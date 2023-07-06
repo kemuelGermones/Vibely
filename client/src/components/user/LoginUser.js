@@ -1,8 +1,20 @@
 import { Link } from "react-router-dom";
+import axios from "axios";
+import { useMutation } from "@tanstack/react-query";
 import { useFormik } from "formik";
 import * as yup from "yup";
 
 function LoginUser() {
+  const mutation = useMutation({
+    mutationFn: (data) => axios.post("http://localhost:5000/signin", data),
+    onSuccess: (data, variables, context) => {
+      console.log(data.data);
+    },
+    onError: (error, variables, context) => {
+      console.log(error.response.data.message);
+    },
+  });
+
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -13,7 +25,7 @@ function LoginUser() {
       password: yup.string().required(),
     }),
     onSubmit: (values) => {
-      console.log(values);
+      mutation.mutate(values);
     },
   });
 
