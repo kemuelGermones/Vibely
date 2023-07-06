@@ -3,6 +3,7 @@ const express = require("express");
 const app = express();
 const passport = require("passport");
 const sequelize = require("./config/sequelize");
+const cors = require("cors");
 const passportJwt = require("./config/passport");
 const userRoute = require("./routes/user");
 const postRoute = require("./routes/post");
@@ -26,6 +27,8 @@ sequelize
   .catch((error) => {
     console.log("cannot synchronize models successfully", error);
   });
+
+app.use(cors());
 
 app.use(express.json());
 

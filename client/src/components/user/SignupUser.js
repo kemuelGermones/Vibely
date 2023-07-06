@@ -1,39 +1,49 @@
 import { Link } from "react-router-dom";
 import { useFormik } from "formik";
+import { useMutation } from "@tanstack/react-query";
+import axios from "axios";
 import * as yup from "yup";
 
-import toBase64 from "../../utils/toBase64";
-
-const BASE64_IMAGE_REGEXP =
-  /data:image\/[bmp,gif,ico,jpg,png,svg,webp,x\-icon,svg+xml]+;base64,[a-zA-Z0-9,+,/]+={0,2}/m;
-
 function SignupUser() {
-  const formik = useFormik({
-    initialValues: {
-      firstName: "",
-      lastName: "",
-      username: "",
-      email: "",
-      password: "",
-      image: "",
+  const mutation = useMutation({
+    mutationFn: (data) => axios.post("http://localhost:5000/signup", data),
+    onSuccess: (data, variables, context) => {
+      console.log(data.data);
     },
-    validationSchema: yup.object({
-      firstName: yup.string().required(),
-      lastName: yup.string().required(),
-      username: yup.string().required(),
-      email: yup.string().email().required(),
-      password: yup.string().required(),
-      image: yup.string().matches(BASE64_IMAGE_REGEXP).required(),
-    }),
-    onSubmit: (values) => {
-      console.log(values);
+    onError: (error, variables, context) => {
+      console.log(error.response.data.message);
     },
   });
 
-  const setImageField = async (event) => {
-    const imageBase64 = await toBase64(event.currentTarget.files[0]);
-    formik.setFieldValue("image", imageBase64);
-  };
+  const formik = useFormik({
+    initialValues: {
+      firstname: "",
+      lastname: "",
+      username: "",
+      email: "",
+      password: "",
+      avatar: "",
+    },
+    validationSchema: yup.object({
+      firstname: yup.string().required(),
+      lastname: yup.string().required(),
+      username: yup.string().required(),
+      email: yup.string().email().required(),
+      password: yup.string().required(),
+      avatar: yup.mixed().test("avatar", "avatar is required", (value) => {
+        if (!value) return false;
+        const REGEX = /(image\/jpeg|image\/jpg|image\/png)/i;
+        return REGEX.test(value.type);
+      }),
+    }),
+    onSubmit: (values) => {
+      const formData = new FormData();
+      for (let value in values) {
+        formData.append(value, values[value]);
+      }
+      mutation.mutate(formData);
+    },
+  });
 
   return (
     <div className="flex flex-col gap-3 rounded-lg bg-white p-3 shadow">
@@ -42,29 +52,29 @@ function SignupUser() {
         <div className="flex flex-col gap-3 sm:flex-row">
           <input
             className={`w-full rounded-lg p-3 shadow ${
-              formik.touched.firstName && formik.errors.firstName
+              formik.touched.firstname && formik.errors.firstname
                 ? "border-red-500 bg-[url('../public/warning.svg')] bg-[length:1.3rem] bg-[right_0.5rem_center] bg-no-repeat focus:border-red-500 focus:ring-red-500"
                 : "border-yellow-300 focus:border-yellow-300 focus:ring-yellow-300"
             }`}
-            id="firstName"
-            name="firstName"
+            id="firstname"
+            name="firstname"
             type="text"
             placeholder="Enter first name"
-            value={formik.values.firstName}
+            value={formik.values.firstname}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
           />
           <input
             className={`w-full rounded-lg p-3 shadow ${
-              formik.touched.lastName && formik.errors.lastName
+              formik.touched.lastname && formik.errors.lastname
                 ? "border-red-500 bg-[url('../public/warning.svg')] bg-[length:1.3rem] bg-[right_0.5rem_center] bg-no-repeat focus:border-red-500 focus:ring-red-500"
                 : "border-yellow-300 focus:border-yellow-300 focus:ring-yellow-300"
             }`}
-            id="lastName"
-            name="lastName"
+            id="lastname"
+            name="lastname"
             type="text"
             placeholder="Enter last name"
-            value={formik.values.lastName}
+            value={formik.values.lastname}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
           />
@@ -113,18 +123,18 @@ function SignupUser() {
         />
         <label
           className={`relative block flex w-full cursor-pointer flex-col gap-3 rounded-lg border p-6 shadow ${
-            formik.touched.image && formik.errors.image
+            formik.touched.avatar && formik.errors.avatar
               ? "border-red-500 bg-[url('../public/warning.svg')] bg-[length:1.3rem] bg-[right_0.5rem_top_0.5rem] bg-no-repeat"
               : "border-yellow-300"
           }`}
-          htmlFor="image"
+          htmlFor="avatar"
         >
           <div className="mx-auto h-36 w-36 shrink-0">
             <img
               className="h-full w-full rounded-full bg-yellow-100 object-cover"
               src={
-                formik.values.image && !formik.errors.image
-                  ? formik.values.image
+                formik.values.avatar && !formik.errors.avatar
+                  ? URL.createObjectURL(formik.values.avatar)
                   : "./person.svg"
               }
             />
@@ -137,10 +147,12 @@ function SignupUser() {
           </p>
           <input
             className="absolute -z-10 opacity-0"
-            id="image"
-            name="image"
+            id="avatar"
+            name="avatar"
             type="file"
-            onChange={setImageField}
+            onChange={(event) => {
+              formik.setFieldValue("avatar", event.currentTarget.files[0]);
+            }}
             onBlur={formik.handleBlur}
           />
         </label>
