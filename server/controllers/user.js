@@ -9,7 +9,7 @@ const AppError = require("../utils/AppError");
 module.exports.signup = async (req, res) => {
   const { firstname, lastname, username, email, password } = req.body;
 
-  const doesUserExist = await User.findOne({ where: { email }});
+  const doesUserExist = await User.findOne({ where: { email } });
 
   if (doesUserExist) {
     throw new AppError("user exists already", 400);
@@ -17,7 +17,7 @@ module.exports.signup = async (req, res) => {
 
   await sequelize.transaction(async (t) => {
     const user = await User.create(
-      { firstname, lastname, username, email, password, avatar: req.file },
+      { firstname, lastname, username, email, avatar: req.file },
       { include: [Avatar], transaction: t }
     );
 
@@ -28,5 +28,5 @@ module.exports.signup = async (req, res) => {
     });
   });
 
-  res.status(200).json({ status: 200, message: "successful sign up"})
+  res.status(200).json({ status: 200, message: "successful sign up" });
 };
