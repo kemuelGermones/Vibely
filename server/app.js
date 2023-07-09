@@ -4,9 +4,11 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 const passport = require("passport");
+const admin = require("firebase-admin");
 
 const sequelize = require("./config/sequelize");
 const passportJwt = require("./config/passport");
+const credentials = require("./firebase.json");
 const userRoute = require("./routes/user");
 const postRoute = require("./routes/post");
 const commentRoute = require("./routes/comment");
@@ -33,6 +35,10 @@ sequelize
 app.use(cors());
 
 app.use(express.json());
+
+admin.initializeApp({
+  credential: admin.credential.cert(credentials),
+});
 
 passport.use(passportJwt);
 app.use(passport.initialize());
