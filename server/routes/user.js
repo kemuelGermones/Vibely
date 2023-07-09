@@ -4,7 +4,7 @@ const wrapAsync = require("../utils/wrapAsync");
 const { multerSignup } = require("../middleware/multer");
 const { uploadAvatar } = require("../middleware/cloudinary");
 const { hashPassword } = require("../middleware/hash");
-const { createUser, loginUser } = require("../controllers/user");
+const { signup, signin } = require("../controllers/user");
 const {
   validateAvatar,
   validateSignup,
@@ -20,9 +20,9 @@ router.post(
   validateAvatar,
   uploadAvatar,
   hashPassword,
-  wrapAsync(createUser)
+  wrapAsync(signup)
 );
 
-router.post("/signin", validateSignin, wrapAsync(loginUser));
+router.post("/signin", validateSignin, wrapAsync(signin));
 
 module.exports = router;
