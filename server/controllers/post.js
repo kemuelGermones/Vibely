@@ -63,18 +63,22 @@ module.exports.updatePost = async (req, res) => {
   const { postId } = req.params;
   const { caption, images } = req.body;
 
-  const post = await sequelize.transaction(async () => {
+  const post = await sequelize.transaction(async (t) => {
     const destroyImagesDb = images.map(
       async (image) =>
-        await Image.destroy({ where: { filename: image.filename, postId } })
+        await Image.destroy({
+          where: { filename: image.filename, postId },
+          transaction: t,
+        })
     );
 
     await Promise.all(destroyImagesDb);
 
-    await Post.update({ caption }, { where: { id: postId } });
+    await Post.update({ caption }, { where: { id: postId }, transaction: t });
 
     return await Post.findOne({
       where: { id: postId },
+      transaction: t,
       ...OPTIONS,
     });
   });
@@ -93,10 +97,10 @@ module.exports.deletePost = async (req, res) => {
 
   const images = await Image.findAll({ where: { postId } });
 
-  await sequelize.transaction(async () => {
-    await Comment.destroy({ where: { postId } });
-    await Image.destroy({ where: { postId } });
-    await Post.destroy({ where: { id: postId } });
+  await sequelize.transaction(async (t) => {
+    await Comment.destroy({ where: { postId }, transaction: t });
+    await Image.destroy({ where: { postId }, transaction: t });
+    await Post.destroy({ where: { id: postId }, transaction: t });
   });
 
   const destroyImagesCloudinary = images.map(async (image) => {
