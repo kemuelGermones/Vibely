@@ -3,7 +3,6 @@ const express = require("express");
 const wrapAsync = require("../utils/wrapAsync");
 const { multerSignup } = require("../middleware/multer");
 const { uploadAvatar } = require("../middleware/cloudinary");
-const { hashPassword } = require("../middleware/hash");
 const { signup, signin } = require("../controllers/user");
 const {
   validateAvatar,
@@ -19,7 +18,6 @@ router.post(
   validateSignup,
   validateAvatar,
   uploadAvatar,
-  hashPassword,
   wrapAsync(signup)
 );
 
