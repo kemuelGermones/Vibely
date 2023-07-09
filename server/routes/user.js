@@ -1,5 +1,5 @@
 const express = require("express");
-const router = express.Router();
+
 const wrapAsync = require("../utils/wrapAsync");
 const { multerSignup } = require("../middleware/multer");
 const { uploadAvatar } = require("../middleware/cloudinary");
@@ -10,6 +10,8 @@ const {
   validateSignup,
   validateSignin,
 } = require("../middleware/validate");
+
+const router = express.Router();
 
 router.post(
   "/signup",

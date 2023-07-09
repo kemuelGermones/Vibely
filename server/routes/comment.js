@@ -1,6 +1,6 @@
 const express = require("express");
-const router = express.Router({ mergeParams: true });
 const passport = require("passport");
+
 const wrapAsync = require("../utils/wrapAsync");
 const {
   getComments,
@@ -9,6 +9,8 @@ const {
 } = require("../controllers/comment");
 const { validateComment } = require("../middleware/validate");
 const { isCommentOwner } = require("../middleware/auth");
+
+const router = express.Router({ mergeParams: true });
 
 router.get(
   "/",

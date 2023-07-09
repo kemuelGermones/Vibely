@@ -1,6 +1,6 @@
 const express = require("express");
-const router = express.Router();
 const passport = require("passport");
+
 const wrapAsync = require("../utils/wrapAsync");
 const { uploadImages } = require("../middleware/cloudinary");
 const { multerCreatePost } = require("../middleware/multer");
@@ -15,6 +15,8 @@ const {
   validateCreatePost,
   validateUpdatePost,
 } = require("../middleware/validate");
+
+const router = express.Router();
 
 router.get(
   "/",

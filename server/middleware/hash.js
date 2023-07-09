@@ -7,6 +7,7 @@ module.exports.hashPassword = (req, res, next) => {
     .then((salt) => bcrypt.hash(password, salt))
     .then((hash) => {
       req.body.password = hash;
+
       next();
     })
     .catch((error) => {
