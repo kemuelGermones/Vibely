@@ -1,9 +1,8 @@
 require("dotenv").config();
 
-const admin = require("firebase-admin");
-
 const { User, Avatar } = require("../models");
 const sequelize = require("../config/sequelize");
+const admin = require("../config/firebase");
 const AppError = require("../utils/AppError");
 
 module.exports.signup = async (req, res) => {
