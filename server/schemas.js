@@ -59,8 +59,3 @@ module.exports.signupSchema = Joi.object({
   email: Joi.string().email().escapeHTML().required(),
   password: Joi.string().escapeHTML().required(),
 });
-
-module.exports.signinSchema = Joi.object({
-  email: Joi.string().email().escapeHTML().required(),
-  password: Joi.string().escapeHTML().required(),
-});

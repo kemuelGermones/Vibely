@@ -4,7 +4,6 @@ const {
   updatePostSchema,
   commentSchema,
   signupSchema,
-  signinSchema,
 } = require("../schemas");
 
 module.exports.validateCreatePost = (req, res, next) => {
@@ -54,17 +53,6 @@ module.exports.validateSignup = (req, res, next) => {
 module.exports.validateAvatar = (req, res, next) => {
   if (!req.file) {
     throw new AppError("avatar is required", 400);
-  }
-
-  next();
-};
-
-module.exports.validateSignin = (req, res, next) => {
-  const { error } = signinSchema.validate(req.body);
-
-  if (error) {
-    const msg = error.details.map((detail) => detail.message).join(",");
-    throw new AppError(msg, 400);
   }
 
   next();
