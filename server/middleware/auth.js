@@ -1,5 +1,23 @@
+const admin = require("../config/firebase");
 const { Post, Comment } = require("../models");
 const AppError = require("../utils/AppError");
+
+module.exports.authenticate = (req, res, next) => {
+  const token = req.headers.authorization.split(" ")[1];
+  admin
+    .auth()
+    .verifyIdToken(token)
+    .then((decodedToken) => {
+      const uid = decodedToken.uid;
+
+      req.user = { id: uid };
+
+      next();
+    })
+    .catch((error) => {
+      next(error);
+    });
+};
 
 module.exports.isPostOwner = (req, res, next) => {
   const { postId } = req.params;
