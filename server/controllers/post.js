@@ -41,7 +41,7 @@ module.exports.getPosts = async (req, res) => {
 };
 
 module.exports.createPost = async (req, res) => {
-  const { id } = await Post.create(
+  const post = await Post.create(
     {
       ...req.body,
       images: req.files,
@@ -50,20 +50,19 @@ module.exports.createPost = async (req, res) => {
     { include: [Image] }
   );
 
-  const post = await Post.findOne({
-    where: { id },
+  const foundPost = await Post.findOne({
+    where: { id: post.id },
     ...OPTIONS,
   });
 
-  res.status(200).json(post);
+  res.status(200).json(foundPost);
 };
 
 module.exports.updatePost = async (req, res) => {
   const { postId } = req.params;
-  const { caption, images } = req.body;
 
   const post = await sequelize.transaction(async (t) => {
-    const destroyImagesDb = images.map(
+    const destroyImagesDb = req.body.images.map(
       async (image) =>
         await Image.destroy({
           where: { filename: image.filename, postId },
@@ -73,16 +72,21 @@ module.exports.updatePost = async (req, res) => {
 
     await Promise.all(destroyImagesDb);
 
-    await Post.update({ caption }, { where: { id: postId }, transaction: t });
+    await Post.update(
+      { caption: req.body.caption },
+      { where: { id: postId }, transaction: t }
+    );
 
-    return await Post.findOne({
+    const foundPost = await Post.findOne({
       where: { id: postId },
       transaction: t,
       ...OPTIONS,
     });
+
+    return foundPost;
   });
 
-  const destroyImagesCloudinary = images.map(async (image) => {
+  const destroyImagesCloudinary = req.body.images.map(async (image) => {
     await cloudinary.uploader.destroy(image.filename);
   });
 
@@ -98,7 +102,9 @@ module.exports.deletePost = async (req, res) => {
 
   await sequelize.transaction(async (t) => {
     await Comment.destroy({ where: { postId }, transaction: t });
+
     await Image.destroy({ where: { postId }, transaction: t });
+    
     await Post.destroy({ where: { id: postId }, transaction: t });
   });
 

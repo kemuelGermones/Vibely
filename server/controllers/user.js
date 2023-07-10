@@ -6,9 +6,9 @@ const admin = require("../config/firebase");
 const AppError = require("../utils/AppError");
 
 module.exports.signup = async (req, res) => {
-  const { firstname, lastname, username, email, password } = req.body;
-
-  const doesUserExist = await User.findOne({ where: { email } });
+  const doesUserExist = await User.findOne({
+    where: { email: req.body.email },
+  });
 
   if (doesUserExist) {
     throw new AppError("user exists already", 400);
@@ -16,13 +16,19 @@ module.exports.signup = async (req, res) => {
 
   await sequelize.transaction(async (t) => {
     const user = await User.create(
-      { firstname, lastname, username, email, avatar: req.file },
+      {
+        firstname: req.body.firstname,
+        lastname: req.body.lastname,
+        username: req.body.username,
+        email: req.body.email,
+        avatar: req.file,
+      },
       { include: [Avatar], transaction: t }
     );
 
     await admin.auth().createUser({
-      email,
-      password,
+      email: req.body.email,
+      password: req.body.password,
       uid: user.id,
     });
   });

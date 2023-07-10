@@ -26,15 +26,18 @@ module.exports.getComments = async (req, res, next) => {
 module.exports.createComment = async (req, res, next) => {
   const { postId } = req.params;
 
-  const { id } = await Comment.create({
+  const comment = await Comment.create({
     ...req.body,
     postId,
     userId: req.user.uid,
   });
 
-  const comment = await Comment.findOne({ where: { id }, ...OPTIONS });
+  const foundComment = await Comment.findOne({
+    where: { id: comment.id },
+    ...OPTIONS,
+  });
 
-  res.status(200).json(comment);
+  res.status(200).json(foundComment);
 };
 
 module.exports.deleteComment = async (req, res, next) => {
