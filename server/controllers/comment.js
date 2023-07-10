@@ -5,7 +5,6 @@ const OPTIONS = {
     {
       model: User,
       as: "user",
-      attributes: { exclude: ["password", "email"] },
       include: {
         model: Avatar,
         as: "avatar",
