@@ -8,9 +8,7 @@ module.exports.authenticate = (req, res, next) => {
     .auth()
     .verifyIdToken(token)
     .then((decodedToken) => {
-      const uid = decodedToken.uid;
-
-      req.user = { id: uid };
+      req.user = decodedToken;
 
       next();
     })
@@ -28,7 +26,7 @@ module.exports.isPostOwner = (req, res, next) => {
         throw new AppError("comment doesn't exists", 400);
       }
 
-      if (comment.userId !== req.user.id) {
+      if (comment.userId !== req.user.uid) {
         throw new AppError(
           "you are not allowed to update/delete this comment",
           400
@@ -51,7 +49,7 @@ module.exports.isCommentOwner = (req, res, next) => {
         throw new AppError("comment doesn't exists", 400);
       }
 
-      if (comment.userId !== req.user.id) {
+      if (comment.userId !== req.user.uid) {
         throw new AppError(
           "you are not allowed to update/delete this comment",
           400

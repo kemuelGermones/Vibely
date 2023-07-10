@@ -46,7 +46,7 @@ module.exports.createPost = async (req, res) => {
     {
       ...req.body,
       images: req.files,
-      userId: req.user.id,
+      userId: req.user.uid,
     },
     { include: [Image] }
   );

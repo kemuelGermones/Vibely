@@ -30,7 +30,7 @@ module.exports.createComment = async (req, res, next) => {
   const { id } = await Comment.create({
     ...req.body,
     postId,
-    userId: req.user.id,
+    userId: req.user.uid,
   });
 
   const comment = await Comment.findOne({ where: { id }, ...OPTIONS });
