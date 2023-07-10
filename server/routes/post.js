@@ -1,10 +1,9 @@
 const express = require("express");
-const passport = require("passport");
 
 const wrapAsync = require("../utils/wrapAsync");
 const { uploadImages } = require("../middleware/cloudinary");
 const { multerCreatePost } = require("../middleware/multer");
-const { isPostOwner } = require("../middleware/auth");
+const { isPostOwner, authenticate } = require("../middleware/auth");
 const {
   getPosts,
   createPost,
@@ -20,13 +19,13 @@ const router = express.Router();
 
 router.get(
   "/",
-  passport.authenticate("jwt", { session: false }),
+  authenticate,
   wrapAsync(getPosts)
 );
 
 router.post(
   "/",
-  passport.authenticate("jwt", { session: false }),
+  authenticate,
   multerCreatePost,
   validateCreatePost,
   uploadImages,
@@ -35,7 +34,7 @@ router.post(
 
 router.put(
   "/:postId",
-  passport.authenticate("jwt", { session: false }),
+  authenticate,
   isPostOwner,
   validateUpdatePost,
   wrapAsync(updatePost)
@@ -43,7 +42,7 @@ router.put(
 
 router.delete(
   "/:postId",
-  passport.authenticate("jwt", { session: false }),
+  authenticate,
   isPostOwner,
   wrapAsync(deletePost)
 );
