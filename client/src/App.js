@@ -1,6 +1,8 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import { Tooltip } from "react-tooltip";
+import { ToastContainer } from "react-toastify";
 import "react-tooltip/dist/react-tooltip.css";
+import "react-toastify/dist/ReactToastify.css";
 
 import Login from "./pages/Login";
 import Posts from "./pages/Posts";
@@ -30,6 +32,7 @@ function App() {
         </Route>
       </Routes>
       <Tooltip id="my-tooltip" place="bottom" />
+      <ToastContainer />
     </>
   );
 }

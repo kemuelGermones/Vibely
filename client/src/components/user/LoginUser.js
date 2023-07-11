@@ -3,15 +3,18 @@ import { useMutation } from "@tanstack/react-query";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import { signInWithEmailAndPassword } from "firebase/auth";
+import { toast } from "react-toastify";
 
 import { auth } from "../../config/firebase";
+import extractErrorMsg from "../../utils/extractErrorMsg";
 
 function LoginUser() {
   const mutation = useMutation({
     mutationFn: (data) =>
       signInWithEmailAndPassword(auth, data.email, data.password),
     onError: (error, variables, context) => {
-      console.log(error.message);
+      const message = extractErrorMsg(error);
+      toast.error(message);
     },
   });
 
