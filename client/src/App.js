@@ -4,7 +4,7 @@ import { ToastContainer } from "react-toastify";
 import "react-tooltip/dist/react-tooltip.css";
 import "react-toastify/dist/ReactToastify.css";
 
-import Login from "./pages/Login";
+import Signin from "./pages/Signin";
 import Posts from "./pages/Posts";
 import Users from "./pages/Users";
 import Error from "./pages/Error";
@@ -18,9 +18,9 @@ function App() {
   return (
     <>
       <Routes>
-        <Route index element={<Navigate to="login" />} />
+        <Route index element={<Navigate to="signin" />} />
         <Route element={<Unprotected />}>
-          <Route path="login" element={<Login />} />
+          <Route path="signin" element={<Signin />} />
           <Route path="signup" element={<Signup />} />
         </Route>
         <Route element={<Protected />}>

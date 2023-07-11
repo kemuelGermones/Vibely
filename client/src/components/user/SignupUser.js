@@ -167,9 +167,9 @@ function SignupUser() {
         Have an account?{" "}
         <Link
           className="text-blue-600 underline underline-offset-4"
-          to="/login"
+          to="/signin"
         >
-          log in
+          Sign in
         </Link>
       </p>
     </div>

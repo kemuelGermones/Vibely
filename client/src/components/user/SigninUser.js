@@ -8,7 +8,7 @@ import { toast } from "react-toastify";
 import { auth } from "../../config/firebase";
 import extractErrorMsg from "../../utils/extractErrorMsg";
 
-function LoginUser() {
+function SigninUser() {
   const mutation = useMutation({
     mutationFn: (data) =>
       signInWithEmailAndPassword(auth, data.email, data.password),
@@ -35,7 +35,7 @@ function LoginUser() {
   return (
     <div className="flex flex-col gap-3 rounded-lg bg-white p-3 shadow">
       <h1 className="text-center text-lg font-semibold">
-        Log in to your account
+        Sign in to your account
       </h1>
       <form className="flex flex-col gap-3" onSubmit={formik.handleSubmit}>
         <input
@@ -71,7 +71,7 @@ function LoginUser() {
           type="submit"
           disabled={mutation.isLoading}
         >
-          Log in
+          Sign in
         </button>
       </form>
       <p className="text-center">
@@ -87,4 +87,4 @@ function LoginUser() {
   );
 }
 
-export default LoginUser;
+export default SigninUser;
