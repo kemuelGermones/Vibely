@@ -1,17 +1,17 @@
 import { Link } from "react-router-dom";
-import axios from "axios";
 import { useMutation } from "@tanstack/react-query";
 import { useFormik } from "formik";
 import * as yup from "yup";
+import { signInWithEmailAndPassword } from "firebase/auth";
+
+import { auth } from "../../config/firebase";
 
 function LoginUser() {
   const mutation = useMutation({
-    mutationFn: (data) => axios.post("http://localhost:5000/signin", data),
-    onSuccess: (data, variables, context) => {
-      console.log(data.data);
-    },
+    mutationFn: (data) =>
+      signInWithEmailAndPassword(auth, data.email, data.password),
     onError: (error, variables, context) => {
-      console.log(error.response.data.message);
+      console.log(error.message);
     },
   });
 
@@ -66,6 +66,7 @@ function LoginUser() {
         <button
           className="w-full rounded-lg bg-yellow-300 p-3 font-semibold shadow hover:bg-yellow-400 focus:outline-none"
           type="submit"
+          disabled={mutation.isLoading}
         >
           Log in
         </button>
@@ -76,7 +77,7 @@ function LoginUser() {
           className="text-blue-600 underline underline-offset-4"
           to="/signup"
         >
-          sign up
+          Sign up
         </Link>
       </p>
     </div>
