@@ -1,21 +1,25 @@
 import { Link } from "react-router-dom";
 import { useFormik } from "formik";
 import { useMutation } from "@tanstack/react-query";
-import axios from "axios";
+import { FirebaseError } from "@firebase/util";
 import * as yup from "yup";
+import { toast } from "react-toastify";
+
+import signup from "../../api/signup";
+import extractErrorMsg from "../../utils/extractErrorMsg";
 
 function SignupUser() {
-  const mutation = useMutation(
-    (data) => axios.post("http://localhost:5000/signup", data),
-    {
-      onSuccess: (data, variables, context) => {
-        console.log(data.data);
-      },
-      onError: (error, variables, context) => {
-        console.log(error.response.data.message);
-      },
-    }
-  );
+  const mutation = useMutation((data) => signup(data), {
+    onError: (error, variables, context) => {
+      let message;
+      if (error instanceof FirebaseError) {
+        message = extractErrorMsg(error);
+      } else {
+        message = error.response.data.message;
+      }
+      toast.error(message);
+    },
+  });
 
   const formik = useFormik({
     initialValues: {
@@ -39,11 +43,7 @@ function SignupUser() {
       }),
     }),
     onSubmit: (values) => {
-      const formData = new FormData();
-      for (let value in values) {
-        formData.append(value, values[value]);
-      }
-      mutation.mutate(formData);
+      mutation.mutate(values);
     },
   });
 
@@ -161,6 +161,7 @@ function SignupUser() {
         <button
           className="block w-full rounded-lg bg-yellow-300 p-3 font-semibold shadow shadow hover:bg-yellow-400 focus:outline-none"
           type="submit"
+          disabled={mutation.isLoading}
         >
           Sign up
         </button>
