@@ -9,14 +9,15 @@ import { auth } from "../../config/firebase";
 import extractErrorMsg from "../../utils/extractErrorMsg";
 
 function SigninUser() {
-  const mutation = useMutation({
-    mutationFn: (data) =>
-      signInWithEmailAndPassword(auth, data.email, data.password),
-    onError: (error, variables, context) => {
-      const message = extractErrorMsg(error);
-      toast.error(message);
-    },
-  });
+  const mutation = useMutation(
+    (data) => signInWithEmailAndPassword(auth, data.email, data.password),
+    {
+      onError: (error, variables, context) => {
+        const message = extractErrorMsg(error);
+        toast.error(message);
+      },
+    }
+  );
 
   const formik = useFormik({
     initialValues: {

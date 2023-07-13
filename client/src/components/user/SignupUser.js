@@ -5,15 +5,17 @@ import axios from "axios";
 import * as yup from "yup";
 
 function SignupUser() {
-  const mutation = useMutation({
-    mutationFn: (data) => axios.post("http://localhost:5000/signup", data),
-    onSuccess: (data, variables, context) => {
-      console.log(data.data);
-    },
-    onError: (error, variables, context) => {
-      console.log(error.response.data.message);
-    },
-  });
+  const mutation = useMutation(
+    (data) => axios.post("http://localhost:5000/signup", data),
+    {
+      onSuccess: (data, variables, context) => {
+        console.log(data.data);
+      },
+      onError: (error, variables, context) => {
+        console.log(error.response.data.message);
+      },
+    }
+  );
 
   const formik = useFormik({
     initialValues: {
