@@ -163,7 +163,7 @@ function SignupUser() {
           type="submit"
           disabled={mutation.isLoading}
         >
-          Sign up
+          {mutation.isLoading ? "Loading..." : "Sign up"}
         </button>
       </form>
       <p className="text-center">

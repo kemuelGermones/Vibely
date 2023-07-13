@@ -72,7 +72,7 @@ function SigninUser() {
           type="submit"
           disabled={mutation.isLoading}
         >
-          Sign in
+          {mutation.isLoading ? "Loading..." : "Sign in"}
         </button>
       </form>
       <p className="text-center">
