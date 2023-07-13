@@ -29,7 +29,7 @@ function SignupUser() {
       lastname: yup.string().required(),
       username: yup.string().required(),
       email: yup.string().email().required(),
-      password: yup.string().required(),
+      password: yup.string().min(6).required(),
       avatar: yup.mixed().test("avatar", "avatar is required", (value) => {
         if (!value) return false;
         const REGEX = /(image\/jpeg|image\/jpg|image\/png)/i;
@@ -116,7 +116,7 @@ function SignupUser() {
           id="password"
           name="password"
           type="password"
-          placeholder="Enter password"
+          placeholder="Enter password (at least 6 characters)"
           value={formik.values.password}
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
