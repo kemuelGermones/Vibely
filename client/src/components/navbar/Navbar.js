@@ -76,7 +76,7 @@ function Navbar() {
           <li
             className="flex cursor-pointer items-center justify-center hover:bg-yellow-400"
             data-tooltip-id="my-tooltip"
-            data-tooltip-content="Log out"
+            data-tooltip-content="Sign out"
             onClick={() => {
               mutation.mutate();
             }}
