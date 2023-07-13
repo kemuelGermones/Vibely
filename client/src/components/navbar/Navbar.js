@@ -1,5 +1,6 @@
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import { useMutation } from "@tanstack/react-query";
 import {
   BsSearch,
   BsPerson,
@@ -7,12 +8,24 @@ import {
   BsBoxArrowRight,
   BsLayoutTextWindowReverse,
 } from "react-icons/bs";
+import { signOut } from "firebase/auth";
+import { toast } from "react-toastify";
 
 import { ModalContext } from "../../store/modal-context";
+import { auth } from "../../config/firebase";
 import Search from "../search/Search";
+import extractErrorMsg from "../../utils/extractErrorMsg";
 
 function Navbar() {
   const { openModal } = useContext(ModalContext);
+
+  const mutation = useMutation(() => signOut(auth), {
+    onError: (error, variables, context) => {
+      const message = extractErrorMsg(error);
+      toast.error(message);
+    },
+  });
+
   const navigate = useNavigate();
 
   return (
@@ -64,6 +77,9 @@ function Navbar() {
             className="flex cursor-pointer items-center justify-center hover:bg-yellow-400"
             data-tooltip-id="my-tooltip"
             data-tooltip-content="Log out"
+            onClick={() => {
+              mutation.mutate();
+            }}
           >
             <BsBoxArrowRight className="shrink-0" size="1.5em" />
           </li>
