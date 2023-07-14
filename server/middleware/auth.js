@@ -4,6 +4,7 @@ const AppError = require("../utils/AppError");
 
 module.exports.authenticate = (req, res, next) => {
   const token = req.headers.authorization.split(" ")[1];
+
   admin
     .auth()
     .verifyIdToken(token)
@@ -13,7 +14,11 @@ module.exports.authenticate = (req, res, next) => {
       next();
     })
     .catch((error) => {
-      next(error);
+      const auth = error.code.split("/")[1];
+
+      const code = auth.replace(/-/g, " ");
+
+      next(new AppError(400, code));
     });
 };
 
@@ -21,15 +26,15 @@ module.exports.isPostOwner = (req, res, next) => {
   const { postId } = req.params;
 
   Post.findOne({ where: { id: postId } })
-    .then((comment) => {
-      if (!comment) {
-        throw new AppError("comment doesn't exists", 400);
+    .then((post) => {
+      if (!post) {
+        throw new AppError(400, "post doesn't exist");
       }
 
-      if (comment.userId !== req.user.uid) {
+      if (post.userId !== req.user.uid) {
         throw new AppError(
-          "you are not allowed to update/delete this comment",
-          400
+          400,
+          "you are not allowed to update/delete this post"
         );
       }
 
@@ -46,14 +51,11 @@ module.exports.isCommentOwner = (req, res, next) => {
   Comment.findOne({ where: { id: commentId } })
     .then((comment) => {
       if (!comment) {
-        throw new AppError("comment doesn't exists", 400);
+        throw new AppError(400, "comment doesn't exist");
       }
 
       if (comment.userId !== req.user.uid) {
-        throw new AppError(
-          "you are not allowed to update/delete this comment",
-          400
-        );
+        throw new AppError(400, "you are not allowed to delete this comment");
       }
 
       next();

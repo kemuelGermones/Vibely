@@ -11,7 +11,7 @@ module.exports.signup = async (req, res) => {
   });
 
   if (doesUserExist) {
-    throw new AppError("user exists already", 400);
+    throw new AppError(400, "user exist already");
   }
 
   await sequelize.transaction(async (t) => {
@@ -33,5 +33,9 @@ module.exports.signup = async (req, res) => {
     });
   });
 
-  res.status(200).json({ status: 200, message: "successful sign up" });
+  res.status(200).json({
+    status: 200,
+    data: null,
+    message: "successfully created a user",
+  });
 };

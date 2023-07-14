@@ -13,7 +13,7 @@ const upload = multer({
     const WHITELIST = ["image/png", "image/jpeg", "image/jpg"];
 
     if (!WHITELIST.includes(file.mimetype)) {
-      return cb(new Error("file is not allowed"));
+      return cb(new Error("file type is invalid"));
     }
 
     cb(null, true);
@@ -25,7 +25,7 @@ module.exports.multerCreatePost = (req, res, next) => {
 
   parse(req, res, (error) => {
     if (error) {
-      next(new AppError(error.message, 400));
+      next(new AppError(400, error.message));
     }
 
     next();
@@ -37,7 +37,7 @@ module.exports.multerSignup = (req, res, next) => {
 
   parse(req, res, (error) => {
     if (error) {
-      next(new AppError(error.message, 400));
+      next(new AppError(400, error.message));
     }
 
     next();

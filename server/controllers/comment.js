@@ -20,7 +20,11 @@ module.exports.getComments = async (req, res, next) => {
 
   const comments = await Comment.findAll({ where: { postId }, ...OPTIONS });
 
-  res.status(200).json(comments);
+  res.status(200).json({
+    status: 200,
+    data: comments,
+    message: "successfully fetched comments",
+  });
 };
 
 module.exports.createComment = async (req, res, next) => {
@@ -37,7 +41,11 @@ module.exports.createComment = async (req, res, next) => {
     ...OPTIONS,
   });
 
-  res.status(200).json(foundComment);
+  res.status(200).json({
+    status: 200,
+    data: foundComment,
+    message: "successfully created a comment",
+  });
 };
 
 module.exports.deleteComment = async (req, res, next) => {
@@ -45,7 +53,9 @@ module.exports.deleteComment = async (req, res, next) => {
 
   await Comment.destroy({ where: { id: commentId, postId } });
 
-  res
-    .status(200)
-    .json({ status: 200, message: "successfully deleted a comment" });
+  res.status(200).json({
+    status: 200,
+    data: null,
+    message: "successfully deleted a comment",
+  });
 };

@@ -37,12 +37,12 @@ app.use("/posts", postRoute);
 app.use("/posts/:postId/comments", commentRoute);
 
 app.all("*", (req, res, next) => {
-  next(new AppError("not found", 400));
+  next(new AppError(400, "not found"));
 });
 
 app.use((err, req, res, next) => {
   const { status = 500, message = "something went wrong" } = err;
-  res.status(status).json({ status, message });
+  res.status(status).json({ status, data: null, message });
 });
 
 const PORT = process.env.PORT;

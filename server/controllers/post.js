@@ -37,7 +37,11 @@ const OPTIONS = {
 module.exports.getPosts = async (req, res) => {
   const posts = await Post.findAll(OPTIONS);
 
-  res.status(200).json(posts);
+  res.status(200).json({
+    status: 200,
+    data: posts,
+    message: "successfully fetched posts",
+  });
 };
 
 module.exports.createPost = async (req, res) => {
@@ -55,7 +59,11 @@ module.exports.createPost = async (req, res) => {
     ...OPTIONS,
   });
 
-  res.status(200).json(foundPost);
+  res.status(200).json({
+    status: 200,
+    data: foundPost,
+    message: "successfully created a post",
+  });
 };
 
 module.exports.updatePost = async (req, res) => {
@@ -92,7 +100,11 @@ module.exports.updatePost = async (req, res) => {
 
   await Promise.all(destroyImagesCloudinary);
 
-  res.status(200).json(post);
+  res.status(200).json({
+    status: 200,
+    data: post,
+    message: "successfully updated a post",
+  });
 };
 
 module.exports.deletePost = async (req, res) => {
@@ -104,7 +116,7 @@ module.exports.deletePost = async (req, res) => {
     await Comment.destroy({ where: { postId }, transaction: t });
 
     await Image.destroy({ where: { postId }, transaction: t });
-    
+
     await Post.destroy({ where: { id: postId }, transaction: t });
   });
 
@@ -114,5 +126,9 @@ module.exports.deletePost = async (req, res) => {
 
   await Promise.all(destroyImagesCloudinary);
 
-  res.status(200).json({ status: 200, message: "successfully deleted a post" });
+  res.status(200).json({
+    status: 200,
+    data: null,
+    message: "successfully deleted a post",
+  });
 };
