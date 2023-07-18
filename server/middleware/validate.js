@@ -1,3 +1,4 @@
+const { User } = require("../models");
 const AppError = require("../utils/AppError");
 const {
   createPostSchema,
@@ -12,6 +13,10 @@ module.exports.validateCreatePost = (req, res, next) => {
   if (error) {
     const message = error.details.map((detail) => detail.message).join(",");
     throw new AppError(400, message);
+  }
+
+  if (req.files.length === 0) {
+    throw new AppError(400, '"images" is required');
   }
 
   next();
@@ -48,21 +53,21 @@ module.exports.validateSignup = (req, res, next) => {
     throw new AppError(400, message);
   }
 
-  next();
-};
-
-module.exports.validateImages = (req, res, next) => {
-  if (req.files.length === 0) {
-    throw new AppError(400, '"images" is required');
-  }
-
-  next();
-};
-
-module.exports.validateAvatar = (req, res, next) => {
   if (!req.file) {
     throw new AppError(400, '"avatar" is required');
   }
 
-  next();
+  User.findOne({
+    where: { email: req.body.email },
+  })
+    .then((user) => {
+      if (user) {
+        throw new AppError(400, "user exist already");
+      }
+
+      next();
+    })
+    .catch((error) => {
+      next(error);
+    });
 };

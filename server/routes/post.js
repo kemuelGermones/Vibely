@@ -13,7 +13,6 @@ const {
 const {
   validateCreatePost,
   validateUpdatePost,
-  validateImages,
 } = require("../middleware/validate");
 
 const router = express.Router();
@@ -25,7 +24,6 @@ router.post(
   authenticate,
   multerCreatePost,
   validateCreatePost,
-  validateImages,
   uploadImages,
   wrapAsync(createPost)
 );

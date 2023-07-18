@@ -3,17 +3,8 @@ require("dotenv").config();
 const { User, Avatar } = require("../models");
 const sequelize = require("../config/sequelize");
 const admin = require("../config/firebase");
-const AppError = require("../utils/AppError");
 
 module.exports.signup = async (req, res) => {
-  const doesUserExist = await User.findOne({
-    where: { email: req.body.email },
-  });
-
-  if (doesUserExist) {
-    throw new AppError(400, "user exist already");
-  }
-
   await sequelize.transaction(async (t) => {
     const user = await User.create(
       {
