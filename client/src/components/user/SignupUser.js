@@ -36,7 +36,7 @@ function SignupUser() {
       username: yup.string().required(),
       email: yup.string().email().required(),
       password: yup.string().min(6).required(),
-      avatar: yup.mixed().test("avatar", "avatar is required", (value) => {
+      avatar: yup.mixed().test("avatar", "avatar is invalid", (value) => {
         if (!value) return false;
         const REGEX = /(image\/jpeg|image\/jpg|image\/png)/i;
         return REGEX.test(value.type);
