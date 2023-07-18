@@ -1,18 +1,52 @@
+import { useFormik } from "formik";
+import * as yup from "yup";
+
 function CreatePost() {
+  const formik = useFormik({
+    initialValues: {
+      caption: "",
+      images: [],
+    },
+    validationSchema: yup.object({
+      caption: yup.string().required(),
+      images: yup.mixed().test("images", "images is invalid", (values) => {
+        if (values.length === 0 || values.length > 5) return false;
+        const REGEX = /(image\/jpeg|image\/jpg|image\/png)/i;
+        for (let value of values) {
+          if (!REGEX.test(value.type)) return false;
+        }
+        return true;
+      }),
+    }),
+    onSubmit: (values) => {
+      console.log(values);
+    },
+  });
+
   return (
     <div className="rounded-lg bg-white p-3 shadow">
-      <form className="flex flex-col gap-3">
+      <form className="flex flex-col gap-3" onSubmit={formik.handleSubmit}>
         <textarea
-          className="w-full resize-none rounded-lg border-yellow-300 p-3 shadow focus:border-yellow-300 focus:ring-yellow-300"
-          placeholder="Description"
+          className={`w-full resize-none rounded-lg p-3 shadow ${
+            formik.touched.caption && formik.errors.caption
+              ? "border-red-500 bg-[url('../public/warning.svg')] bg-[length:1.3rem] bg-[right_0.5rem_top_0.5rem] bg-no-repeat focus:border-red-500 focus:ring-red-500"
+              : "border-yellow-300 focus:border-yellow-300 focus:ring-yellow-300"
+          }`}
+          id="caption"
+          name="caption"
+          type="text"
+          placeholder="Enter caption"
+          value={formik.values.caption}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
         />
         <label
           className={`relative block flex w-full cursor-pointer flex-col gap-3 rounded-lg border p-6 shadow ${
-            false
+            formik.touched.images && formik.errors.images
               ? "border-red-500 bg-[url('../public/warning.svg')] bg-[length:1.3rem] bg-[right_0.5rem_top_0.5rem] bg-no-repeat"
               : "border-yellow-300"
           }`}
-          htmlFor="image"
+          htmlFor="images"
         >
           <svg
             className="mx-auto h-20 w-20"
@@ -36,18 +70,32 @@ function CreatePost() {
               ></path>
             </g>
           </svg>
-          <h1 className="text-center text-xl text-gray-700">Choose images</h1>
+          <h1 className="text-center text-xl text-gray-700">
+            {formik.values.images.length && !formik.errors.images
+              ? `${formik.values.images.length} images chosen`
+              : "Choose images"}
+          </h1>
           <p className="text-center text-gray-500">
-            Upload or drag & drop your file PNG, JPG or JPEG
+            Upload less than or equals to 5 images
+            <br />
+            (PNG, JPG or JPEG).
           </p>
           <input
             className="absolute -z-10 opacity-0"
-            id="image"
-            name="image"
+            id="images"
+            name="images"
             type="file"
+            multiple={true}
+            onChange={(event) => {
+              formik.setFieldValue("images", [...event.currentTarget.files]);
+            }}
+            onBlur={formik.handleBlur}
           />
         </label>
-        <button className="w-full rounded-lg bg-yellow-300 p-3 font-semibold shadow hover:bg-yellow-400 focus:outline-none">
+        <button
+          className="w-full rounded-lg bg-yellow-300 p-3 font-semibold shadow hover:bg-yellow-400 focus:outline-none"
+          type="submit"
+        >
           Post
         </button>
       </form>
