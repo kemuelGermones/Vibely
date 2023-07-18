@@ -28,7 +28,7 @@ router.post(
   wrapAsync(createPost)
 );
 
-router.put(
+router.patch(
   "/:postId",
   authenticate,
   isPostOwner,

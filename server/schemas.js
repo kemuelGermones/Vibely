@@ -29,23 +29,8 @@ const extension = (joi) => ({
 
 const Joi = BaseJoi.extend(extension);
 
-module.exports.createPostSchema = Joi.object({
+module.exports.postSchema = Joi.object({
   caption: Joi.string().escapeHTML().required(),
-});
-
-module.exports.updatePostSchema = Joi.object({
-  caption: Joi.string().escapeHTML().required(),
-  images: Joi.array()
-    .items(
-      Joi.object({
-        id: Joi.string()
-          .guid({ version: ["uuidv4"] })
-          .required(),
-        url: Joi.string().uri().required(),
-        filename: Joi.string().escapeHTML().required(),
-      })
-    )
-    .required(),
 });
 
 module.exports.commentSchema = Joi.object({

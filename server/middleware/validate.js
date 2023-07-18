@@ -1,14 +1,9 @@
 const { User } = require("../models");
 const AppError = require("../utils/AppError");
-const {
-  createPostSchema,
-  updatePostSchema,
-  commentSchema,
-  signupSchema,
-} = require("../schemas");
+const { postSchema, commentSchema, signupSchema } = require("../schemas");
 
 module.exports.validateCreatePost = (req, res, next) => {
-  const { error } = createPostSchema.validate(req.body);
+  const { error } = postSchema.validate(req.body);
 
   if (error) {
     const message = error.details.map((detail) => detail.message).join(",");
@@ -23,7 +18,7 @@ module.exports.validateCreatePost = (req, res, next) => {
 };
 
 module.exports.validateUpdatePost = (req, res, next) => {
-  const { error } = updatePostSchema.validate(req.body);
+  const { error } = postSchema.validate(req.body);
 
   if (error) {
     const message = error.details.map((detail) => detail.message).join(",");
