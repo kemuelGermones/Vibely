@@ -13,21 +13,19 @@ const {
 const {
   validateCreatePost,
   validateUpdatePost,
+  validateImages,
 } = require("../middleware/validate");
 
 const router = express.Router();
 
-router.get(
-  "/",
-  authenticate,
-  wrapAsync(getPosts)
-);
+router.get("/", authenticate, wrapAsync(getPosts));
 
 router.post(
   "/",
   authenticate,
   multerCreatePost,
   validateCreatePost,
+  validateImages,
   uploadImages,
   wrapAsync(createPost)
 );
@@ -40,11 +38,6 @@ router.put(
   wrapAsync(updatePost)
 );
 
-router.delete(
-  "/:postId",
-  authenticate,
-  isPostOwner,
-  wrapAsync(deletePost)
-);
+router.delete("/:postId", authenticate, isPostOwner, wrapAsync(deletePost));
 
 module.exports = router;

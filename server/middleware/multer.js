@@ -4,23 +4,21 @@ const AppError = require("../utils/AppError");
 
 const storage = multer.memoryStorage();
 
-const upload = multer({
-  storage,
-  limits: {
-    files: 5,
-  },
-  fileFilter(req, file, cb) {
-    const WHITELIST = ["image/png", "image/jpeg", "image/jpg"];
+const fileFilter = (req, file, cb) => {
+  const WHITELIST = ["image/png", "image/jpeg", "image/jpg"];
 
-    if (!WHITELIST.includes(file.mimetype)) {
-      return cb(new Error("file type is invalid"));
-    }
+  if (!WHITELIST.includes(file.mimetype)) {
+    return cb(new Error("file type is invalid"));
+  }
 
-    cb(null, true);
-  },
-});
+  cb(null, true);
+};
 
 module.exports.multerCreatePost = (req, res, next) => {
+  const limits = { files: 5 };
+
+  const upload = multer({ storage, limits, fileFilter });
+
   const parse = upload.array("images");
 
   parse(req, res, (error) => {
@@ -33,6 +31,8 @@ module.exports.multerCreatePost = (req, res, next) => {
 };
 
 module.exports.multerSignup = (req, res, next) => {
+  const upload = multer({ storage, fileFilter });
+
   const parse = upload.single("avatar");
 
   parse(req, res, (error) => {

@@ -51,6 +51,14 @@ module.exports.validateSignup = (req, res, next) => {
   next();
 };
 
+module.exports.validateImages = (req, res, next) => {
+  if (req.files.length === 0) {
+    throw new AppError(400, '"images" is required');
+  }
+
+  next();
+};
+
 module.exports.validateAvatar = (req, res, next) => {
   if (!req.file) {
     throw new AppError(400, '"avatar" is required');
