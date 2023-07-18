@@ -1,7 +1,36 @@
+import { useContext } from "react";
+import { useMutation } from "@tanstack/react-query";
 import { useFormik } from "formik";
+import { toast } from "react-toastify";
+import axios from "axios";
 import * as yup from "yup";
 
+import { AuthContext } from "../../store/auth-context";
+import { ModalContext } from "../../store/modal-context";
+
 function CreatePost() {
+  const { user } = useContext(AuthContext);
+  const { closeModal } = useContext(ModalContext);
+
+  const mutation = useMutation(
+    (data) =>
+      axios.post("http://localhost:5000/posts", data, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${user.accessToken}`,
+        },
+      }),
+    {
+      onSuccess: (data, variables, context) => {
+        closeModal();
+      },
+      onError: (error, variables, context) => {
+        const message = error.response.data.message;
+        toast.error(message);
+      },
+    }
+  );
+
   const formik = useFormik({
     initialValues: {
       caption: "",
@@ -19,7 +48,12 @@ function CreatePost() {
       }),
     }),
     onSubmit: (values) => {
-      console.log(values);
+      const formData = new FormData();
+      formData.append("caption", values.caption);
+      values.images.forEach((image) => {
+        formData.append("images", image);
+      });
+      mutation.mutate(formData);
     },
   });
 
@@ -95,8 +129,9 @@ function CreatePost() {
         <button
           className="w-full rounded-lg bg-yellow-300 p-3 font-semibold shadow hover:bg-yellow-400 focus:outline-none"
           type="submit"
+          disabled={mutation.isLoading}
         >
-          Post
+          {mutation.isLoading ? "Loading..." : "Submit"}
         </button>
       </form>
     </div>

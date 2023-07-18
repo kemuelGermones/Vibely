@@ -3,6 +3,7 @@ import { createPortal } from "react-dom";
 
 export const ModalContext = createContext({
   openModal: () => {},
+  closeModal: () => {}
 });
 
 export function ModalContextProvider({ children }) {
@@ -19,7 +20,7 @@ export function ModalContextProvider({ children }) {
   };
 
   return (
-    <ModalContext.Provider value={{ openModal }}>
+    <ModalContext.Provider value={{ openModal, closeModal }}>
       {modal
         ? createPortal(
             <>
