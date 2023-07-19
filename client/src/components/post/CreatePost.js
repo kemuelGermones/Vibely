@@ -7,6 +7,7 @@ import * as yup from "yup";
 
 import { AuthContext } from "../../store/auth-context";
 import { ModalContext } from "../../store/modal-context";
+import validateImages from "../../utils/validateImages";
 
 function CreatePost() {
   const { user } = useContext(AuthContext);
@@ -38,14 +39,7 @@ function CreatePost() {
     },
     validationSchema: yup.object({
       caption: yup.string().required(),
-      images: yup.mixed().test("images", "images is invalid", (values) => {
-        if (values.length === 0 || values.length > 5) return false;
-        const REGEX = /(image\/jpeg|image\/jpg|image\/png)/i;
-        for (let value of values) {
-          if (!REGEX.test(value.type)) return false;
-        }
-        return true;
-      }),
+      images: yup.mixed().test("images", "images is invalid", validateImages),
     }),
     onSubmit: (values) => {
       const formData = new FormData();
