@@ -6,14 +6,14 @@ import * as yup from "yup";
 import { toast } from "react-toastify";
 
 import signup from "../../api/signup";
-import getFirebaseErrorMessage from "../../utils/getFirebaseErrorMessage";
+import firebaseError from "../../utils/firebaseError";
 
 function SignupUser() {
   const mutation = useMutation((data) => signup(data), {
     onError: (error, variables, context) => {
       let message;
       if (error instanceof FirebaseError) {
-        message = getFirebaseErrorMessage(error);
+        message = firebaseError(error);
       } else {
         message = error.response.data.message;
       }

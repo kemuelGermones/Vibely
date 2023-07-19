@@ -6,14 +6,14 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { toast } from "react-toastify";
 
 import { auth } from "../../config/firebase";
-import getFirebaseErrorMessage from "../../utils/getFirebaseErrorMessage";
+import firebaseError from "../../utils/firebaseError";
 
 function SigninUser() {
   const mutation = useMutation(
     (data) => signInWithEmailAndPassword(auth, data.email, data.password),
     {
       onError: (error, variables, context) => {
-        const message = getFirebaseErrorMessage(error);
+        const message = firebaseError(error);
         toast.error(message);
       },
     }
