@@ -1,25 +1,38 @@
 import { Link } from "react-router-dom";
 import { useFormik } from "formik";
 import { useMutation } from "@tanstack/react-query";
-import { FirebaseError } from "@firebase/util";
-import * as yup from "yup";
 import { toast } from "react-toastify";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import axios from "axios";
+import * as yup from "yup";
 
-import signup from "../../api/signup";
 import firebaseError from "../../utils/firebaseError";
+import validateAvatar from "../../utils/validateAvatar";
+import { auth } from "../../config/firebase";
 
 function SignupUser() {
-  const mutation = useMutation((data) => signup(data), {
-    onError: (error, variables, context) => {
-      let message;
-      if (error instanceof FirebaseError) {
-        message = firebaseError(error);
-      } else {
-        message = error.response.data.message;
-      }
-      toast.error(message);
-    },
-  });
+  const signin = useMutation(
+    (data) => signInWithEmailAndPassword(auth, data.email, data.password),
+    {
+      onError: (error, variables, context) => {
+        const message = firebaseError(error);
+        toast.error(message);
+      },
+    }
+  );
+
+  const signup = useMutation(
+    (data) =>
+      axios.post("http://localhost:5000/signup", data, {
+        headers: { "Content-Type": "multipart/form-data" },
+      }),
+    {
+      onError: (error, variables, context) => {
+        const message = error.response.data.message;
+        toast.error(message);
+      },
+    }
+  );
 
   const formik = useFormik({
     initialValues: {
@@ -36,14 +49,16 @@ function SignupUser() {
       username: yup.string().required(),
       email: yup.string().email().required(),
       password: yup.string().min(6).required(),
-      avatar: yup.mixed().test("avatar", "avatar is invalid", (value) => {
-        if (!value) return false;
-        const REGEX = /(image\/jpeg|image\/jpg|image\/png)/i;
-        return REGEX.test(value.type);
-      }),
+      avatar: yup.mixed().test("avatar", "avatar is invalid", validateAvatar),
     }),
     onSubmit: (values) => {
-      mutation.mutate(values);
+      const formData = new FormData();
+      Object.keys(values).forEach((value) => {
+        formData.append(value, values[value]);
+      });
+      signup.mutateAsync(formData).then(() => {
+        signin.mutate(values);
+      });
     },
   });
 
@@ -145,7 +160,7 @@ function SignupUser() {
             Choose profile picture
           </h2>
           <p className="text-center text-gray-500">
-            Upload or drag & drop your file PNG, JPG or JPEG
+            Upload your avatar PNG, JPG or JPEG
           </p>
           <input
             className="absolute -z-10 opacity-0"
@@ -161,9 +176,9 @@ function SignupUser() {
         <button
           className="block w-full rounded-lg bg-yellow-300 p-3 font-semibold shadow shadow hover:bg-yellow-400 focus:outline-none"
           type="submit"
-          disabled={mutation.isLoading}
+          disabled={signin.isLoading || signup.isLoading}
         >
-          {mutation.isLoading ? "Loading..." : "Sign up"}
+          {signin.isLoading || signup.isLoading ? "Loading..." : "Submit"}
         </button>
       </form>
       <p className="text-center">
