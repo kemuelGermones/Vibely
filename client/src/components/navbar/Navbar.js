@@ -14,14 +14,14 @@ import { toast } from "react-toastify";
 import { ModalContext } from "../../store/modal-context";
 import { auth } from "../../config/firebase";
 import Search from "../search/Search";
-import extractErrorMsg from "../../utils/extractErrorMsg";
+import getFirebaseErrorMessage from "../../utils/getFirebaseErrorMessage";
 
 function Navbar() {
   const { openModal } = useContext(ModalContext);
 
   const mutation = useMutation(() => signOut(auth), {
     onError: (error, variables, context) => {
-      const message = extractErrorMsg(error);
+      const message = getFirebaseErrorMessage(error);
       toast.error(message);
     },
   });
