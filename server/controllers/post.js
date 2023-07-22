@@ -35,7 +35,18 @@ const OPTIONS = {
 };
 
 module.exports.getPosts = async (req, res) => {
-  const posts = await Post.findAll(OPTIONS);
+  const page = req.query.page ? Number(req.query.page) : 0;
+
+  const limit = req.query.limit ? Number(req.query.limit) : 10;
+
+  const offset = page * limit;
+
+  const posts = await Post.findAll({
+    order: [["createdAt", "DESC"]],
+    limit,
+    offset,
+    ...OPTIONS,
+  });
 
   res.status(200).json({
     status: 200,

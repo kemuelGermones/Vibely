@@ -3,7 +3,7 @@ import { useContext } from "react";
 import Navbar from "../components/navbar/Navbar";
 import UserList from "../components/user/UserList";
 import User from "../components/user/User";
-import Post from "../components/post/Post";
+import PostList from "../components/post/PostList";
 import Advertisement from "../components/advertisement/Advertisement";
 import { ModalContext } from "../store/modal-context";
 import CreatePost from "../components/post/CreatePost";
@@ -38,10 +38,7 @@ function Posts() {
               />
             </div>
           </div>
-          <Post />
-          <Post />
-          <Post />
-          <Post />
+          <PostList />
         </section>
         <aside className="hidden lg:block">
           <Advertisement />
