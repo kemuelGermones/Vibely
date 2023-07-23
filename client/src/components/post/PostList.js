@@ -39,15 +39,15 @@ function PostList() {
 
   return (
     <InfiniteScroll
+      className="flex flex-col gap-3"
+      style={{ overflow: "visible" }}
       dataLength={posts.length}
       next={() => query.fetchNextPage()}
       hasMore={query.hasNextPage}
     >
-      <div className="flex flex-col gap-3">
-        {posts.map((post) => (
-          <Post data={post} key={post.id} />
-        ))}
-      </div>
+      {posts.map((post) => (
+        <Post data={post} key={post.id} />
+      ))}
     </InfiniteScroll>
   );
 }
