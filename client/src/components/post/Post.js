@@ -72,7 +72,7 @@ function Post({ data }) {
           <BsThreeDotsVertical size="1.5em" onClick={toggleDropdown} />
           {isDropdownVisible ? (
             <div
-              className="absolute -left-[70px] top-8 flex flex-col items-end sm:left-1/2 sm:-translate-x-1/2 sm:items-center"
+              className="absolute -left-[70px] top-8 z-10 flex flex-col items-end sm:left-1/2 sm:-translate-x-1/2 sm:items-center"
               onClick={stopPropagationHandler}
             >
               <div className="h-0 w-0 border-b-[8px] border-l-[8px] border-b-stone-900/90 border-l-transparent border-r-transparent sm:border-b-[6px] sm:border-l-[6px] sm:border-r-[6px]" />

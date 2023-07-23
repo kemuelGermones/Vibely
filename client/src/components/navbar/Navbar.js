@@ -29,7 +29,7 @@ function Navbar() {
   const navigate = useNavigate();
 
   return (
-    <nav className="fixed left-0 top-0 z-10 w-full bg-yellow-300">
+    <nav className="fixed left-0 top-0 z-20 w-full bg-yellow-300">
       <main className="container mx-auto flex items-center gap-3 px-3">
         <div className="text-lg font-bold">Vibely</div>
         <ul className="grid h-12 w-full grid-cols-5 sm:w-80">

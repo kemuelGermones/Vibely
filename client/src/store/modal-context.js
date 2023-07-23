@@ -25,10 +25,10 @@ export function ModalContextProvider({ children }) {
         ? createPortal(
             <>
               <div
-                className="fixed left-0 top-0 z-20 h-screen w-full bg-stone-900/20 backdrop-blur-sm"
+                className="fixed left-0 top-0 z-30 h-screen w-full bg-stone-900/20 backdrop-blur-sm"
                 onClick={closeModal}
               />
-              <main className="container fixed left-1/2 top-1/2 z-30 -translate-x-1/2 -translate-y-1/2 px-3 sm:max-w-screen-sm">
+              <main className="container fixed left-1/2 top-1/2 z-40 -translate-x-1/2 -translate-y-1/2 px-3 sm:max-w-screen-sm">
                 {modal}
               </main>
             </>,
