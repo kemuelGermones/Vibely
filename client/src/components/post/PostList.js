@@ -34,13 +34,22 @@ function PostList() {
   }, [query.data]);
 
   if (query.isLoading) {
-    return <div className="text-center">Loading...</div>;
+    return (
+      <div className="flex justify-center p-3">
+        <div className="h-10 w-10 animate-spin rounded-full border-4 border-solid border-yellow-400 border-t-transparent"></div>
+      </div>
+    );
   }
 
   return (
     <InfiniteScroll
       className="flex flex-col gap-3"
       style={{ overflow: "visible" }}
+      loader={
+        <div className="flex justify-center p-3">
+          <div className="h-10 w-10 animate-spin rounded-full border-4 border-solid border-yellow-400 border-t-transparent"></div>
+        </div>
+      }
       dataLength={posts.length}
       next={() => query.fetchNextPage()}
       hasMore={query.hasNextPage}
