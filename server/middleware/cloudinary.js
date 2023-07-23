@@ -5,13 +5,6 @@ const cloudinary = require("../config/cloudinary");
 
 const parser = new DatauriParser();
 
-const UPLOAD_PRESET = {
-  overwrite: true,
-  invalidate: true,
-  resource_type: "auto",
-  folder: "vibely",
-};
-
 module.exports.uploadImages = (req, res, next) => {
   const dataUris = req.files.map(
     (file) =>
@@ -19,7 +12,13 @@ module.exports.uploadImages = (req, res, next) => {
   );
 
   const uploadImagesCloudinary = dataUris.map(
-    async (image) => await cloudinary.uploader.upload(image, UPLOAD_PRESET)
+    async (image) =>
+      await cloudinary.uploader.upload(image, {
+        resource_type: "image",
+        folder: "Vibely",
+        allowed_formats: "jpg, png, jpeg",
+        transformation: [{ width: 1280, height: 720, crop: "fill" }],
+      })
   );
 
   Promise.all(uploadImagesCloudinary)
@@ -43,7 +42,11 @@ module.exports.uploadAvatar = (req, res, next) => {
   ).content;
 
   cloudinary.uploader
-    .upload(dataUri, UPLOAD_PRESET)
+    .upload(dataUri, {
+      resource_type: "image",
+      folder: "Vibely",
+      allowed_formats: "jpg, png, jpeg",
+    })
     .then((avatar) => {
       req.file = { url: avatar.url, filename: avatar.public_id };
 
