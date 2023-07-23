@@ -123,7 +123,9 @@ function CreatePost() {
           />
         </label>
         <button
-          className="w-full rounded-lg bg-yellow-300 p-3 font-semibold shadow hover:bg-yellow-400 focus:outline-none"
+          className={`w-full rounded-lg bg-yellow-300 p-3 font-semibold shadow ${
+            mutation.isLoading ? "" : "hover:bg-yellow-400"
+          } focus:outline-none"`}
           type="submit"
           disabled={mutation.isLoading}
         >

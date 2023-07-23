@@ -174,7 +174,9 @@ function SignupUser() {
           />
         </label>
         <button
-          className="block w-full rounded-lg bg-yellow-300 p-3 font-semibold shadow shadow hover:bg-yellow-400 focus:outline-none"
+          className={`w-full rounded-lg bg-yellow-300 p-3 font-semibold shadow ${
+            signin.isLoading || signup.isLoading ? "" : "hover:bg-yellow-400"
+          } focus:outline-none"`}
           type="submit"
           disabled={signin.isLoading || signup.isLoading}
         >
