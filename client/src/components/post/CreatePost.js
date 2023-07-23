@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useFormik } from "formik";
 import { toast } from "react-toastify";
 import axios from "axios";
@@ -12,6 +12,7 @@ import validateImages from "../../utils/validateImages";
 function CreatePost() {
   const { user } = useContext(AuthContext);
   const { closeModal } = useContext(ModalContext);
+  const queryClient = useQueryClient();
 
   const mutation = useMutation(
     (data) =>
@@ -23,6 +24,7 @@ function CreatePost() {
       }),
     {
       onSuccess: (data, variables, context) => {
+        queryClient.invalidateQueries({ queryKey: ["posts"] });
         closeModal();
       },
       onError: (error, variables, context) => {
