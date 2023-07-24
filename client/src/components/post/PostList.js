@@ -17,7 +17,7 @@ function PostList() {
       }),
     getNextPageParam: (lastPage, allPages) => {
       const response = lastPage.data;
-      const posts = response.data;
+      const posts = response.items;
       return posts.length ? allPages.length + 1 : undefined;
     },
   });
@@ -28,7 +28,7 @@ function PostList() {
       return result;
     }
     for (let page of query.data.pages) {
-      result = result.concat(page.data.data);
+      result = result.concat(page.data.items);
     }
     return result;
   }, [query.data]);
