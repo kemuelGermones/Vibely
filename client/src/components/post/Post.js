@@ -106,46 +106,49 @@ function Post({ data }) {
         /> */}
       </div>
       <p>{data.caption}</p>
-      <div className="relative overflow-hidden rounded-lg">
-        <div
-          className="flex transition-transform duration-500 ease-out"
-          style={{ transform: `translateX(-${currentSlide * 100}%)` }}
-        >
-          {data.images.map((image) => (
-            <img
-              className="min-w-0 flex-[0_0_100%]"
-              src={image.url}
-              key={image.id}
-            />
-          ))}
-        </div>
-        <button
-          type="button"
-          onClick={previousSlide}
-          className="absolute left-4 top-1/2 -translate-y-1/2 rounded-full bg-white/80 p-1 text-gray-800 shadow hover:bg-white"
-        >
-          <BsChevronLeft />
-        </button>
-        <button
-          type="button"
-          onClick={nextSlide}
-          className="absolute right-4 top-1/2 -translate-y-1/2 rounded-full bg-white/80 p-1 text-gray-800 shadow hover:bg-white"
-        >
-          <BsChevronRight />
-        </button>
-        <div className="absolute bottom-4 left-1/2 flex w-min -translate-x-1/2 items-center gap-2">
-          {data.images.map((image, index) => (
-            <div
-              className={`
+      {data.images.length > 1 ? (
+        <div className="relative overflow-hidden rounded-lg">
+          <div
+            className="flex transition-transform duration-500 ease-out"
+            style={{ transform: `translateX(-${currentSlide * 100}%)` }}
+          >
+            {data.images.map((image) => (
+              <img
+                className="min-w-0 flex-[0_0_100%]"
+                src={image.url}
+                key={image.id}
+              />
+            ))}
+          </div>
+          <button
+            type="button"
+            onClick={previousSlide}
+            className="absolute left-4 top-1/2 -translate-y-1/2 rounded-full bg-white/80 p-1 text-gray-800 shadow hover:bg-white"
+          >
+            <BsChevronLeft />
+          </button>
+          <button
+            type="button"
+            onClick={nextSlide}
+            className="absolute right-4 top-1/2 -translate-y-1/2 rounded-full bg-white/80 p-1 text-gray-800 shadow hover:bg-white"
+          >
+            <BsChevronRight />
+          </button>
+          <div className="absolute bottom-4 left-1/2 flex w-min -translate-x-1/2 items-center gap-2">
+            {data.images.map((image, index) => (
+              <div
+                className={`
               h-3 w-3 rounded-full bg-white transition-all
               ${currentSlide === index ? "p-2" : "bg-opacity-50"}
             `}
-              key={image.id}
-            />
-          ))}
+                key={image.id}
+              />
+            ))}
+          </div>
         </div>
-      </div>
-      {/* <img src={IMAGES[0]} alt="food" className="rounded-lg" /> */}
+      ) : (
+        <img className="rounded-lg" src={data.images[0].url} />
+      )}
       <div className="flex items-center gap-3">
         <BsHeart
           className="shrink-0 cursor-pointer"
