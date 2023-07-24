@@ -10,10 +10,12 @@ import {
 } from "react-icons/bs";
 
 import Comments from "../comment/Comments";
+import { AuthContext } from "../../store/auth-context";
 import { ModalContext } from "../../store/modal-context";
 import UpdatePost from "./UpdatePost";
 
 function Post({ data }) {
+  const { user } = useContext(AuthContext);
   const { openModal } = useContext(ModalContext);
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
@@ -68,42 +70,38 @@ function Post({ data }) {
             <div className="text-sm text-gray-500">{`${data.user.firstname} ${data.user.lastname}`}</div>
           </div>
         </div>
-        <div className="relative">
-          <BsThreeDotsVertical size="1.5em" onClick={toggleDropdown} />
-          {isDropdownVisible ? (
-            <div
-              className="absolute -left-[70px] top-8 z-10 flex flex-col items-end sm:left-1/2 sm:-translate-x-1/2 sm:items-center"
-              onClick={stopPropagationHandler}
-            >
-              <div className="h-0 w-0 border-b-[8px] border-l-[8px] border-b-stone-900/90 border-l-transparent border-r-transparent sm:border-b-[6px] sm:border-l-[6px] sm:border-r-[6px]" />
-              <ul className="rounded-bl rounded-br rounded-tl bg-stone-900/90 p-1 text-sm text-white sm:rounded-tr">
-                <li
-                  className="cursor-pointer rounded px-4 py-2 text-center hover:bg-stone-900"
-                  onClick={() => {
-                    closeDropdown();
-                    openModal(
-                      <UpdatePost id={data.id} caption={data.caption} />
-                    );
-                  }}
-                >
-                  Edit
-                </li>
-                <li
-                  className="cursor-pointer rounded px-4 py-2 text-center hover:bg-stone-900"
-                  onClick={closeDropdown}
-                >
-                  Delete
-                </li>
-              </ul>
-            </div>
-          ) : null}
-        </div>
-        {/* <BsPersonPlus
-          className="shrink-0 cursor-pointer"
-          size="1.5em"
-          data-tooltip-id="my-tooltip"
-          data-tooltip-content="Follow"
-        /> */}
+        {data.user.id === user.uid ? (
+          <div className="relative">
+            <BsThreeDotsVertical size="1.5em" onClick={toggleDropdown} />
+            {isDropdownVisible ? (
+              <div
+                className="absolute -left-[70px] top-8 z-10 flex flex-col items-end sm:left-1/2 sm:-translate-x-1/2 sm:items-center"
+                onClick={stopPropagationHandler}
+              >
+                <div className="h-0 w-0 border-b-[8px] border-l-[8px] border-b-stone-900/90 border-l-transparent border-r-transparent sm:border-b-[6px] sm:border-l-[6px] sm:border-r-[6px]" />
+                <ul className="rounded-bl rounded-br rounded-tl bg-stone-900/90 p-1 text-sm text-white sm:rounded-tr">
+                  <li
+                    className="cursor-pointer rounded px-4 py-2 text-center hover:bg-stone-900"
+                    onClick={() => {
+                      closeDropdown();
+                      openModal(
+                        <UpdatePost id={data.id} caption={data.caption} />
+                      );
+                    }}
+                  >
+                    Edit
+                  </li>
+                  <li
+                    className="cursor-pointer rounded px-4 py-2 text-center hover:bg-stone-900"
+                    onClick={closeDropdown}
+                  >
+                    Delete
+                  </li>
+                </ul>
+              </div>
+            ) : null}
+          </div>
+        ) : null}
       </div>
       <p>{data.caption}</p>
       {data.images.length > 1 ? (
