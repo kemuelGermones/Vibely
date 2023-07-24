@@ -48,7 +48,7 @@ function UpdatePost({ id, caption }) {
     <div className="rounded-lg bg-white p-3 shadow">
       <form className="flex flex-col gap-3" onSubmit={formik.handleSubmit}>
         <textarea
-          className={`w-full resize-none rounded-lg p-3 shadow ${
+          className={`h-24 w-full resize-none rounded-lg p-3 shadow ${
             formik.touched.caption && formik.errors.caption
               ? "border-red-500 bg-[url('../public/warning.svg')] bg-[length:1.3rem] bg-[right_0.5rem_top_0.5rem] bg-no-repeat focus:border-red-500 focus:ring-red-500"
               : "border-yellow-300 focus:border-yellow-300 focus:ring-yellow-300"

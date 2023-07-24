@@ -12,7 +12,7 @@ function Comments() {
         </div>
         <form className="flex w-full flex-col gap-3">
           <textarea
-            className="w-full resize-none rounded-lg border-yellow-300 p-3 shadow focus:border-yellow-300 focus:ring-yellow-300"
+            className="h-24 w-full resize-none rounded-lg border-yellow-300 p-3 shadow focus:border-yellow-300 focus:ring-yellow-300"
             placeholder="Add comment"
           />
           <button className="w-full rounded-lg bg-yellow-300 p-3 font-semibold shadow hover:bg-yellow-400 focus:outline-none">
@@ -42,6 +42,7 @@ function Comments() {
             </div>
           </div>
         </li>
+        
       </ul>
     </div>
   );
