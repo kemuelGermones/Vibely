@@ -22,7 +22,7 @@ module.exports.getComments = async (req, res, next) => {
 
   res.status(200).json({
     status: 200,
-    data: comments,
+    items: comments,
     message: "successfully fetched comments",
   });
 };
@@ -43,7 +43,7 @@ module.exports.createComment = async (req, res, next) => {
 
   res.status(200).json({
     status: 200,
-    data: foundComment,
+    items: foundComment,
     message: "successfully created a comment",
   });
 };
@@ -55,7 +55,7 @@ module.exports.deleteComment = async (req, res, next) => {
 
   res.status(200).json({
     status: 200,
-    data: null,
+    items: null,
     message: "successfully deleted a comment",
   });
 };

@@ -50,7 +50,7 @@ module.exports.getPosts = async (req, res) => {
 
   res.status(200).json({
     status: 200,
-    data: posts,
+    items: posts,
     message: "successfully fetched posts",
   });
 };
@@ -72,7 +72,7 @@ module.exports.createPost = async (req, res) => {
 
   res.status(200).json({
     status: 200,
-    data: foundPost,
+    items: foundPost,
     message: "successfully created a post",
   });
 };
@@ -89,7 +89,7 @@ module.exports.updatePost = async (req, res) => {
 
   res.status(200).json({
     status: 200,
-    data: post,
+    items: post,
     message: "successfully updated a post",
   });
 };
@@ -115,7 +115,7 @@ module.exports.deletePost = async (req, res) => {
 
   res.status(200).json({
     status: 200,
-    data: null,
+    items: null,
     message: "successfully deleted a post",
   });
 };

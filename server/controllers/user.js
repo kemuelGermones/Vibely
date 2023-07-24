@@ -26,7 +26,7 @@ module.exports.signup = async (req, res) => {
 
   res.status(200).json({
     status: 200,
-    data: null,
+    items: null,
     message: "successfully created a user",
   });
 };
