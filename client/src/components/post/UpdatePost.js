@@ -1,77 +1,74 @@
-import { useState } from "react";
-import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
+import { useContext } from "react";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useFormik } from "formik";
+import { toast } from "react-toastify";
+import axios from "axios";
+import * as yup from "yup";
 
-const IMAGES = [
-  "https://images.pexels.com/photos/376464/pexels-photo-376464.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-  "https://images.pexels.com/photos/376464/pexels-photo-376464.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-  "https://images.pexels.com/photos/376464/pexels-photo-376464.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-];
+import { AuthContext } from "../../store/auth-context";
+import { ModalContext } from "../../store/modal-context";
 
-function UpdatePost() {
-  const [currentSlide, setCurrentSlide] = useState(0);
+function UpdatePost({ id, caption }) {
+  const { user } = useContext(AuthContext);
+  const { closeModal } = useContext(ModalContext);
+  const queryClient = useQueryClient();
 
-  const previousSlide = () => {
-    setCurrentSlide((current) =>
-      current === 0 ? IMAGES.length - 1 : current - 1
-    );
-  };
+  const mutation = useMutation(
+    (data) =>
+      axios.patch(`http://localhost:5000/posts/${id}`, data, {
+        headers: {
+          Authorization: `Bearer ${user.accessToken}`,
+        },
+      }),
+    {
+      onSuccess: (data, variables, context) => {
+        queryClient.invalidateQueries({ queryKey: ["posts"] });
+        closeModal();
+      },
+      onError: (error, variables, context) => {
+        const message = error.response.data.message;
+        toast.error(message);
+      },
+    }
+  );
 
-  const nextSlide = () => {
-    setCurrentSlide((current) =>
-      current === IMAGES.length - 1 ? 0 : current + 1
-    );
-  };
+  const formik = useFormik({
+    initialValues: {
+      caption,
+    },
+    validationSchema: yup.object({
+      caption: yup.string().required(),
+    }),
+    onSubmit: (values) => {
+      mutation.mutate(values);
+    },
+  });
 
   return (
     <div className="rounded-lg bg-white p-3 shadow">
-      <form className="flex flex-col gap-3">
+      <form className="flex flex-col gap-3" onSubmit={formik.handleSubmit}>
         <textarea
-          className="w-full resize-none rounded-lg border-yellow-300 p-3 shadow focus:border-yellow-300 focus:ring-yellow-300"
-          placeholder="Description"
+          className={`w-full resize-none rounded-lg p-3 shadow ${
+            formik.touched.caption && formik.errors.caption
+              ? "border-red-500 bg-[url('../public/warning.svg')] bg-[length:1.3rem] bg-[right_0.5rem_top_0.5rem] bg-no-repeat focus:border-red-500 focus:ring-red-500"
+              : "border-yellow-300 focus:border-yellow-300 focus:ring-yellow-300"
+          }`}
+          id="caption"
+          name="caption"
+          type="text"
+          placeholder="Enter caption"
+          value={formik.values.caption}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
         />
-        <div className="relative overflow-hidden rounded-lg">
-          <div
-            className="flex transition-transform duration-500 ease-out"
-            style={{ transform: `translateX(-${currentSlide * 100}%)` }}
-          >
-            {IMAGES.map((image) => (
-              <div className="relative min-w-0 flex-[0_0_100%]">
-                <img src={image} />
-                <input
-                  className="absolute right-4 top-4 rounded-full border-0 bg-white/80 p-3 text-red-500 checked:bg-[url('../public/cross.svg')] hover:bg-white focus:ring-0 focus:ring-offset-0"
-                  type="checkbox"
-                  value={image}
-                />
-              </div>
-            ))}
-          </div>
-          <button
-            type="button"
-            onClick={previousSlide}
-            className="absolute left-4 top-1/2 -translate-y-1/2 rounded-full bg-white/80 p-1 text-gray-800 shadow hover:bg-white"
-          >
-            <BsChevronLeft />
-          </button>
-          <button
-            type="button"
-            onClick={nextSlide}
-            className="absolute right-4 top-1/2 -translate-y-1/2 rounded-full bg-white/80 p-1 text-gray-800 shadow hover:bg-white"
-          >
-            <BsChevronRight />
-          </button>
-          <div className="absolute bottom-4 left-1/2 flex w-min -translate-x-1/2 items-center gap-2">
-            {IMAGES.map((image, index) => (
-              <div
-                className={`
-              h-3 w-3 rounded-full bg-white transition-all
-              ${currentSlide === index ? "p-2" : "bg-opacity-50"}
-            `}
-              />
-            ))}
-          </div>
-        </div>
-        <button className="w-full rounded-lg bg-yellow-300 p-3 font-semibold shadow hover:bg-yellow-400 focus:outline-none">
-          Save
+        <button
+          className={`w-full rounded-lg bg-yellow-300 p-3 font-semibold shadow ${
+            mutation.isLoading ? "" : "hover:bg-yellow-400"
+          } focus:outline-none"`}
+          type="submit"
+          disabled={mutation.isLoading}
+        >
+          {mutation.isLoading ? "Loading..." : "Submit"}
         </button>
       </form>
     </div>

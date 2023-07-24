@@ -81,7 +81,9 @@ function Post({ data }) {
                   className="cursor-pointer rounded px-4 py-2 text-center hover:bg-stone-900"
                   onClick={() => {
                     closeDropdown();
-                    openModal(<UpdatePost />);
+                    openModal(
+                      <UpdatePost id={data.id} caption={data.caption} />
+                    );
                   }}
                 >
                   Edit
