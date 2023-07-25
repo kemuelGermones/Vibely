@@ -1,38 +1,16 @@
-import { useContext, useState, useEffect } from "react";
+import { useContext } from "react";
 import { Link } from "react-router-dom";
-import { BsHeart, BsChat, BsThreeDotsVertical } from "react-icons/bs";
+import { BsHeart, BsChat } from "react-icons/bs";
 
 import Comments from "../comment/Comments";
 import { AuthContext } from "../../store/auth-context";
 import { ModalContext } from "../../store/modal-context";
-import UpdatePostForm from "./UpdatePostForm";
 import PostCarousel from "./PostCarousel";
+import PostDropdown from "./PostDropdown";
 
 function Post({ data }) {
   const { user } = useContext(AuthContext);
   const { openModal } = useContext(ModalContext);
-  const [isDropdownVisible, setIsDropdownVisible] = useState(false);
-
-  useEffect(() => {
-    document.body.addEventListener("click", closeDropdown);
-
-    return () => {
-      document.body.removeEventListener("click", closeDropdown);
-    };
-  }, []);
-
-  const closeDropdown = () => {
-    setIsDropdownVisible(false);
-  };
-
-  const toggleDropdown = (event) => {
-    stopPropagationHandler(event);
-    setIsDropdownVisible((state) => !state);
-  };
-
-  const stopPropagationHandler = (event) => {
-    event.stopPropagation();
-  };
 
   return (
     <div className="flex flex-col gap-3 rounded-lg bg-white p-3 shadow">
@@ -52,36 +30,7 @@ function Post({ data }) {
           </div>
         </div>
         {data.user.id === user.uid ? (
-          <div className="relative">
-            <BsThreeDotsVertical size="1.5em" onClick={toggleDropdown} />
-            {isDropdownVisible ? (
-              <div
-                className="absolute -left-[70px] top-8 z-10 flex flex-col items-end sm:left-1/2 sm:-translate-x-1/2 sm:items-center"
-                onClick={stopPropagationHandler}
-              >
-                <div className="h-0 w-0 border-b-[8px] border-l-[8px] border-b-stone-900/90 border-l-transparent border-r-transparent sm:border-b-[6px] sm:border-l-[6px] sm:border-r-[6px]" />
-                <ul className="rounded-bl rounded-br rounded-tl bg-stone-900/90 p-1 text-sm text-white sm:rounded-tr">
-                  <li
-                    className="cursor-pointer rounded px-4 py-2 text-center hover:bg-stone-900"
-                    onClick={() => {
-                      closeDropdown();
-                      openModal(
-                        <UpdatePostForm id={data.id} caption={data.caption} />
-                      );
-                    }}
-                  >
-                    Edit
-                  </li>
-                  <li
-                    className="cursor-pointer rounded px-4 py-2 text-center hover:bg-stone-900"
-                    onClick={closeDropdown}
-                  >
-                    Delete
-                  </li>
-                </ul>
-              </div>
-            ) : null}
-          </div>
+          <PostDropdown id={data.id} caption={data.caption} />
         ) : null}
       </div>
       <p>{data.caption}</p>
