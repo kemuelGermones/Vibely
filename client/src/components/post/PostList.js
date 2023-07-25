@@ -18,11 +18,10 @@ function PostList() {
 
   const posts = useMemo(() => {
     let result = [];
-    if (!query.data) {
-      return result;
-    }
-    for (let page of query.data.pages) {
-      result = result.concat(page.data.items);
+    if (query.data) {
+      query.data.pages.forEach((page) => {
+        result = result.concat(page.data.items);
+      });
     }
     return result;
   }, [query]);
