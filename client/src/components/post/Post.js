@@ -34,11 +34,7 @@ function Post({ data }) {
         ) : null}
       </div>
       <p>{data.caption}</p>
-      {data.images.length > 1 ? (
-        <PostCarousel images={data.images} />
-      ) : (
-        <img className="rounded-lg" src={data.images[0].url} />
-      )}
+      <PostCarousel images={data.images} />
       <div className="flex items-center gap-3">
         <BsHeart
           className="shrink-0 cursor-pointer"

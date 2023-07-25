@@ -16,7 +16,7 @@ function PostCarousel({ images }) {
     );
   };
 
-  return (
+  return images.length > 1 ? (
     <div className="relative overflow-hidden rounded-lg">
       <div
         className="flex transition-transform duration-500 ease-out"
@@ -56,6 +56,8 @@ function PostCarousel({ images }) {
         ))}
       </div>
     </div>
+  ) : (
+    <img className="rounded-lg" src={images[0].url} />
   );
 }
 
