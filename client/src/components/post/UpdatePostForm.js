@@ -7,7 +7,7 @@ import { ModalContext } from "../../store/modal-context";
 import { editPost } from "../../api/post";
 import handleError from "../../utils/handleError";
 
-function UpdatePost({ id, caption }) {
+function UpdatePostForm({ id, caption }) {
   const { closeModal } = useContext(ModalContext);
   const queryClient = useQueryClient();
 
@@ -64,4 +64,4 @@ function UpdatePost({ id, caption }) {
   );
 }
 
-export default UpdatePost;
+export default UpdatePostForm;

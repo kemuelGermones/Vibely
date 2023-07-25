@@ -12,7 +12,7 @@ import {
 import Comments from "../comment/Comments";
 import { AuthContext } from "../../store/auth-context";
 import { ModalContext } from "../../store/modal-context";
-import UpdatePost from "./UpdatePost";
+import UpdatePost from "./UpdatePostForm";
 
 function Post({ data }) {
   const { user } = useContext(AuthContext);
