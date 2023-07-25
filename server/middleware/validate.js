@@ -6,7 +6,7 @@ module.exports.validateCreatePost = (req, res, next) => {
   const { error } = postSchema.validate(req.body);
 
   if (error) {
-    const message = error.details.map((detail) => detail.message).join(",");
+    const message = error.details[0].message;
     throw new AppError(400, message);
   }
 
@@ -21,7 +21,7 @@ module.exports.validateUpdatePost = (req, res, next) => {
   const { error } = postSchema.validate(req.body);
 
   if (error) {
-    const message = error.details.map((detail) => detail.message).join(",");
+    const message = error.details[0].message;
     throw new AppError(400, message);
   }
 
@@ -32,7 +32,7 @@ module.exports.validateComment = (req, res, next) => {
   const { error } = commentSchema.validate(req.body);
 
   if (error) {
-    const message = error.details.map((detail) => detail.message).join(",");
+    const message = error.details[0].message;
     throw new AppError(400, message);
   }
 
@@ -43,8 +43,7 @@ module.exports.validateSignup = (req, res, next) => {
   const { error } = signupSchema.validate(req.body);
 
   if (error) {
-    console.log(error.details);
-    const message = error.details.map((detail) => detail.message).join(",");
+    const message = error.details[0].message;
     throw new AppError(400, message);
   }
 
