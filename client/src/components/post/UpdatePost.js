@@ -1,36 +1,25 @@
 import { useContext } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useFormik } from "formik";
-import { toast } from "react-toastify";
-import axios from "axios";
 import * as yup from "yup";
 
-import { AuthContext } from "../../store/auth-context";
 import { ModalContext } from "../../store/modal-context";
+import { editPost } from "../../api/post";
+import handleError from "../../utils/handleError";
 
 function UpdatePost({ id, caption }) {
-  const { user } = useContext(AuthContext);
   const { closeModal } = useContext(ModalContext);
   const queryClient = useQueryClient();
 
-  const mutation = useMutation(
-    (data) =>
-      axios.patch(`http://localhost:5000/posts/${id}`, data, {
-        headers: {
-          Authorization: `Bearer ${user.accessToken}`,
-        },
-      }),
-    {
-      onSuccess: (data, variables, context) => {
-        queryClient.invalidateQueries({ queryKey: ["posts"] });
-        closeModal();
-      },
-      onError: (error, variables, context) => {
-        const message = error.response.data.message;
-        toast.error(message);
-      },
-    }
-  );
+  const mutation = useMutation(editPost, {
+    onSuccess: (data, variables, context) => {
+      queryClient.invalidateQueries({ queryKey: ["posts"] });
+      closeModal();
+    },
+    onError: (error, variables, context) => {
+      handleError(error);
+    },
+  });
 
   const formik = useFormik({
     initialValues: {
@@ -39,8 +28,8 @@ function UpdatePost({ id, caption }) {
     validationSchema: yup.object({
       caption: yup.string().required(),
     }),
-    onSubmit: (values) => {
-      mutation.mutate(values);
+    onSubmit: (data) => {
+      mutation.mutate({ id, data });
     },
   });
 

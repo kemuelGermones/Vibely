@@ -1,20 +1,14 @@
-import { useContext, useMemo } from "react";
+import { useMemo } from "react";
 import { useInfiniteQuery } from "@tanstack/react-query";
-import axios from "axios";
 import InfiniteScroll from "react-infinite-scroll-component";
 
 import Post from "./Post";
-import { AuthContext } from "../../store/auth-context";
+import { getPosts } from "../../api/post";
 
 function PostList() {
-  const { user } = useContext(AuthContext);
-
   const query = useInfiniteQuery({
     queryKey: ["posts"],
-    queryFn: ({ pageParam = 0 }) =>
-      axios(`http://localhost:5000/posts?page=${pageParam}`, {
-        headers: { Authorization: `Bearer ${user.accessToken}` },
-      }),
+    queryFn: getPosts,
     getNextPageParam: (lastPage, allPages) => {
       const response = lastPage.data;
       const posts = response.items;
@@ -31,7 +25,7 @@ function PostList() {
       result = result.concat(page.data.items);
     }
     return result;
-  }, [query.data]);
+  }, [query]);
 
   if (query.isLoading) {
     return (
