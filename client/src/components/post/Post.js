@@ -1,23 +1,16 @@
 import { useContext, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import {
-  BsPersonPlus,
-  BsHeart,
-  BsChat,
-  BsChevronLeft,
-  BsChevronRight,
-  BsThreeDotsVertical,
-} from "react-icons/bs";
+import { BsHeart, BsChat, BsThreeDotsVertical } from "react-icons/bs";
 
 import Comments from "../comment/Comments";
 import { AuthContext } from "../../store/auth-context";
 import { ModalContext } from "../../store/modal-context";
-import UpdatePost from "./UpdatePostForm";
+import UpdatePostForm from "./UpdatePostForm";
+import PostCarousel from "./PostCarousel";
 
 function Post({ data }) {
   const { user } = useContext(AuthContext);
   const { openModal } = useContext(ModalContext);
-  const [currentSlide, setCurrentSlide] = useState(0);
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
 
   useEffect(() => {
@@ -39,18 +32,6 @@ function Post({ data }) {
 
   const stopPropagationHandler = (event) => {
     event.stopPropagation();
-  };
-
-  const previousSlide = () => {
-    setCurrentSlide((current) =>
-      current === 0 ? data.images.length - 1 : current - 1
-    );
-  };
-
-  const nextSlide = () => {
-    setCurrentSlide((current) =>
-      current === data.images.length - 1 ? 0 : current + 1
-    );
   };
 
   return (
@@ -85,7 +66,7 @@ function Post({ data }) {
                     onClick={() => {
                       closeDropdown();
                       openModal(
-                        <UpdatePost id={data.id} caption={data.caption} />
+                        <UpdatePostForm id={data.id} caption={data.caption} />
                       );
                     }}
                   >
@@ -105,45 +86,7 @@ function Post({ data }) {
       </div>
       <p>{data.caption}</p>
       {data.images.length > 1 ? (
-        <div className="relative overflow-hidden rounded-lg">
-          <div
-            className="flex transition-transform duration-500 ease-out"
-            style={{ transform: `translateX(-${currentSlide * 100}%)` }}
-          >
-            {data.images.map((image) => (
-              <img
-                className="min-w-0 flex-[0_0_100%]"
-                src={image.url}
-                key={image.id}
-              />
-            ))}
-          </div>
-          <button
-            type="button"
-            onClick={previousSlide}
-            className="absolute left-4 top-1/2 -translate-y-1/2 rounded-full bg-white/80 p-1 text-gray-800 shadow hover:bg-white"
-          >
-            <BsChevronLeft />
-          </button>
-          <button
-            type="button"
-            onClick={nextSlide}
-            className="absolute right-4 top-1/2 -translate-y-1/2 rounded-full bg-white/80 p-1 text-gray-800 shadow hover:bg-white"
-          >
-            <BsChevronRight />
-          </button>
-          <div className="absolute bottom-4 left-1/2 flex w-min -translate-x-1/2 items-center gap-2">
-            {data.images.map((image, index) => (
-              <div
-                className={`
-              h-3 w-3 rounded-full bg-white transition-all
-              ${currentSlide === index ? "p-2" : "bg-opacity-50"}
-            `}
-                key={image.id}
-              />
-            ))}
-          </div>
-        </div>
+        <PostCarousel images={data.images} />
       ) : (
         <img className="rounded-lg" src={data.images[0].url} />
       )}
