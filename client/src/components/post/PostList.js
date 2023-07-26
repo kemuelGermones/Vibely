@@ -34,6 +34,22 @@ function PostList() {
     );
   }
 
+  if (query.isError) {
+    return (
+      <div className="flex flex-col gap-3 rounded-lg bg-white p-3 shadow">
+        <div className="flex flex-col gap-3 rounded-lg p-6">
+          <img className="mx-auto h-14 w-14" src="./warning.svg" />
+          <h1 className="text-center text-xl text-gray-700">
+            Failed to fetch posts
+          </h1>
+          <p className="text-center text-gray-500">
+            There was an error fetching the data
+          </p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <InfiniteScroll
       className="flex flex-col gap-3"
