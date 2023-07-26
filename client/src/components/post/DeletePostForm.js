@@ -31,7 +31,10 @@ function DeletePostForm({ id }) {
         </div>
         <div className="grid grid-cols-2 gap-3">
           <button
-            className="w-full rounded-lg bg-gray-500 p-2 font-semibold text-white shadow hover:bg-gray-600 focus:outline-none"
+            className={`w-full rounded-lg bg-gray-500 p-2 font-semibold text-white shadow ${
+              mutation.isLoading ? "" : "hover:bg-gray-600"
+            } focus:outline-none"`}
+            disabled={mutation.isLoading}
             onClick={() => {
               closeModal();
             }}
