@@ -3,22 +3,23 @@ import { BsThreeDotsVertical } from "react-icons/bs";
 
 import { ModalContext } from "../../store/modal-context";
 import UpdatePostForm from "./UpdatePostForm";
+import DeletePostForm from "./DeletePostForm";
 
 function PostDropdown({ id, caption }) {
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
   const { openModal } = useContext(ModalContext);
 
   useEffect(() => {
-    document.body.addEventListener("click", closeDropdown);
+    document.body.addEventListener("click", () => {
+      setIsDropdownVisible(false);
+    });
 
     return () => {
-      document.body.removeEventListener("click", closeDropdown);
+      document.body.removeEventListener("click", () => {
+        setIsDropdownVisible(false);
+      });
     };
   }, []);
-
-  const closeDropdown = () => {
-    setIsDropdownVisible(false);
-  };
 
   const toggleDropdown = (event) => {
     stopPropagationHandler(event);
@@ -42,7 +43,6 @@ function PostDropdown({ id, caption }) {
             <li
               className="cursor-pointer rounded px-4 py-2 text-center hover:bg-stone-900"
               onClick={() => {
-                closeDropdown();
                 openModal(<UpdatePostForm id={id} caption={caption} />);
               }}
             >
@@ -50,7 +50,9 @@ function PostDropdown({ id, caption }) {
             </li>
             <li
               className="cursor-pointer rounded px-4 py-2 text-center hover:bg-stone-900"
-              onClick={closeDropdown}
+              onClick={() => {
+                openModal(<DeletePostForm id={id} />);
+              }}
             >
               Delete
             </li>
