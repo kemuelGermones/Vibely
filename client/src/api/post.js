@@ -60,3 +60,16 @@ export const editPost = async ({ id, data }) => {
 
   return response;
 };
+
+export const removePost = async (id) => {
+  const user = auth.currentUser;
+  const token = await getIdToken(user);
+
+  const response = await axios.delete(`http://localhost:5000/posts/${id}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  return response;
+};
