@@ -50,15 +50,29 @@ function UpdatePostForm({ id, caption }) {
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
         />
-        <button
-          className={`w-full rounded-lg bg-yellow-300 p-3 font-semibold shadow ${
-            mutation.isLoading ? "" : "hover:bg-yellow-400"
-          } focus:outline-none"`}
-          type="submit"
-          disabled={mutation.isLoading}
-        >
-          {mutation.isLoading ? "Loading..." : "Submit"}
-        </button>
+        <div className="grid grid-cols-2 gap-3">
+          <button
+            className={`w-full rounded-lg bg-gray-500 p-2 font-semibold text-white shadow ${
+              mutation.isLoading ? "" : "hover:bg-gray-600"
+            } focus:outline-none"`}
+            type="button"
+            disabled={mutation.isLoading}
+            onClick={() => {
+              closeModal();
+            }}
+          >
+            Cancel
+          </button>
+          <button
+            className={`w-full rounded-lg bg-blue-500 p-2 font-semibold text-white shadow ${
+              mutation.isLoading ? "" : "hover:bg-blue-600"
+            } focus:outline-none"`}
+            type="submit"
+            disabled={mutation.isLoading}
+          >
+            {mutation.isLoading ? "Loading..." : "Submit"}
+          </button>
+        </div>
       </form>
     </div>
   );
