@@ -44,7 +44,7 @@ export const getPosts = async ({ pageParam = 0 }) => {
   return response;
 };
 
-export const editPost = async ({ id, data }) => {
+export const updatePost = async ({ id, data }) => {
   const user = auth.currentUser;
   const token = await getIdToken(user);
 
@@ -61,7 +61,7 @@ export const editPost = async ({ id, data }) => {
   return response;
 };
 
-export const removePost = async (id) => {
+export const deletePost = async (id) => {
   const user = auth.currentUser;
   const token = await getIdToken(user);
 

@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-import { removePost } from "../../api/post";
+import { deletePost } from "../../api/post";
 import { ModalContext } from "../../store/modal-context";
 import handleError from "../../utils/handleError";
 
@@ -9,7 +9,7 @@ function DeletePostForm({ id }) {
   const { closeModal } = useContext(ModalContext);
   const queryClient = useQueryClient();
 
-  const mutation = useMutation(removePost, {
+  const mutation = useMutation(deletePost, {
     onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({ queryKey: ["posts"] });
       closeModal();

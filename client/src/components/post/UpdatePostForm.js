@@ -4,14 +4,14 @@ import { useFormik } from "formik";
 import * as yup from "yup";
 
 import { ModalContext } from "../../store/modal-context";
-import { editPost } from "../../api/post";
+import { updatePost } from "../../api/post";
 import handleError from "../../utils/handleError";
 
 function UpdatePostForm({ id, caption }) {
   const { closeModal } = useContext(ModalContext);
   const queryClient = useQueryClient();
 
-  const mutation = useMutation(editPost, {
+  const mutation = useMutation(updatePost, {
     onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({ queryKey: ["posts"] });
       closeModal();
