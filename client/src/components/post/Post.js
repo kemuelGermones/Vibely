@@ -26,7 +26,9 @@ function Post({ data }) {
             <Link className="font-semibold" to="/users">
               {data.user.username}
             </Link>
-            <div className="text-sm text-gray-500">{`${data.user.firstname} ${data.user.lastname}`}</div>
+            <div className="text-sm text-gray-500">
+              {`${data.user.firstname} ${data.user.lastname}`}
+            </div>
           </div>
         </div>
         {data.user.id === user.uid ? (

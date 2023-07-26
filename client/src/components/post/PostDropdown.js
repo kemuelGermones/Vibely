@@ -39,24 +39,24 @@ function PostDropdown({ id, caption }) {
           onClick={stopPropagationHandler}
         >
           <div className="h-0 w-0 border-b-[8px] border-l-[8px] border-b-stone-900/90 border-l-transparent border-r-transparent sm:border-b-[6px] sm:border-l-[6px] sm:border-r-[6px]" />
-          <ul className="rounded-bl rounded-br rounded-tl bg-stone-900/90 p-1 text-sm text-white sm:rounded-tr">
-            <li
+          <div className="rounded-bl rounded-br rounded-tl bg-stone-900/90 p-1 text-sm text-white sm:rounded-tr">
+            <div
               className="cursor-pointer rounded px-4 py-2 text-center hover:bg-stone-900"
               onClick={() => {
                 openModal(<UpdatePostForm id={id} caption={caption} />);
               }}
             >
               Edit
-            </li>
-            <li
+            </div>
+            <div
               className="cursor-pointer rounded px-4 py-2 text-center hover:bg-stone-900"
               onClick={() => {
                 openModal(<DeletePostForm id={id} />);
               }}
             >
               Delete
-            </li>
-          </ul>
+            </div>
+          </div>
         </div>
       ) : null}
     </div>
