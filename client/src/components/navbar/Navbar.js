@@ -28,6 +28,22 @@ function Navbar() {
     mutate();
   };
 
+  const showSearch = () => {
+    openModal(<Search />);
+  };
+
+  const navigateToPosts = () => {
+    navigate("/posts");
+  };
+
+  const navigateToMessages = () => {
+    navigate("/messages");
+  };
+
+  const navigateToProfile = () => {
+    navigate("/profile");
+  };
+
   return (
     <nav className="fixed left-0 top-0 z-20 w-full bg-yellow-300">
       <main className="container mx-auto flex items-center gap-3 px-3">
@@ -37,9 +53,7 @@ function Navbar() {
             className="flex cursor-pointer items-center justify-center hover:bg-yellow-400"
             data-tooltip-id="my-tooltip"
             data-tooltip-content="Posts"
-            onClick={() => {
-              navigate("/posts");
-            }}
+            onClick={navigateToPosts}
           >
             <BsLayoutTextWindowReverse className="shrink-0" size="1.5em" />
           </li>
@@ -47,9 +61,7 @@ function Navbar() {
             className="flex cursor-pointer items-center justify-center hover:bg-yellow-400"
             data-tooltip-id="my-tooltip"
             data-tooltip-content="Search"
-            onClick={() => {
-              openModal(<Search />);
-            }}
+            onClick={showSearch}
           >
             <BsSearch className="shrink-0" size="1.5em" />
           </li>
@@ -57,9 +69,7 @@ function Navbar() {
             className="flex cursor-pointer items-center justify-center hover:bg-yellow-400"
             data-tooltip-id="my-tooltip"
             data-tooltip-content="Messages"
-            onClick={() => {
-              navigate("/messages");
-            }}
+            onClick={navigateToMessages}
           >
             <BsChatSquareText className="shrink-0" size="1.5em" />
           </li>
@@ -67,9 +77,7 @@ function Navbar() {
             className="flex cursor-pointer items-center justify-center hover:bg-yellow-400"
             data-tooltip-id="my-tooltip"
             data-tooltip-content="Profile"
-            onClick={() => {
-              navigate("/users");
-            }}
+            onClick={navigateToProfile}
           >
             <BsPerson className="shrink-0" size="1.5em" />
           </li>
