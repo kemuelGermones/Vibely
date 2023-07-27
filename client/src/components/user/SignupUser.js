@@ -1,47 +1,35 @@
 import { Link } from "react-router-dom";
 import { useFormik } from "formik";
 import { useMutation } from "@tanstack/react-query";
-import { toast } from "react-toastify";
-import { signInWithEmailAndPassword } from "firebase/auth";
-import axios from "axios";
 import * as yup from "yup";
 
-import firebaseError from "../../utils/firebaseError";
+import { signup } from "../../api/user";
 import validateAvatar from "../../utils/validateAvatar";
-import { auth } from "../../config/firebase";
+import handleError from "../../utils/handleError";
 
 function SignupUser() {
-  const signin = useMutation(
-    (data) => signInWithEmailAndPassword(auth, data.email, data.password),
-    {
-      onError: (error, variables, context) => {
-        const message = firebaseError(error);
-        toast.error(message);
-      },
-    }
-  );
+  const { mutate, isLoading } = useMutation(signup, {
+    onError: (error, variables, context) => {
+      handleError(error);
+    },
+  });
 
-  const signup = useMutation(
-    (data) =>
-      axios.post("http://localhost:5000/signup", data, {
-        headers: { "Content-Type": "multipart/form-data" },
-      }),
-    {
-      onError: (error, variables, context) => {
-        const message = error.response.data.message;
-        toast.error(message);
-      },
-    }
-  );
-
-  const formik = useFormik({
+  const {
+    touched,
+    errors,
+    values,
+    handleChange,
+    handleBlur,
+    handleSubmit,
+    setFieldValue,
+  } = useFormik({
     initialValues: {
       firstname: "",
       lastname: "",
       username: "",
       email: "",
       password: "",
-      avatar: "",
+      avatar: null,
     },
     validationSchema: yup.object({
       firstname: yup.string().required(),
@@ -52,24 +40,22 @@ function SignupUser() {
       avatar: yup.mixed().test("avatar", "avatar is invalid", validateAvatar),
     }),
     onSubmit: (values) => {
-      const formData = new FormData();
-      Object.keys(values).forEach((value) => {
-        formData.append(value, values[value]);
-      });
-      signup.mutateAsync(formData).then(() => {
-        signin.mutate(values);
-      });
+      mutate(values);
     },
   });
+
+  const handleChangeAvatar = (event) => {
+    setFieldValue("avatar", event.currentTarget.files[0]);
+  };
 
   return (
     <div className="flex flex-col gap-3 rounded-lg bg-white p-3 shadow">
       <h1 className="text-center text-lg font-semibold">Create your account</h1>
-      <form className="flex flex-col gap-3" onSubmit={formik.handleSubmit}>
+      <form className="flex flex-col gap-3" onSubmit={handleSubmit}>
         <div className="flex flex-col gap-3 sm:flex-row">
           <input
             className={`w-full rounded-lg p-3 shadow ${
-              formik.touched.firstname && formik.errors.firstname
+              touched.firstname && errors.firstname
                 ? "border-red-500 bg-[url('../public/warning.svg')] bg-[length:1.3rem] bg-[right_0.5rem_center] bg-no-repeat focus:border-red-500 focus:ring-red-500"
                 : "border-yellow-300 focus:border-yellow-300 focus:ring-yellow-300"
             }`}
@@ -77,13 +63,13 @@ function SignupUser() {
             name="firstname"
             type="text"
             placeholder="Enter first name"
-            value={formik.values.firstname}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
+            value={values.firstname}
+            onChange={handleChange}
+            onBlur={handleBlur}
           />
           <input
             className={`w-full rounded-lg p-3 shadow ${
-              formik.touched.lastname && formik.errors.lastname
+              touched.lastname && errors.lastname
                 ? "border-red-500 bg-[url('../public/warning.svg')] bg-[length:1.3rem] bg-[right_0.5rem_center] bg-no-repeat focus:border-red-500 focus:ring-red-500"
                 : "border-yellow-300 focus:border-yellow-300 focus:ring-yellow-300"
             }`}
@@ -91,14 +77,14 @@ function SignupUser() {
             name="lastname"
             type="text"
             placeholder="Enter last name"
-            value={formik.values.lastname}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
+            value={values.lastname}
+            onChange={handleChange}
+            onBlur={handleBlur}
           />
         </div>
         <input
           className={`w-full rounded-lg p-3 shadow ${
-            formik.touched.username && formik.errors.username
+            touched.username && errors.username
               ? "border-red-500 bg-[url('../public/warning.svg')] bg-[length:1.3rem] bg-[right_0.5rem_center] bg-no-repeat focus:border-red-500 focus:ring-red-500"
               : "border-yellow-300 focus:border-yellow-300 focus:ring-yellow-300"
           }`}
@@ -106,13 +92,13 @@ function SignupUser() {
           name="username"
           type="text"
           placeholder="Enter username"
-          value={formik.values.username}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
+          value={values.username}
+          onChange={handleChange}
+          onBlur={handleBlur}
         />
         <input
           className={`w-full rounded-lg p-3 shadow ${
-            formik.touched.email && formik.errors.email
+            touched.email && errors.email
               ? "border-red-500 bg-[url('../public/warning.svg')] bg-[length:1.3rem] bg-[right_0.5rem_center] bg-no-repeat focus:border-red-500 focus:ring-red-500"
               : "border-yellow-300 focus:border-yellow-300 focus:ring-yellow-300"
           }`}
@@ -120,13 +106,13 @@ function SignupUser() {
           name="email"
           type="email"
           placeholder="Enter email"
-          value={formik.values.email}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
+          value={values.email}
+          onChange={handleChange}
+          onBlur={handleBlur}
         />
         <input
           className={`w-full rounded-lg p-3 shadow ${
-            formik.touched.password && formik.errors.password
+            touched.password && errors.password
               ? "border-red-500 bg-[url('../public/warning.svg')] bg-[length:1.3rem] bg-[right_0.5rem_center] bg-no-repeat focus:border-red-500 focus:ring-red-500"
               : "border-yellow-300 focus:border-yellow-300 focus:ring-yellow-300"
           }`}
@@ -134,13 +120,13 @@ function SignupUser() {
           name="password"
           type="password"
           placeholder="Enter password (at least 6 characters)"
-          value={formik.values.password}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
+          value={values.password}
+          onChange={handleChange}
+          onBlur={handleBlur}
         />
         <label
           className={`relative block flex w-full cursor-pointer flex-col gap-3 rounded-lg border p-6 shadow ${
-            formik.touched.avatar && formik.errors.avatar
+            touched.avatar && errors.avatar
               ? "border-red-500 bg-[url('../public/warning.svg')] bg-[length:1.3rem] bg-[right_0.5rem_top_0.5rem] bg-no-repeat"
               : "border-yellow-300"
           }`}
@@ -150,8 +136,8 @@ function SignupUser() {
             <img
               className="h-full w-full rounded-full bg-yellow-100 object-cover"
               src={
-                formik.values.avatar && !formik.errors.avatar
-                  ? URL.createObjectURL(formik.values.avatar)
+                values.avatar && !errors.avatar
+                  ? URL.createObjectURL(values.avatar)
                   : "./person.svg"
               }
             />
@@ -167,20 +153,18 @@ function SignupUser() {
             id="avatar"
             name="avatar"
             type="file"
-            onChange={(event) => {
-              formik.setFieldValue("avatar", event.currentTarget.files[0]);
-            }}
-            onBlur={formik.handleBlur}
+            onChange={handleChangeAvatar}
+            onBlur={handleBlur}
           />
         </label>
         <button
-          className={`w-full rounded-lg bg-yellow-300 p-3 font-semibold shadow ${
-            signin.isLoading || signup.isLoading ? "" : "hover:bg-yellow-400"
+          className={`w-full rounded-lg bg-yellow-300 p-2 font-semibold shadow ${
+            isLoading ? "" : "hover:bg-yellow-400"
           } focus:outline-none"`}
           type="submit"
-          disabled={signin.isLoading || signup.isLoading}
+          disabled={isLoading}
         >
-          {signin.isLoading || signup.isLoading ? "Loading..." : "Submit"}
+          {isLoading ? "Loading..." : "Submit"}
         </button>
       </form>
       <p className="text-center">
