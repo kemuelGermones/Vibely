@@ -8,25 +8,25 @@ import {
   BsBoxArrowRight,
   BsLayoutTextWindowReverse,
 } from "react-icons/bs";
-import { signOut } from "firebase/auth";
-import { toast } from "react-toastify";
 
 import { ModalContext } from "../../store/modal-context";
-import { auth } from "../../config/firebase";
+import { signout } from "../../api/user";
 import Search from "../search/Search";
-import firebaseError from "../../utils/firebaseError";
+import handleError from "../../utils/handleError";
 
 function Navbar() {
   const { openModal } = useContext(ModalContext);
+  const navigate = useNavigate();
 
-  const mutation = useMutation(() => signOut(auth), {
+  const { mutate } = useMutation(signout, {
     onError: (error, variables, context) => {
-      const message = firebaseError(error);
-      toast.error(message);
+      handleError(error);
     },
   });
 
-  const navigate = useNavigate();
+  const handleSignout = () => {
+    mutate();
+  };
 
   return (
     <nav className="fixed left-0 top-0 z-20 w-full bg-yellow-300">
@@ -77,9 +77,7 @@ function Navbar() {
             className="flex cursor-pointer items-center justify-center hover:bg-yellow-400"
             data-tooltip-id="my-tooltip"
             data-tooltip-content="Sign out"
-            onClick={() => {
-              mutation.mutate();
-            }}
+            onClick={handleSignout}
           >
             <BsBoxArrowRight className="shrink-0" size="1.5em" />
           </li>
