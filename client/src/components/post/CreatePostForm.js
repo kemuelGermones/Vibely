@@ -12,7 +12,7 @@ function CreatePostForm() {
   const { closeModal } = useContext(ModalContext);
   const queryClient = useQueryClient();
 
-  const mutation = useMutation(addPost, {
+  const { mutate, isLoading } = useMutation(addPost, {
     onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({ queryKey: ["posts"] });
       closeModal();
@@ -22,7 +22,15 @@ function CreatePostForm() {
     },
   });
 
-  const formik = useFormik({
+  const {
+    touched,
+    errors,
+    values,
+    handleSubmit,
+    handleChange,
+    handleBlur,
+    setFieldValue,
+  } = useFormik({
     initialValues: {
       caption: "",
       images: [],
@@ -32,16 +40,20 @@ function CreatePostForm() {
       images: yup.mixed().test("images", "images is invalid", validateImages),
     }),
     onSubmit: (data) => {
-      mutation.mutate(data);
+      mutate(data);
     },
   });
 
+  const handleChangeImages = (event) => {
+    setFieldValue("images", [...event.currentTarget.files]);
+  };
+
   return (
     <div className="rounded-lg bg-white p-3 shadow">
-      <form className="flex flex-col gap-3" onSubmit={formik.handleSubmit}>
+      <form className="flex flex-col gap-3" onSubmit={handleSubmit}>
         <textarea
           className={`w-full resize-none rounded-lg p-3 shadow ${
-            formik.touched.caption && formik.errors.caption
+            touched.caption && errors.caption
               ? "border-red-500 bg-[url('../public/warning.svg')] bg-[length:1.3rem] bg-[right_0.5rem_top_0.5rem] bg-no-repeat focus:border-red-500 focus:ring-red-500"
               : "border-yellow-300 focus:border-yellow-300 focus:ring-yellow-300"
           }`}
@@ -49,13 +61,13 @@ function CreatePostForm() {
           name="caption"
           type="text"
           placeholder="Enter caption"
-          value={formik.values.caption}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
+          value={values.caption}
+          onChange={handleChange}
+          onBlur={handleBlur}
         />
         <label
           className={`relative block flex w-full cursor-pointer flex-col gap-3 rounded-lg border p-6 shadow ${
-            formik.touched.images && formik.errors.images
+            touched.images && errors.images
               ? "border-red-500 bg-[url('../public/warning.svg')] bg-[length:1.3rem] bg-[right_0.5rem_top_0.5rem] bg-no-repeat"
               : "border-yellow-300"
           }`}
@@ -63,8 +75,8 @@ function CreatePostForm() {
         >
           <img className="mx-auto h-14 w-14" src="./upload.svg" />
           <h1 className="text-center text-xl text-gray-700">
-            {formik.values.images.length && !formik.errors.images
-              ? `${formik.values.images.length} images chosen`
+            {values.images.length && !errors.images
+              ? `${values.images.length} images chosen`
               : "Choose images"}
           </h1>
           <p className="text-center text-gray-500">
@@ -78,33 +90,29 @@ function CreatePostForm() {
             name="images"
             type="file"
             multiple={true}
-            onChange={(event) => {
-              formik.setFieldValue("images", [...event.currentTarget.files]);
-            }}
-            onBlur={formik.handleBlur}
+            onChange={handleChangeImages}
+            onBlur={handleBlur}
           />
         </label>
         <div className="grid grid-cols-2 gap-3">
           <button
             className={`w-full rounded-lg bg-gray-500 p-2 font-semibold text-white shadow ${
-              mutation.isLoading ? "" : "hover:bg-gray-600"
+              isLoading ? "" : "hover:bg-gray-600"
             } focus:outline-none"`}
             type="button"
-            disabled={mutation.isLoading}
-            onClick={() => {
-              closeModal();
-            }}
+            disabled={isLoading}
+            onClick={closeModal}
           >
             Cancel
           </button>
           <button
             className={`w-full rounded-lg bg-blue-500 p-2 font-semibold text-white shadow ${
-              mutation.isLoading ? "" : "hover:bg-blue-600"
+              isLoading ? "" : "hover:bg-blue-600"
             } focus:outline-none"`}
             type="submit"
-            disabled={mutation.isLoading}
+            disabled={isLoading}
           >
-            {mutation.isLoading ? "Loading..." : "Submit"}
+            {isLoading ? "Loading..." : "Submit"}
           </button>
         </div>
       </form>
