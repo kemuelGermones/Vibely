@@ -29,7 +29,7 @@ function DeletePostForm({ id }) {
         <img className="mx-auto h-14 w-14" src="./cross-circle.svg" />
         <h1 className="text-center text-xl text-gray-700">Are you sure?</h1>
         <p className="text-center text-gray-500">
-          You won't be able to revert this
+          You won't be able to revert this.
         </p>
       </div>
       <div className="grid grid-cols-2 gap-3">

@@ -1,5 +1,5 @@
-import axios from "axios";
 import { signInWithEmailAndPassword } from "firebase/auth";
+import axios from "axios";
 
 import { auth } from "../config/firebase";
 

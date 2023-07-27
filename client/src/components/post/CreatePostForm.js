@@ -4,7 +4,7 @@ import { useFormik } from "formik";
 import * as yup from "yup";
 
 import { ModalContext } from "../../store/modal-context";
-import { addPost } from "../../api/post";
+import { createPost } from "../../api/post";
 import validateImages from "../../utils/validateImages";
 import handleError from "../../utils/handleError";
 
@@ -12,7 +12,7 @@ function CreatePostForm() {
   const { closeModal } = useContext(ModalContext);
   const queryClient = useQueryClient();
 
-  const { mutate, isLoading } = useMutation(addPost, {
+  const { mutate, isLoading } = useMutation(createPost, {
     onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({ queryKey: ["posts"] });
       closeModal();
@@ -82,7 +82,7 @@ function CreatePostForm() {
           <p className="text-center text-gray-500">
             Upload less than or equals to 5 images
             <br />
-            (PNG, JPG or JPEG).
+            PNG, JPG or JPEG.
           </p>
           <input
             className="absolute -z-10 opacity-0"

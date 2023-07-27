@@ -146,7 +146,7 @@ function SignupUser() {
             Choose profile picture
           </h2>
           <p className="text-center text-gray-500">
-            Upload your avatar PNG, JPG or JPEG
+            Upload your avatar PNG, JPG or JPEG.
           </p>
           <input
             className="absolute -z-10 opacity-0"

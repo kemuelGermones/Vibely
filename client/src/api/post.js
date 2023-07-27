@@ -1,9 +1,9 @@
-import axios from "axios";
 import { getIdToken } from "firebase/auth";
+import axios from "axios";
 
 import { auth } from "../config/firebase";
 
-export const addPost = async (values) => {
+export const createPost = async (values) => {
   const formData = new FormData();
 
   for (let value in values) {
@@ -20,14 +20,12 @@ export const addPost = async (values) => {
   const user = auth.currentUser;
   const token = await getIdToken(user);
 
-  const response = await axios.post("http://localhost:5000/posts", formData, {
+  await axios.post("http://localhost:5000/posts", formData, {
     headers: {
       "Content-Type": "multipart/form-data",
       Authorization: `Bearer ${token}`,
     },
   });
-
-  return response;
 };
 
 export const getPosts = async ({ pageParam = 0 }) => {
@@ -48,28 +46,20 @@ export const updatePost = async ({ id, data }) => {
   const user = auth.currentUser;
   const token = await getIdToken(user);
 
-  const response = await axios.patch(
-    `http://localhost:5000/posts/${id}`,
-    data,
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    }
-  );
-
-  return response;
+  await axios.patch(`http://localhost:5000/posts/${id}`, data, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
 };
 
 export const deletePost = async (id) => {
   const user = auth.currentUser;
   const token = await getIdToken(user);
 
-  const response = await axios.delete(`http://localhost:5000/posts/${id}`, {
+  await axios.delete(`http://localhost:5000/posts/${id}`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
   });
-
-  return response;
 };
