@@ -1,19 +1,39 @@
+import { useMutation } from "@tanstack/react-query";
 import { useFormik } from "formik";
 import * as yup from "yup";
 
-function CreateCommentForm() {
-  const { touched, errors, values, handleSubmit, handleChange, handleBlur } =
-    useFormik({
-      initialValues: {
-        description: "",
-      },
-      validationSchema: yup.object({
-        description: yup.string().required(),
-      }),
-      onSubmit: (data) => {
-        console.log(data);
-      },
-    });
+import { createComment } from "../../api/comment";
+import handleError from "../../utils/handleError";
+
+function CreateCommentForm({ id }) {
+  const { mutate, isLoading } = useMutation(createComment, {
+    onSuccess: (data, varaibles, context) => {
+      resetForm();
+    },
+    onError: (error, variables, context) => {
+      handleError(error);
+    },
+  });
+
+  const {
+    touched,
+    errors,
+    values,
+    handleSubmit,
+    handleChange,
+    handleBlur,
+    resetForm,
+  } = useFormik({
+    initialValues: {
+      description: "",
+    },
+    validationSchema: yup.object({
+      description: yup.string().required(),
+    }),
+    onSubmit: (data) => {
+      mutate({ id, data });
+    },
+  });
 
   return (
     <div className="flex gap-3">
@@ -40,12 +60,12 @@ function CreateCommentForm() {
         />
         <button
           className={`w-full rounded-lg bg-yellow-300 p-2 font-semibold shadow ${
-            false ? "" : "hover:bg-yellow-400"
+            isLoading ? "" : "hover:bg-yellow-400"
           } focus:outline-none"`}
           type="submit"
-          disabled={false}
+          disabled={isLoading}
         >
-          {false ? "Loading..." : "Comment"}
+          {isLoading ? "Loading..." : "Comment"}
         </button>
       </form>
     </div>

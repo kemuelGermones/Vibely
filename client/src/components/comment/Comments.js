@@ -2,10 +2,10 @@ import { BsHeart, BsTrash } from "react-icons/bs";
 
 import CreateCommentForm from "./CreateCommentForm";
 
-function Comments() {
+function Comments({ id }) {
   return (
     <div className="flex flex-col gap-3 rounded-lg bg-white p-3 shadow">
-      <CreateCommentForm />
+      <CreateCommentForm id={id} />
       <ul className="flex h-80 flex-col gap-3 overflow-y-auto">
         <li className="flex gap-3">
           <div className="h-12 w-12 shrink-0">
