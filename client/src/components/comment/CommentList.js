@@ -29,7 +29,7 @@ function CommentList({ id }) {
 
   if (isLoading) {
     return (
-      <div className="flex h-full w-full items-center justify-center">
+      <div className="flex justify-center">
         <div className="h-10 w-10 animate-spin rounded-full border-4 border-solid border-yellow-400 border-t-transparent"></div>
       </div>
     );
@@ -37,10 +37,14 @@ function CommentList({ id }) {
 
   if (isError) {
     return (
-      <div className="flex h-full w-full flex-col items-center justify-center gap-3">
-        <img className="h-14 w-14" src="./warning.svg" />
-        <h1 className="text-xl text-gray-700">Failed to fetch comments</h1>
-        <p className="text-gray-500">There was an error fetching the data</p>
+      <div className="flex h-full w-full flex-col justify-center gap-3">
+        <img className="mx-auto h-14 w-14" src="./warning.svg" />
+        <h1 className="text-center text-xl text-gray-700">
+          Failed to fetch comments
+        </h1>
+        <p className="text-center text-gray-500">
+          There was an error fetching the data
+        </p>
       </div>
     );
   }
