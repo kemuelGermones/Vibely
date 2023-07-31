@@ -18,7 +18,19 @@ const OPTIONS = {
 module.exports.getComments = async (req, res, next) => {
   const { postId } = req.params;
 
-  const comments = await Comment.findAll({ where: { postId }, ...OPTIONS });
+  const page = req.query.page ? Number(req.query.page) : 0;
+
+  const limit = req.query.limit ? Number(req.query.limit) : 10;
+
+  const offset = page * limit;
+
+  const comments = await Comment.findAll({
+    where: { postId },
+    order: [["createdAt", "ASC"]],
+    limit,
+    offset,
+    ...OPTIONS,
+  });
 
   res.status(200).json({
     status: 200,

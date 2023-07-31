@@ -4,7 +4,7 @@ import { BsHeart, BsChat } from "react-icons/bs";
 
 import { AuthContext } from "../../store/auth-context";
 import { ModalContext } from "../../store/modal-context";
-import Comments from "../comment/Comments";
+import CommentModal from "../comment/CommentModal";
 import PostCarousel from "./PostCarousel";
 import PostDropdown from "./PostDropdown";
 
@@ -13,7 +13,7 @@ function Post({ data }) {
   const { openModal } = useContext(ModalContext);
 
   const showComments = () => {
-    openModal(<Comments id={data.id} />);
+    openModal(<CommentModal id={data.id} />);
   };
 
   return (

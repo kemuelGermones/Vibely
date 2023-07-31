@@ -1,4 +1,4 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useFormik } from "formik";
 import * as yup from "yup";
 
@@ -6,9 +6,12 @@ import { createComment } from "../../api/comment";
 import handleError from "../../utils/handleError";
 
 function CreateCommentForm({ id }) {
+  const queryClient = useQueryClient();
+
   const { mutate, isLoading } = useMutation(createComment, {
     onSuccess: (data, varaibles, context) => {
       resetForm();
+      queryClient.invalidateQueries({ queryKey: ["posts", id, "comments"] });
     },
     onError: (error, variables, context) => {
       handleError(error);
@@ -37,7 +40,7 @@ function CreateCommentForm({ id }) {
 
   return (
     <div className="flex gap-3">
-      <div className="h-12 w-12 shrink-0">
+      <div className="h-10 w-10 shrink-0">
         <img
           className="h-full w-full rounded-full object-cover"
           src="https://images.pexels.com/photos/1334945/pexels-photo-1334945.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
