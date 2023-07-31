@@ -5,11 +5,11 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import { getComments } from "../../api/comment";
 import Comment from "./Comment";
 
-function CommentList({ id }) {
+function CommentList({ postId }) {
   const { data, fetchNextPage, hasNextPage, isLoading, isError } =
     useInfiniteQuery({
-      queryKey: ["posts", id, "comments"],
-      queryFn: ({ pageParam = 0 }) => getComments({ id, pageParam }),
+      queryKey: ["posts", postId, "comments"],
+      queryFn: ({ pageParam = 0 }) => getComments({ postId, pageParam }),
       getNextPageParam: (lastPage, allPages) => {
         const response = lastPage.data;
         const comments = response.items;
@@ -64,7 +64,7 @@ function CommentList({ id }) {
       hasMore={hasNextPage}
     >
       {comments.map((comment) => (
-        <Comment data={comment} key={comment.id} />
+        <Comment postId={postId} data={comment} key={comment.id} />
       ))}
     </InfiniteScroll>
   );

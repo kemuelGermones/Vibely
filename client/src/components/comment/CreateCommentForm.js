@@ -5,13 +5,15 @@ import * as yup from "yup";
 import { createComment } from "../../api/comment";
 import handleError from "../../utils/handleError";
 
-function CreateCommentForm({ id }) {
+function CreateCommentForm({ postId }) {
   const queryClient = useQueryClient();
 
   const { mutate, isLoading } = useMutation(createComment, {
     onSuccess: (data, varaibles, context) => {
       resetForm();
-      queryClient.invalidateQueries({ queryKey: ["posts", id, "comments"] });
+      queryClient.invalidateQueries({
+        queryKey: ["posts", postId, "comments"],
+      });
     },
     onError: (error, variables, context) => {
       handleError(error);
@@ -34,7 +36,7 @@ function CreateCommentForm({ id }) {
       description: yup.string().required(),
     }),
     onSubmit: (data) => {
-      mutate({ id, data });
+      mutate({ postId, data });
     },
   });
 

@@ -13,7 +13,7 @@ function Post({ data }) {
   const { openModal } = useContext(ModalContext);
 
   const showComments = () => {
-    openModal(<CommentModal id={data.id} />);
+    openModal(<CommentModal postId={data.id} />);
   };
 
   return (
