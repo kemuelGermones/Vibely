@@ -13,7 +13,7 @@ function PostList() {
       getNextPageParam: (lastPage, allPages) => {
         const response = lastPage.data;
         const posts = response.items;
-        return posts.length ? allPages.length + 1 : undefined;
+        return posts.length ? allPages.length : undefined;
       },
     });
 
@@ -29,7 +29,7 @@ function PostList() {
 
   if (isLoading) {
     return (
-      <div className="flex justify-center p-3">
+      <div className="flex justify-center">
         <div className="h-10 w-10 animate-spin rounded-full border-4 border-solid border-yellow-400 border-t-transparent"></div>
       </div>
     );
@@ -37,16 +37,14 @@ function PostList() {
 
   if (isError) {
     return (
-      <div className="flex flex-col gap-3 rounded-lg bg-white p-3 shadow">
-        <div className="flex flex-col gap-3 rounded-lg p-6">
-          <img className="mx-auto h-14 w-14" src="./warning.svg" />
-          <h1 className="text-center text-xl text-gray-700">
-            Failed to fetch posts
-          </h1>
-          <p className="text-center text-gray-500">
-            There was an error fetching the data
-          </p>
-        </div>
+      <div className="flex flex-col gap-3 rounded-lg bg-white p-9 shadow">
+        <img className="mx-auto h-14 w-14" src="./warning.svg" />
+        <h1 className="text-center text-xl text-gray-700">
+          Failed to fetch posts
+        </h1>
+        <p className="text-center text-gray-500">
+          There was an error fetching the data
+        </p>
       </div>
     );
   }
@@ -56,7 +54,7 @@ function PostList() {
       className="flex flex-col gap-3"
       style={{ overflow: "visible" }}
       loader={
-        <div className="flex justify-center p-3">
+        <div className="flex justify-center">
           <div className="h-10 w-10 animate-spin rounded-full border-4 border-solid border-yellow-400 border-t-transparent"></div>
         </div>
       }
