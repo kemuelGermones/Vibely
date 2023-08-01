@@ -32,9 +32,6 @@ export const deleteComment = async ({ postId, commentId }) => {
   const user = auth.currentUser;
   const token = await getIdToken(user);
 
-  console.log(postId);
-  console.log(commentId);
-
   await axios.delete(
     `http://localhost:5000/posts/${postId}/comments/${commentId}`,
     {
