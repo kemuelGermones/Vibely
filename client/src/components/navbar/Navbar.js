@@ -51,7 +51,7 @@ function Navbar() {
         <ul className="grid h-12 w-full grid-cols-5 sm:w-80">
           <li
             className="flex cursor-pointer items-center justify-center hover:bg-yellow-400"
-            data-tooltip-id="my-tooltip"
+            data-tooltip-id="tooltip"
             data-tooltip-content="Posts"
             onClick={navigateToPosts}
           >
@@ -59,7 +59,7 @@ function Navbar() {
           </li>
           <li
             className="flex cursor-pointer items-center justify-center hover:bg-yellow-400"
-            data-tooltip-id="my-tooltip"
+            data-tooltip-id="tooltip"
             data-tooltip-content="Search"
             onClick={showSearch}
           >
@@ -67,7 +67,7 @@ function Navbar() {
           </li>
           <li
             className="flex cursor-pointer items-center justify-center hover:bg-yellow-400"
-            data-tooltip-id="my-tooltip"
+            data-tooltip-id="tooltip"
             data-tooltip-content="Messages"
             onClick={navigateToMessages}
           >
@@ -75,7 +75,7 @@ function Navbar() {
           </li>
           <li
             className="flex cursor-pointer items-center justify-center hover:bg-yellow-400"
-            data-tooltip-id="my-tooltip"
+            data-tooltip-id="tooltip"
             data-tooltip-content="Profile"
             onClick={navigateToProfile}
           >
@@ -83,7 +83,7 @@ function Navbar() {
           </li>
           <li
             className="flex cursor-pointer items-center justify-center hover:bg-yellow-400"
-            data-tooltip-id="my-tooltip"
+            data-tooltip-id="tooltip"
             data-tooltip-content="Sign out"
             onClick={handleSignout}
           >

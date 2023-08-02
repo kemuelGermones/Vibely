@@ -45,14 +45,14 @@ function Post({ data }) {
         <BsHeart
           className="shrink-0 cursor-pointer"
           size="1.5em"
-          data-tooltip-id="my-tooltip"
+          data-tooltip-id="tooltip"
           data-tooltip-content="Like"
         />
         <div>100</div>
         <BsChat
           className="shrink-0 cursor-pointer"
           size="1.5em"
-          data-tooltip-id="my-tooltip"
+          data-tooltip-id="tooltip"
           data-tooltip-content="Comment"
           onClick={showComments}
         />

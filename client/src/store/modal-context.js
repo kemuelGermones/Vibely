@@ -1,9 +1,8 @@
-import { useState, createContext } from "react";
-import { createPortal } from "react-dom";
+import { useState, createContext, Fragment } from "react";
 
 export const ModalContext = createContext({
   openModal: () => {},
-  closeModal: () => {}
+  closeModal: () => {},
 });
 
 export function ModalContextProvider({ children }) {
@@ -19,22 +18,21 @@ export function ModalContextProvider({ children }) {
     document.body.style.overflow = "unset";
   };
 
+  const modalWithBackdrop = modal ? (
+    <Fragment>
+      <div
+        className="fixed left-0 top-0 z-30 h-screen w-full bg-stone-900/20 backdrop-blur-sm"
+        onClick={closeModal}
+      ></div>
+      <main className="container fixed left-1/2 top-1/2 z-40 -translate-x-1/2 -translate-y-1/2 px-3 sm:max-w-screen-sm">
+        {modal}
+      </main>
+    </Fragment>
+  ) : null;
+
   return (
     <ModalContext.Provider value={{ openModal, closeModal }}>
-      {modal
-        ? createPortal(
-            <>
-              <div
-                className="fixed left-0 top-0 z-30 h-screen w-full bg-stone-900/20 backdrop-blur-sm"
-                onClick={closeModal}
-              />
-              <main className="container fixed left-1/2 top-1/2 z-40 -translate-x-1/2 -translate-y-1/2 px-3 sm:max-w-screen-sm">
-                {modal}
-              </main>
-            </>,
-            document.getElementById("modal-root")
-          )
-        : null}
+      {modalWithBackdrop}
       {children}
     </ModalContext.Provider>
   );

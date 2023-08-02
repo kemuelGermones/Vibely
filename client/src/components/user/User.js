@@ -30,13 +30,13 @@ function User() {
           <BsPersonPlus
             className="shrink-0 cursor-pointer"
             size="1.5em"
-            data-tooltip-id="my-tooltip"
+            data-tooltip-id="tooltip"
             data-tooltip-content="Follow"
           />
           <BsEnvelope
             className="shrink-0 cursor-pointer"
             size="1.5em"
-            data-tooltip-id="my-tooltip"
+            data-tooltip-id="tooltip"
             data-tooltip-content="Message"
             onClick={() => {
               openModal(<Chat />);

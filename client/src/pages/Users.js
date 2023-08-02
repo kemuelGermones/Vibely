@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, Fragment } from "react";
 
 import Navbar from "../components/navbar/Navbar";
 import User from "../components/user/User";
@@ -12,7 +12,7 @@ function Users() {
   const { openModal } = useContext(ModalContext);
 
   return (
-    <>
+    <Fragment>
       <Navbar />
       <main className="container mx-auto mt-12 p-3 sm:grid sm:grid-cols-[1fr_1.5fr] sm:gap-3 md:max-w-screen-md">
         <aside className="hidden sm:block sm:flex sm:flex-col sm:gap-3">
@@ -42,7 +42,7 @@ function Users() {
           <Post />
         </section>
       </main>
-    </>
+    </Fragment>
   );
 }
 

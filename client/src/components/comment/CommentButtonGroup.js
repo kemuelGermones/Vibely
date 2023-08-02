@@ -26,16 +26,38 @@ function CommentButtonGroup({ postId, commentId, userId }) {
     mutate({ postId, commentId });
   };
 
-  const deleteButton = isLoading ? (
-    <AiOutlineLoading3Quarters />
-  ) : (
-    <BsTrash onClick={handleDelete} />
+  const deleteButton = (
+    <button type="button" disabled={isLoading} onClick={handleDelete}>
+      {isLoading ? (
+        <AiOutlineLoading3Quarters
+          className="animate-spin outline-none"
+          data-tooltip-id="tooltip"
+          data-tooltip-content="Loading"
+        />
+      ) : (
+        <BsTrash
+          className="outline-none"
+          data-tooltip-id="tooltip"
+          data-tooltip-content="Delete"
+        />
+      )}
+    </button>
+  );
+
+  const likeButton = (
+    <button type="button">
+      <BsHeart
+        className="outline-none"
+        data-tooltip-id="tooltip"
+        data-tooltip-content="Like"
+      />
+    </button>
   );
 
   return (
     <div className="flex items-center gap-3">
       {user.uid === userId ? deleteButton : null}
-      <BsHeart />
+      {likeButton}
     </div>
   );
 }
