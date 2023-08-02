@@ -40,7 +40,9 @@ function PostDropdown({ id, caption }) {
 
   return (
     <div className="relative">
-      <BsThreeDotsVertical size="1.5em" onClick={toggleDropdown} />
+      <button onClick={toggleDropdown}>
+        <BsThreeDotsVertical size="1.5em" />
+      </button>
       {isDropdownVisible ? (
         <div
           className="absolute -left-[70px] top-8 z-10 flex flex-col items-end sm:left-1/2 sm:-translate-x-1/2 sm:items-center"
@@ -48,18 +50,18 @@ function PostDropdown({ id, caption }) {
         >
           <div className="h-0 w-0 border-b-[8px] border-l-[8px] border-b-stone-900/90 border-l-transparent border-r-transparent sm:border-b-[6px] sm:border-l-[6px] sm:border-r-[6px]" />
           <div className="rounded-bl rounded-br rounded-tl bg-stone-900/90 p-1 text-sm text-white sm:rounded-tr">
-            <div
-              className="cursor-pointer rounded px-4 py-2 text-center hover:bg-stone-900"
+            <button
+              className="w-full rounded px-4 py-2 text-center hover:bg-stone-900"
               onClick={showUpdatePostForm}
             >
               Edit
-            </div>
-            <div
-              className="cursor-pointer rounded px-4 py-2 text-center hover:bg-stone-900"
+            </button>
+            <button
+              className="w-full rounded px-4 py-2 text-center hover:bg-stone-900"
               onClick={showDeletePostForm}
             >
               Delete
-            </div>
+            </button>
           </div>
         </div>
       ) : null}
