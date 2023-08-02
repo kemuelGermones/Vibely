@@ -11,8 +11,8 @@ function CreatePost() {
   };
 
   return (
-    <div className="flex gap-3 rounded-lg bg-white p-3 shadow">
-      <div className="h-12 w-12 shrink-0">
+    <div className="flex items-center gap-3 rounded-lg bg-white p-3 shadow">
+      <div className="h-10 w-10 shrink-0">
         <img
           className="h-full w-full rounded-full object-cover"
           src="https://images.pexels.com/photos/1334945/pexels-photo-1334945.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
