@@ -1,5 +1,6 @@
 import { useMemo } from "react";
 import { useInfiniteQuery } from "@tanstack/react-query";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import InfiniteScroll from "react-infinite-scroll-component";
 
 import { getComments } from "../../api/comment";
@@ -29,7 +30,10 @@ function CommentList({ postId }) {
 
   const loader = (
     <div className="flex justify-center">
-      <div className="h-10 w-10 animate-spin rounded-full border-4 border-solid border-yellow-400 border-t-transparent"></div>
+      <AiOutlineLoading3Quarters
+        className="animate-spin text-yellow-400"
+        size="2em"
+      />
     </div>
   );
 
