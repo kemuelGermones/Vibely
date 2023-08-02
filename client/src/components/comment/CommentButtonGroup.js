@@ -28,29 +28,21 @@ function CommentButtonGroup({ postId, commentId, userId }) {
 
   const deleteButton = (
     <button type="button" disabled={isLoading} onClick={handleDelete}>
-      {isLoading ? (
-        <AiOutlineLoading3Quarters
-          className="animate-spin outline-none"
-          data-tooltip-id="tooltip"
-          data-tooltip-content="Loading"
-        />
-      ) : (
-        <BsTrash
-          className="outline-none"
-          data-tooltip-id="tooltip"
-          data-tooltip-content="Delete"
-        />
-      )}
+      <div data-tooltip-id="tooltip" data-tooltip-content="Delete">
+        {isLoading ? (
+          <AiOutlineLoading3Quarters className="animate-spin outline-none" />
+        ) : (
+          <BsTrash className="outline-none" />
+        )}
+      </div>
     </button>
   );
 
   const likeButton = (
     <button type="button">
-      <BsHeart
-        className="outline-none"
-        data-tooltip-id="tooltip"
-        data-tooltip-content="Like"
-      />
+      <div data-tooltip-id="tooltip" data-tooltip-content="Like">
+        <BsHeart />
+      </div>
     </button>
   );
 
