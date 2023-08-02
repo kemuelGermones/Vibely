@@ -1,5 +1,6 @@
 import { useContext } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { BsXCircle } from "react-icons/bs";
 
 import { deletePost } from "../../api/post";
 import { ModalContext } from "../../store/modal-context";
@@ -26,7 +27,7 @@ function DeletePostForm({ id }) {
   return (
     <div className="flex flex-col gap-3 rounded-lg bg-white p-3 shadow">
       <div className="flex flex-col gap-3 p-6">
-        <img className="mx-auto h-14 w-14" src="./cross-circle.svg" />
+        <BsXCircle className="mx-auto text-red-500" size="2.5em" />
         <h1 className="text-center text-xl text-gray-700">Are you sure?</h1>
         <p className="text-center text-gray-500">
           You won't be able to revert this.

@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useFormik } from "formik";
+import { BsCloudUpload } from "react-icons/bs";
 import * as yup from "yup";
 
 import { ModalContext } from "../../store/modal-context";
@@ -73,7 +74,7 @@ function CreatePostForm() {
           }`}
           htmlFor="images"
         >
-          <img className="mx-auto h-14 w-14" src="./upload.svg" />
+          <BsCloudUpload className="mx-auto text-yellow-300" size="2.5em" />
           <h1 className="text-center text-xl text-gray-700">
             {values.images.length && !errors.images
               ? `${values.images.length} images chosen`
@@ -95,14 +96,14 @@ function CreatePostForm() {
           />
         </label>
         <button
-            className={`w-full rounded-lg bg-yellow-300 p-2 font-semibold shadow ${
-              isLoading ? "" : "hover:bg-yellow-400"
-            } focus:outline-none"`}
-            type="submit"
-            disabled={isLoading}
-          >
-            {isLoading ? "Loading..." : "Submit"}
-          </button>
+          className={`w-full rounded-lg bg-yellow-300 p-2 font-semibold shadow ${
+            isLoading ? "" : "hover:bg-yellow-400"
+          } focus:outline-none"`}
+          type="submit"
+          disabled={isLoading}
+        >
+          {isLoading ? "Loading..." : "Submit"}
+        </button>
       </form>
     </div>
   );

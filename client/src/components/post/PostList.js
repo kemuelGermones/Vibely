@@ -1,5 +1,6 @@
 import { useMemo } from "react";
 import { useInfiniteQuery } from "@tanstack/react-query";
+import { BsExclamationTriangle } from "react-icons/bs";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import InfiniteScroll from "react-infinite-scroll-component";
 
@@ -44,7 +45,7 @@ function PostList() {
   if (isError) {
     return (
       <div className="flex flex-col gap-3 rounded-lg bg-white p-9 shadow">
-        <img className="mx-auto h-14 w-14" src="./warning.svg" />
+        <BsExclamationTriangle className="mx-auto text-red-500" size="2.5em" />
         <h1 className="text-center text-xl text-gray-700">
           Failed to fetch posts
         </h1>
