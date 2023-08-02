@@ -1,19 +1,12 @@
 import { useContext } from "react";
-import { BsHeart, BsChat } from "react-icons/bs";
 
 import { AuthContext } from "../../store/auth-context";
-import { ModalContext } from "../../store/modal-context";
-import CommentModal from "../comment/CommentModal";
 import PostCarousel from "./PostCarousel";
 import PostDropdown from "./PostDropdown";
+import PostButtonGroup from "./PostButtonGroup";
 
 function Post({ data }) {
   const { user } = useContext(AuthContext);
-  const { openModal } = useContext(ModalContext);
-
-  const showComments = () => {
-    openModal(<CommentModal postId={data.id} />);
-  };
 
   return (
     <div className="flex flex-col gap-3 rounded-lg bg-white p-3 shadow">
@@ -38,23 +31,7 @@ function Post({ data }) {
       </div>
       <p>{data.caption}</p>
       <PostCarousel images={data.images} />
-      <div className="flex items-center gap-3">
-        <BsHeart
-          className="shrink-0 cursor-pointer"
-          size="1.5em"
-          data-tooltip-id="tooltip"
-          data-tooltip-content="Like"
-        />
-        <div>100</div>
-        <BsChat
-          className="shrink-0 cursor-pointer"
-          size="1.5em"
-          data-tooltip-id="tooltip"
-          data-tooltip-content="Comment"
-          onClick={showComments}
-        />
-        <div>{data.comments}</div>
-      </div>
+      <PostButtonGroup id={data.id} totalComments={data.comments} />
     </div>
   );
 }
