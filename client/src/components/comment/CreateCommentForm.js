@@ -50,7 +50,7 @@ function CreateCommentForm({ postId }) {
       </div>
       <form className="flex w-full flex-col gap-3" onSubmit={handleSubmit}>
         <textarea
-          className={`w-full resize-none rounded-lg p-3 shadow ${
+          className={`resize-none rounded-lg p-3 shadow ${
             touched.description && errors.description
               ? "border-red-500 bg-[url('../public/warning.svg')] bg-[length:1.3rem] bg-[right_0.5rem_top_0.5rem] bg-no-repeat focus:border-red-500 focus:ring-red-500"
               : "border-yellow-300 focus:border-yellow-300 focus:ring-yellow-300"
@@ -64,7 +64,7 @@ function CreateCommentForm({ postId }) {
           onBlur={handleBlur}
         />
         <button
-          className={`w-full rounded-lg bg-yellow-300 p-2 font-semibold shadow ${
+          className={`rounded-lg bg-yellow-300 p-2 font-semibold shadow ${
             isLoading ? "" : "hover:bg-yellow-400"
           } focus:outline-none"`}
           type="submit"
