@@ -1,5 +1,4 @@
 import { useContext } from "react";
-import { Link } from "react-router-dom";
 import { BsHeart, BsChat } from "react-icons/bs";
 
 import { AuthContext } from "../../store/auth-context";
@@ -20,16 +19,14 @@ function Post({ data }) {
     <div className="flex flex-col gap-3 rounded-lg bg-white p-3 shadow">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <div className="h-12 w-12 shrink-0">
+          <div className="h-10 w-10 shrink-0">
             <img
               className="h-full w-full rounded-full object-cover"
               src={data.user.avatar.url}
             />
           </div>
           <div>
-            <Link className="font-semibold" to="/users">
-              {data.user.username}
-            </Link>
+            <div className="font-semibold">{data.user.username}</div>
             <div className="text-sm text-gray-500">
               {`${data.user.firstname} ${data.user.lastname}`}
             </div>
