@@ -94,27 +94,15 @@ function CreatePostForm() {
             onBlur={handleBlur}
           />
         </label>
-        <div className="grid grid-cols-2 gap-3">
-          <button
-            className={`w-full rounded-lg bg-gray-500 p-2 font-semibold text-white shadow ${
-              isLoading ? "" : "hover:bg-gray-600"
-            } focus:outline-none"`}
-            type="button"
-            disabled={isLoading}
-            onClick={closeModal}
-          >
-            Cancel
-          </button>
-          <button
-            className={`w-full rounded-lg bg-blue-500 p-2 font-semibold text-white shadow ${
-              isLoading ? "" : "hover:bg-blue-600"
+        <button
+            className={`w-full rounded-lg bg-yellow-300 p-2 font-semibold shadow ${
+              isLoading ? "" : "hover:bg-yellow-400"
             } focus:outline-none"`}
             type="submit"
             disabled={isLoading}
           >
             {isLoading ? "Loading..." : "Submit"}
           </button>
-        </div>
       </form>
     </div>
   );
