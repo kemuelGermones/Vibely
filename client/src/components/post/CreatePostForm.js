@@ -53,7 +53,7 @@ function CreatePostForm() {
     <div className="rounded-lg bg-white p-3 shadow">
       <form className="flex flex-col gap-3" onSubmit={handleSubmit}>
         <textarea
-          className={`w-full resize-none rounded-lg p-3 shadow ${
+          className={`resize-none rounded-lg p-3 shadow ${
             touched.caption && errors.caption
               ? "border-red-500 bg-[url('../public/warning.svg')] bg-[length:1.3rem] bg-[right_0.5rem_top_0.5rem] bg-no-repeat focus:border-red-500 focus:ring-red-500"
               : "border-yellow-300 focus:border-yellow-300 focus:ring-yellow-300"
@@ -67,7 +67,7 @@ function CreatePostForm() {
           onBlur={handleBlur}
         />
         <label
-          className={`relative block flex w-full cursor-pointer flex-col gap-3 rounded-lg border p-6 shadow ${
+          className={`relative flex cursor-pointer flex-col gap-3 rounded-lg border p-6 shadow ${
             touched.images && errors.images
               ? "border-red-500 bg-[url('../public/warning.svg')] bg-[length:1.3rem] bg-[right_0.5rem_top_0.5rem] bg-no-repeat"
               : "border-yellow-300"
@@ -82,8 +82,6 @@ function CreatePostForm() {
           </h1>
           <p className="text-center text-gray-500">
             Upload less than or equals to 5 images
-            <br />
-            PNG, JPG or JPEG.
           </p>
           <input
             className="absolute -z-10 opacity-0"
@@ -96,7 +94,7 @@ function CreatePostForm() {
           />
         </label>
         <button
-          className={`w-full rounded-lg bg-yellow-300 p-2 font-semibold shadow ${
+          className={`rounded-lg bg-yellow-300 p-2 font-semibold shadow ${
             isLoading ? "" : "hover:bg-yellow-400"
           } focus:outline-none"`}
           type="submit"

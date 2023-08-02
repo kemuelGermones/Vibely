@@ -45,19 +45,19 @@ function PostDropdown({ id, caption }) {
       </button>
       {isDropdownVisible ? (
         <div
-          className="absolute -left-[70px] top-8 z-10 flex flex-col items-end sm:left-1/2 sm:-translate-x-1/2 sm:items-center"
+          className="absolute -left-[67px] z-10 w-20 sm:left-1/2 sm:-translate-x-1/2"
           onClick={handleStopPropagation}
         >
-          <div className="h-0 w-0 border-b-[8px] border-l-[8px] border-b-stone-900/90 border-l-transparent border-r-transparent sm:border-b-[6px] sm:border-l-[6px] sm:border-r-[6px]" />
+          <div className="ml-auto h-0 w-0 border-b-[8px] border-l-[8px] border-b-stone-900/90 border-l-transparent border-r-transparent sm:mx-auto sm:border-b-[6px] sm:border-l-[6px] sm:border-r-[6px]" />
           <div className="rounded-bl rounded-br rounded-tl bg-stone-900/90 p-1 text-sm text-white sm:rounded-tr">
             <button
-              className="w-full rounded px-4 py-2 text-center hover:bg-stone-900"
+              className="w-full rounded py-2 hover:bg-stone-900"
               onClick={showUpdatePostForm}
             >
               Edit
             </button>
             <button
-              className="w-full rounded px-4 py-2 text-center hover:bg-stone-900"
+              className="w-full rounded py-2 hover:bg-stone-900"
               onClick={showDeletePostForm}
             >
               Delete
