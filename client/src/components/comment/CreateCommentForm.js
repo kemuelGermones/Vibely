@@ -70,7 +70,7 @@ function CreateCommentForm({ postId }) {
           type="submit"
           disabled={isLoading}
         >
-          {isLoading ? "Loading..." : "Comment"}
+          {isLoading ? "Loading..." : "Submit"}
         </button>
       </form>
     </div>
