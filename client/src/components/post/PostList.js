@@ -29,29 +29,38 @@ function PostList() {
     return result;
   }, [data]);
 
-  const loader = (
-    <div className="flex justify-center">
-      <AiOutlineLoading3Quarters
-        className="animate-spin text-yellow-400"
-        size="2em"
-      />
-    </div>
-  );
-
   if (isLoading) {
-    return loader;
+    return (
+      <div className="rounded-lg bg-white p-3 shadow">
+        <div className="flex h-80 flex-col justify-center gap-3">
+          <AiOutlineLoading3Quarters
+            className="mx-auto animate-spin text-yellow-400"
+            size="2.5em"
+          />
+          <h1 className="text-center text-xl text-gray-700">Loading...</h1>
+          <p className="text-center text-gray-500">
+            Fetching posts from this app.
+          </p>
+        </div>
+      </div>
+    );
   }
 
   if (isError) {
     return (
-      <div className="flex flex-col gap-3 rounded-lg bg-white p-9 shadow">
-        <BsExclamationTriangle className="mx-auto text-red-500" size="2.5em" />
-        <h1 className="text-center text-xl text-gray-700">
-          Failed to fetch posts
-        </h1>
-        <p className="text-center text-gray-500">
-          There was an error fetching the data
-        </p>
+      <div className="rounded-lg bg-white p-3 shadow">
+        <div className="flex h-80 flex-col justify-center gap-3">
+          <BsExclamationTriangle
+            className="mx-auto text-red-500"
+            size="2.5em"
+          />
+          <h1 className="text-center text-xl text-gray-700">
+            Failed to fetch posts
+          </h1>
+          <p className="text-center text-gray-500">
+            There was an error fetching the data.
+          </p>
+        </div>
       </div>
     );
   }
@@ -60,7 +69,12 @@ function PostList() {
     <InfiniteScroll
       className="flex flex-col gap-3"
       style={{ overflow: "visible" }}
-      loader={loader}
+      loader={
+        <AiOutlineLoading3Quarters
+          className="mx-auto animate-spin text-yellow-400"
+          size="2.5em"
+        />
+      }
       dataLength={posts.length}
       next={fetchNextPage}
       hasMore={hasNextPage}
