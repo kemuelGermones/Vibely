@@ -27,12 +27,14 @@ function PostList() {
     return result;
   }, [data]);
 
+  const loader = (
+    <div className="flex justify-center">
+      <div className="h-10 w-10 animate-spin rounded-full border-4 border-solid border-yellow-400 border-t-transparent"></div>
+    </div>
+  );
+
   if (isLoading) {
-    return (
-      <div className="flex justify-center">
-        <div className="h-10 w-10 animate-spin rounded-full border-4 border-solid border-yellow-400 border-t-transparent"></div>
-      </div>
-    );
+    return loader;
   }
 
   if (isError) {
@@ -53,11 +55,7 @@ function PostList() {
     <InfiniteScroll
       className="flex flex-col gap-3"
       style={{ overflow: "visible" }}
-      loader={
-        <div className="flex justify-center">
-          <div className="h-10 w-10 animate-spin rounded-full border-4 border-solid border-yellow-400 border-t-transparent"></div>
-        </div>
-      }
+      loader={loader}
       dataLength={posts.length}
       next={fetchNextPage}
       hasMore={hasNextPage}
