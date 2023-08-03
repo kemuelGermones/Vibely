@@ -135,7 +135,7 @@ function SignupUser() {
             }`}
             htmlFor="avatar"
           >
-            <div className="mx-auto h-36 w-36 shrink-0">
+            <div className="mx-auto h-24 w-24 shrink-0">
               <img
                 className="h-full w-full rounded-full bg-yellow-100 object-cover"
                 src={
