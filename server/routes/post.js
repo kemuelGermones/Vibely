@@ -1,6 +1,3 @@
-const express = require("express");
-
-const wrapAsync = require("../utils/wrapAsync");
 const { uploadImages } = require("../middleware/cloudinary");
 const { multerCreatePost } = require("../middleware/multer");
 const { isPostOwner, authenticate } = require("../middleware/auth");
@@ -14,6 +11,8 @@ const {
   validateCreatePost,
   validateUpdatePost,
 } = require("../middleware/validate");
+const express = require("express");
+const wrapAsync = require("../utils/wrapAsync");
 
 const router = express.Router();
 

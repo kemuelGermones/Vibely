@@ -1,5 +1,4 @@
 const multer = require("multer");
-
 const AppError = require("../utils/AppError");
 
 const storage = multer.memoryStorage();
@@ -16,30 +15,25 @@ const fileFilter = (req, file, cb) => {
 
 module.exports.multerCreatePost = (req, res, next) => {
   const limits = { files: 5 };
-
   const upload = multer({ storage, limits, fileFilter });
-
   const parse = upload.array("images");
 
   parse(req, res, (error) => {
     if (error) {
       next(new AppError(400, error.message));
     }
-
     next();
   });
 };
 
 module.exports.multerSignup = (req, res, next) => {
   const upload = multer({ storage, fileFilter });
-
   const parse = upload.single("avatar");
 
   parse(req, res, (error) => {
     if (error) {
       next(new AppError(400, error.message));
     }
-
     next();
   });
 };

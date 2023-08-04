@@ -1,6 +1,6 @@
 const { User } = require("../models");
-const AppError = require("../utils/AppError");
 const { postSchema, commentSchema, signupSchema } = require("../schemas");
+const AppError = require("../utils/AppError");
 
 module.exports.validateCreatePost = (req, res, next) => {
   const { error } = postSchema.validate(req.body);
@@ -58,7 +58,6 @@ module.exports.validateSignup = (req, res, next) => {
       if (user) {
         throw new AppError(400, "user exist already");
       }
-
       next();
     })
     .catch((error) => {

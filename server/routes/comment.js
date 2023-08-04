@@ -1,6 +1,3 @@
-const express = require("express");
-
-const wrapAsync = require("../utils/wrapAsync");
 const {
   getComments,
   createComment,
@@ -8,6 +5,8 @@ const {
 } = require("../controllers/comment");
 const { validateComment } = require("../middleware/validate");
 const { isCommentOwner, authenticate } = require("../middleware/auth");
+const express = require("express");
+const wrapAsync = require("../utils/wrapAsync");
 
 const router = express.Router({ mergeParams: true });
 

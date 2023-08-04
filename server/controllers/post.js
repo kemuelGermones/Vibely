@@ -1,14 +1,11 @@
 const { Sequelize } = require("sequelize");
-
 const { Post, Image, Comment, User, Avatar } = require("../models");
 const sequelize = require("../config/sequelize");
 const cloudinary = require("../config/cloudinary");
 
 module.exports.getPosts = async (req, res) => {
   const page = req.query.page ? Number(req.query.page) : 0;
-
   const limit = req.query.limit ? Number(req.query.limit) : 10;
-
   const offset = page * limit;
 
   const posts = await Post.findAll({
@@ -87,9 +84,7 @@ module.exports.deletePost = async (req, res) => {
 
   await sequelize.transaction(async (t) => {
     await Comment.destroy({ where: { postId }, transaction: t });
-
     await Image.destroy({ where: { postId }, transaction: t });
-
     await Post.destroy({ where: { id: postId }, transaction: t });
   });
 
