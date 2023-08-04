@@ -3,8 +3,8 @@ require("dotenv").config();
 const express = require("express");
 const app = express();
 const cors = require("cors");
-
 const sequelize = require("./config/sequelize");
+const authRoute = require("./routes/auth");
 const userRoute = require("./routes/user");
 const postRoute = require("./routes/post");
 const commentRoute = require("./routes/comment");
@@ -32,7 +32,8 @@ app.use(cors());
 
 app.use(express.json());
 
-app.use("/", userRoute);
+app.use("/", authRoute);
+app.use("/users", userRoute);
 app.use("/posts", postRoute);
 app.use("/posts/:postId/comments", commentRoute);
 
