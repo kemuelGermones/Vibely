@@ -1,20 +1,5 @@
 const { Comment, User, Avatar } = require("../models");
 
-const OPTIONS = {
-  include: [
-    {
-      model: User,
-      as: "user",
-      include: {
-        model: Avatar,
-        as: "avatar",
-        attributes: { exclude: ["userId"] },
-      },
-    },
-  ],
-  exclude: ["userId", "postId"],
-};
-
 module.exports.getComments = async (req, res, next) => {
   const { postId } = req.params;
 
@@ -29,7 +14,18 @@ module.exports.getComments = async (req, res, next) => {
     order: [["createdAt", "ASC"]],
     limit,
     offset,
-    ...OPTIONS,
+    include: [
+      {
+        model: User,
+        as: "user",
+        include: {
+          model: Avatar,
+          as: "avatar",
+          attributes: { exclude: ["userId"] },
+        },
+      },
+    ],
+    exclude: ["userId", "postId"],
   });
 
   res.status(200).json({
@@ -42,20 +38,15 @@ module.exports.getComments = async (req, res, next) => {
 module.exports.createComment = async (req, res, next) => {
   const { postId } = req.params;
 
-  const comment = await Comment.create({
+  await Comment.create({
     ...req.body,
     postId,
     userId: req.user.uid,
   });
 
-  const foundComment = await Comment.findOne({
-    where: { id: comment.id },
-    ...OPTIONS,
-  });
-
   res.status(200).json({
     status: 200,
-    items: foundComment,
+    items: null,
     message: "successfully created a comment",
   });
 };

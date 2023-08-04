@@ -4,36 +4,6 @@ const { Post, Image, Comment, User, Avatar } = require("../models");
 const sequelize = require("../config/sequelize");
 const cloudinary = require("../config/cloudinary");
 
-const OPTIONS = {
-  include: [
-    {
-      model: Image,
-      as: "images",
-      attributes: { exclude: ["postId"] },
-    },
-    {
-      model: User,
-      as: "user",
-      include: {
-        model: Avatar,
-        as: "avatar",
-        attributes: { exclude: ["userId"] },
-      },
-    },
-  ],
-  attributes: {
-    include: [
-      [
-        Sequelize.literal(
-          "(SELECT COUNT(*) FROM comments WHERE comments.postId = posts.id )"
-        ),
-        "comments",
-      ],
-    ],
-    exclude: ["userId"],
-  },
-};
-
 module.exports.getPosts = async (req, res) => {
   const page = req.query.page ? Number(req.query.page) : 0;
 
@@ -45,7 +15,33 @@ module.exports.getPosts = async (req, res) => {
     order: [["createdAt", "DESC"]],
     limit,
     offset,
-    ...OPTIONS,
+    include: [
+      {
+        model: Image,
+        as: "images",
+        attributes: { exclude: ["postId"] },
+      },
+      {
+        model: User,
+        as: "user",
+        include: {
+          model: Avatar,
+          as: "avatar",
+          attributes: { exclude: ["userId"] },
+        },
+      },
+    ],
+    attributes: {
+      include: [
+        [
+          Sequelize.literal(
+            "(SELECT COUNT(*) FROM comments WHERE comments.postId = posts.id )"
+          ),
+          "comments",
+        ],
+      ],
+      exclude: ["userId"],
+    },
   });
 
   res.status(200).json({
@@ -56,7 +52,7 @@ module.exports.getPosts = async (req, res) => {
 };
 
 module.exports.createPost = async (req, res) => {
-  const post = await Post.create(
+  await Post.create(
     {
       ...req.body,
       images: req.files,
@@ -65,14 +61,9 @@ module.exports.createPost = async (req, res) => {
     { include: [Image] }
   );
 
-  const foundPost = await Post.findOne({
-    where: { id: post.id },
-    ...OPTIONS,
-  });
-
   res.status(200).json({
     status: 200,
-    items: foundPost,
+    items: null,
     message: "successfully created a post",
   });
 };
@@ -82,14 +73,9 @@ module.exports.updatePost = async (req, res) => {
 
   await Post.update({ caption: req.body.caption }, { where: { id: postId } });
 
-  const post = await Post.findOne({
-    where: { id: postId },
-    ...OPTIONS,
-  });
-
   res.status(200).json({
     status: 200,
-    items: post,
+    items: null,
     message: "successfully updated a post",
   });
 };
