@@ -5,7 +5,6 @@ import Posts from "./pages/Posts";
 import Users from "./pages/Users";
 import Error from "./pages/Error";
 import Messages from "./pages/Messages";
-import Settings from "./pages/Settings";
 import Signup from "./pages/Signup";
 import Unprotected from "./outlet/Unprotected";
 import Protected from "./outlet/Protected";
@@ -22,7 +21,6 @@ function App() {
         <Route path="posts" element={<Posts />} />
         <Route path="messages" element={<Messages />} />
         <Route path="users" element={<Users />} />
-        <Route path="settings" element={<Settings />} />
         <Route path="error" element={<Error />} />
       </Route>
     </Routes>
