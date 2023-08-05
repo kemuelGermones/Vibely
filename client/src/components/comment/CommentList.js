@@ -1,11 +1,11 @@
 import { useMemo } from "react";
 import { useInfiniteQuery } from "@tanstack/react-query";
-import { BsExclamationTriangle } from "react-icons/bs";
-import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import InfiniteScroll from "react-infinite-scroll-component";
 
 import { getComments } from "../../api/comment";
 import Comment from "./Comment";
+import CommentSkeleton from "./CommentSkeleton";
+import handleError from "../../utils/handleError";
 
 function CommentList({ postId }) {
   const { data, fetchNextPage, hasNextPage, isLoading, isError } =
@@ -17,6 +17,7 @@ function CommentList({ postId }) {
         const comments = response.items;
         return comments.length ? allPages.length : undefined;
       },
+      onError: (error) => handleError(error),
     });
 
   const comments = useMemo(() => {
@@ -29,33 +30,8 @@ function CommentList({ postId }) {
     return result;
   }, [data]);
 
-  if (isLoading) {
-    return (
-      <div className="flex h-full flex-col justify-center gap-3">
-        <AiOutlineLoading3Quarters
-          className="mx-auto animate-spin text-yellow-300"
-          size="2.5em"
-        />
-        <h1 className="text-center text-xl text-gray-700">Loading...</h1>
-        <p className="text-center text-gray-500">
-          Fetching comments from this post.
-        </p>
-      </div>
-    );
-  }
-
-  if (isError) {
-    return (
-      <div className="flex h-full flex-col justify-center gap-3">
-        <BsExclamationTriangle className="mx-auto text-red-500" size="2.5em" />
-        <h1 className="text-center text-xl text-gray-700">
-          Failed to fetch comments
-        </h1>
-        <p className="text-center text-gray-500">
-          There was an error fetching the data
-        </p>
-      </div>
-    );
+  if (isLoading || isError) {
+    return <CommentSkeleton />;
   }
 
   return (
@@ -63,12 +39,7 @@ function CommentList({ postId }) {
       className="flex flex-col gap-3"
       scrollableTarget="comments"
       style={{ overflow: "visible" }}
-      loader={
-        <AiOutlineLoading3Quarters
-          className="mx-auto animate-spin text-yellow-300"
-          size="2.5em"
-        />
-      }
+      loader={<CommentSkeleton />}
       dataLength={comments.length}
       next={fetchNextPage}
       hasMore={hasNextPage}
