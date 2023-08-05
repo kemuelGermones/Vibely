@@ -1,6 +1,6 @@
 const { multerSignup } = require("../middleware/multer");
 const { uploadAvatar } = require("../middleware/cloudinary");
-const { signup } = require("../controllers/user");
+const { signup } = require("../controllers/auth");
 const { validateSignup } = require("../middleware/validate");
 const express = require("express");
 const wrapAsync = require("../utils/wrapAsync");
