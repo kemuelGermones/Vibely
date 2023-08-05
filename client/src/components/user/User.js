@@ -1,7 +1,26 @@
+import { useContext } from "react";
+import { useQuery } from "@tanstack/react-query";
+
+import { AuthContext } from "../../store/auth-context";
+import { getUser } from "../../api/user";
+import UserSkeleton from "./UserSkeleton";
 import UserButtonGroup from "./UserButtonGroup";
+import handleError from "../../utils/handleError";
 
 function User() {
-  return (
+  const { user } = useContext(AuthContext);
+
+  const { isLoading, isError, data } = useQuery({
+    queryKey: ["users", user.uid],
+    queryFn: () => getUser(user.uid),
+    onError: (error) => handleError(error),
+  });
+
+  if (isLoading || isError) {
+    return <UserSkeleton />;
+  }
+
+  return data ? (
     <div className="rounded-lg bg-white p-3 shadow">
       <div className="flex flex-col gap-3">
         <div className="flex items-center justify-between">
@@ -9,12 +28,14 @@ function User() {
             <div className="h-10 w-10 shrink-0 ">
               <img
                 className="h-full w-full rounded-full object-cover"
-                src="https://images.pexels.com/photos/1334945/pexels-photo-1334945.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+                src={data.items.avatar.url}
               />
             </div>
             <div>
-              <div className="font-semibold">theAdmiral</div>
-              <div className="text-sm text-gray-500">John Doe</div>
+              <div className="font-semibold">{data.items.username}</div>
+              <div className="text-sm text-gray-500">
+                {`${data.items.firstname} ${data.items.lastname}`}
+              </div>
             </div>
           </div>
           <UserButtonGroup />
@@ -25,7 +46,7 @@ function User() {
         </div>
       </div>
     </div>
-  );
+  ) : null;
 }
 
 export default User;

@@ -10,18 +10,24 @@ function handleError(error) {
     return firstChar.concat(remainingChar);
   };
 
-  let message;
-
   if (error instanceof FirebaseError) {
     const auth = error.code.split("/")[1];
-    message = auth.replace(/-/g, " ");
-  } else if (error instanceof AxiosError) {
-    message = error.response.data.message;
+    const code = auth.replace(/-/g, " ");
+    const message = capitalize(code);
+    toast.error(message);
+    return;
   }
 
-  message = message ? capitalize(message) : "Something went wrong";
+  if (error instanceof AxiosError) {
+    const response = error.response
+      ? error.response.data.message
+      : error.message;
+    const message = capitalize(response);
+    toast.error(message);
+    return;
+  }
 
-  toast.error(message);
+  toast.error("Something went wrong");
 }
 
 export default handleError;
