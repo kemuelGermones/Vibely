@@ -3,11 +3,11 @@ import { useFormik } from "formik";
 import { useMutation } from "@tanstack/react-query";
 import * as yup from "yup";
 
-import { signup } from "../../api/user";
+import { signup } from "../../api/auth";
 import validateAvatar from "../../utils/validateAvatar";
 import handleError from "../../utils/handleError";
 
-function SignupUser() {
+function SignupForm() {
   const { mutate, isLoading } = useMutation(signup, {
     onError: (error, variables, context) => {
       handleError(error);
@@ -184,4 +184,4 @@ function SignupUser() {
   );
 }
 
-export default SignupUser;
+export default SignupForm;

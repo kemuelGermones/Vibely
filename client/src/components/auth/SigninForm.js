@@ -3,10 +3,10 @@ import { useFormik } from "formik";
 import { Link } from "react-router-dom";
 import * as yup from "yup";
 
-import { signin } from "../../api/user";
+import { signin } from "../../api/auth";
 import handleError from "../../utils/handleError";
 
-function SigninUser() {
+function SigninForm() {
   const { mutate, isLoading } = useMutation(signin, {
     onError: (error, variables, context) => {
       handleError(error);
@@ -87,4 +87,4 @@ function SigninUser() {
   );
 }
 
-export default SigninUser;
+export default SigninForm;

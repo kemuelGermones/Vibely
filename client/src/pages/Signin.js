@@ -1,4 +1,4 @@
-import SigninUser from "../components/user/SigninUser";
+import SigninForm from "../components/auth/SigninForm";
 
 function Signin() {
   return (
@@ -8,7 +8,7 @@ function Signin() {
         <p className="text-center text-2xl text-yellow-600">
           Positive, Uplifting, Community-focused.
         </p>
-        <SigninUser />
+        <SigninForm />
       </section>
     </main>
   );

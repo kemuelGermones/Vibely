@@ -10,7 +10,7 @@ import {
 } from "react-icons/bs";
 
 import { ModalContext } from "../../store/modal-context";
-import { signout } from "../../api/user";
+import { signout } from "../../api/auth";
 import Search from "../search/Search";
 import handleError from "../../utils/handleError";
 
