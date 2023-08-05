@@ -2,9 +2,9 @@ const { Comment, User, Avatar } = require("../models");
 
 module.exports.getComments = async (req, res, next) => {
   const { postId } = req.params;
-  const page = req.query.page ? Number(req.query.page) : 0;
-  const limit = req.query.limit ? Number(req.query.limit) : 10;
-  const offset = page * limit;
+  const { page } = req.query;
+  const limit = 10;
+  const offset = page ? Number(page) * limit : 0;
 
   const comments = await Comment.findAll({
     where: { postId },
