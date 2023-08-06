@@ -7,12 +7,12 @@ import UserSkeleton from "./UserSkeleton";
 import UserButtonGroup from "./UserButtonGroup";
 import handleError from "../../utils/handleError";
 
-function User() {
+function User({ id }) {
   const { user } = useContext(AuthContext);
 
   const { isLoading, isError, data } = useQuery({
-    queryKey: ["users", user.uid],
-    queryFn: () => getUser(user.uid),
+    queryKey: ["users", id],
+    queryFn: () => getUser(id),
     onError: (error) => handleError(error),
   });
 
@@ -38,7 +38,7 @@ function User() {
               </div>
             </div>
           </div>
-          <UserButtonGroup />
+          {user.uid === id ? <UserButtonGroup /> : null}
         </div>
         <div className="flex justify-around">
           <button>100 followers</button>

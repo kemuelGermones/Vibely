@@ -20,7 +20,7 @@ function App() {
       <Route element={<Protected />}>
         <Route path="posts" element={<Posts />} />
         <Route path="messages" element={<Messages />} />
-        <Route path="users" element={<Users />} />
+        <Route path="users/:userId" element={<Users />} />
         <Route path="error" element={<Error />} />
       </Route>
     </Routes>
