@@ -4,7 +4,7 @@ import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../config/firebase";
 
 export const AuthContext = createContext({
-  user: null,
+  user: undefined,
 });
 
 export function AuthContextProvider({ children }) {
@@ -18,17 +18,19 @@ export function AuthContextProvider({ children }) {
     return () => unsub();
   }, []);
 
+  const loader = (
+    <div className="fixed left-0 top-0 z-[60] flex h-screen w-full items-center justify-center bg-yellow-200">
+      <div className="flex gap-3">
+        <div className="h-6 w-6 animate-[bounce_1s_infinite_-0.3s] rounded-full bg-yellow-400"></div>
+        <div className="h-6 w-6 animate-[bounce_1s_infinite_-0.1s] rounded-full bg-yellow-400"></div>
+        <div className="h-6 w-6 animate-[bounce_1s_infinite_0.1s] rounded-full bg-yellow-400"></div>
+      </div>
+    </div>
+  );
+
   return (
     <AuthContext.Provider value={{ user }}>
-      {user === undefined ? (
-        <div className="fixed left-0 top-0 z-20 flex h-screen w-full items-center justify-center bg-yellow-200">
-          <div className="flex items-center justify-center gap-3">
-            <div className="h-6 w-6 animate-[bounce_1s_infinite_-0.3s] rounded-full bg-yellow-400"></div>
-            <div className="h-6 w-6 animate-[bounce_1s_infinite_-0.1s] rounded-full bg-yellow-400"></div>
-            <div className="h-6 w-6 animate-[bounce_1s_infinite_0.1s] rounded-full bg-yellow-400"></div>
-          </div>
-        </div>
-      ) : null}
+      {user === undefined ? loader : null}
       {children}
     </AuthContext.Provider>
   );
