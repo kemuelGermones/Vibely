@@ -7,7 +7,7 @@ import UserSkeleton from "./UserSkeleton";
 import UserButtonGroup from "./UserButtonGroup";
 import handleError from "../../utils/handleError";
 
-function User({ id }) {
+function UserDetails({ id }) {
   const { user } = useContext(AuthContext);
 
   const { isLoading, isError, data } = useQuery({
@@ -49,4 +49,4 @@ function User({ id }) {
   ) : null;
 }
 
-export default User;
+export default UserDetails;
