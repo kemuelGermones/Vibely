@@ -15,23 +15,26 @@ import Loading from "./pages/Loading";
 function App() {
   const { initialized } = useContext(AuthContext);
 
-  return initialized ? (
-    <Routes>
-      <Route index element={<Navigate to="/signin" />} />
-      <Route element={<Unprotected />}>
-        <Route path="/signin" element={<Signin />} />
-        <Route path="/signup" element={<Signup />} />
-      </Route>
-      <Route element={<Protected />}>
-        <Route path="/posts" element={<Posts />} />
-        <Route path="/messages" element={<Messages />} />
-        <Route path="/users/:userId" element={<UserProfile />} />
-      </Route>
-      <Route path="*" element={<NotFound />} />
-    </Routes>
-  ) : (
-    <Loading />
-  );
+  if (initialized) {
+    return (
+      <Routes>
+        <Route index element={<Navigate to="/signin" />} />
+        <Route element={<Unprotected />}>
+          <Route path="/signin" element={<Signin />} />
+          <Route path="/signup" element={<Signup />} />
+        </Route>
+        <Route element={<Protected />}>
+          <Route path="/posts" element={<Posts />} />
+          <Route path="/messages" element={<Messages />} />
+          <Route path="/users/:userId" element={<UserProfile />} />
+        </Route>
+        <Route path="/error" element={<NotFound />} />
+        <Route path="*" element={<Navigate to="/error" />} />
+      </Routes>
+    );
+  }
+
+  return <Loading />;
 }
 
 export default App;
