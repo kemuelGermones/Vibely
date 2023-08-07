@@ -4,34 +4,20 @@ import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../config/firebase";
 
 export const AuthContext = createContext({
-  user: undefined,
+  user: null,
+  initialized: false,
 });
 
 export function AuthContextProvider({ children }) {
-  const [user, setUser] = useState();
+  const [client, setClient] = useState({ user: null, initialized: false });
 
   useEffect(() => {
-    const unsub = onAuthStateChanged(auth, (client) => {
-      setUser(client);
+    const unsub = onAuthStateChanged(auth, (user) => {
+      setClient({ user, initialized: true });
     });
 
     return () => unsub();
   }, []);
 
-  const loader = (
-    <div className="fixed left-0 top-0 z-[60] flex h-screen w-full items-center justify-center bg-yellow-200">
-      <div className="flex gap-3">
-        <div className="h-6 w-6 animate-[bounce_1s_infinite_-0.3s] rounded-full bg-yellow-400"></div>
-        <div className="h-6 w-6 animate-[bounce_1s_infinite_-0.1s] rounded-full bg-yellow-400"></div>
-        <div className="h-6 w-6 animate-[bounce_1s_infinite_0.1s] rounded-full bg-yellow-400"></div>
-      </div>
-    </div>
-  );
-
-  return (
-    <AuthContext.Provider value={{ user }}>
-      {user === undefined ? loader : null}
-      {children}
-    </AuthContext.Provider>
-  );
+  return <AuthContext.Provider value={client}>{children}</AuthContext.Provider>;
 }
