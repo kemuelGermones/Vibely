@@ -5,7 +5,7 @@ import { AuthContext } from "./store/auth-context";
 import Signin from "./pages/Signin";
 import Posts from "./pages/Posts";
 import UserProfile from "./pages/UserProfile";
-import NotFound from "./pages/NotFound";
+import Error from "./pages/Error";
 import Messages from "./pages/Messages";
 import Signup from "./pages/Signup";
 import Unprotected from "./outlet/Unprotected";
@@ -28,7 +28,7 @@ function App() {
           <Route path="/messages" element={<Messages />} />
           <Route path="/users/:userId" element={<UserProfile />} />
         </Route>
-        <Route path="/error" element={<NotFound />} />
+        <Route path="/error" element={<Error />} />
         <Route path="*" element={<Navigate to="/error" />} />
       </Routes>
     );
