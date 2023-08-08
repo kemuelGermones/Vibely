@@ -1,10 +1,8 @@
-import { useContext } from "react";
-
+import useModal from "../../hooks/useModal";
 import Chat from "./Chat";
-import { ModalContext } from "../../store/modal-context";
 
 function Chats() {
-  const { openModal } = useContext(ModalContext);
+  const { openModal } = useModal();
 
   return (
     <div className="flex h-full flex-col gap-3 rounded-lg bg-white p-3 shadow">

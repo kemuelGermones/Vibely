@@ -1,10 +1,8 @@
-import { useContext } from "react";
-
-import { ModalContext } from "../../store/modal-context";
+import useModal from "../../hooks/useModal";
 import CreatePostForm from "./CreatePostForm";
 
 function CreatePost() {
-  const { openModal } = useContext(ModalContext);
+  const { openModal } = useModal();
 
   const showCreatePostForm = () => {
     openModal(<CreatePostForm />);

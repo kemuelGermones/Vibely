@@ -1,13 +1,13 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
 import { BsThreeDotsVertical } from "react-icons/bs";
 
-import { ModalContext } from "../../store/modal-context";
+import useModal from "../../hooks/useModal";
 import UpdatePostForm from "./UpdatePostForm";
 import DeletePostForm from "./DeletePostForm";
 
 function PostDropdown({ id, caption }) {
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
-  const { openModal } = useContext(ModalContext);
+  const { openModal } = useModal();
 
   useEffect(() => {
     document.body.addEventListener("click", () => {

@@ -1,13 +1,12 @@
-import { useContext } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { BsXCircle } from "react-icons/bs";
 
 import { deletePost } from "../../api/post";
-import { ModalContext } from "../../store/modal-context";
+import useModal from "../../hooks/useModal";
 import handleError from "../../utils/handleError";
 
 function DeletePostForm({ id }) {
-  const { closeModal } = useContext(ModalContext);
+  const { closeModal } = useModal();
   const queryClient = useQueryClient();
 
   const { isLoading, mutate } = useMutation(deletePost, {

@@ -1,16 +1,15 @@
-import { useContext } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useFormik } from "formik";
 import { BsCloudUpload } from "react-icons/bs";
 import * as yup from "yup";
 
-import { ModalContext } from "../../store/modal-context";
 import { createPost } from "../../api/post";
 import validateImages from "../../utils/validateImages";
 import handleError from "../../utils/handleError";
+import useModal from "../../hooks/useModal";
 
 function CreatePostForm() {
-  const { closeModal } = useContext(ModalContext);
+  const { closeModal } = useModal;
   const queryClient = useQueryClient();
 
   const { mutate, isLoading } = useMutation(createPost, {

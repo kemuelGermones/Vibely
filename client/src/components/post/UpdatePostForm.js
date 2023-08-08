@@ -1,14 +1,13 @@
-import { useContext } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useFormik } from "formik";
 import * as yup from "yup";
 
-import { ModalContext } from "../../store/modal-context";
 import { updatePost } from "../../api/post";
+import useModal from "../../hooks/useModal";
 import handleError from "../../utils/handleError";
 
 function UpdatePostForm({ id, caption }) {
-  const { closeModal } = useContext(ModalContext);
+  const { closeModal } = useModal();
   const queryClient = useQueryClient();
 
   const { mutate, isLoading } = useMutation(updatePost, {

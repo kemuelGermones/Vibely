@@ -1,4 +1,3 @@
-import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
 import {
@@ -9,14 +8,14 @@ import {
   BsLayoutTextWindowReverse,
 } from "react-icons/bs";
 
-import { ModalContext } from "../../store/modal-context";
 import { signout } from "../../api/auth";
+import useModal from "../../hooks/useModal";
 import useAuth from "../../hooks/useAuth";
 import Search from "../search/Search";
 import handleError from "../../utils/handleError";
 
 function Navbar() {
-  const { openModal } = useContext(ModalContext);
+  const { openModal } = useModal();
   const { user } = useAuth();
   const navigate = useNavigate();
 

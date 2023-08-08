@@ -1,11 +1,10 @@
-import { useContext } from "react";
 import { BsHeart, BsChat } from "react-icons/bs";
 
-import { ModalContext } from "../../store/modal-context";
+import useModal from "../../hooks/useModal";
 import CommentModal from "../comment/CommentModal";
 
 function PostButtonGroup({ id, totalComments }) {
-  const { openModal } = useContext(ModalContext);
+  const { openModal } = useModal();
 
   const showComments = () => {
     openModal(<CommentModal postId={id} />);
