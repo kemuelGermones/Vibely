@@ -1,7 +1,7 @@
-import { Fragment, useContext } from "react";
+import { Fragment } from "react";
 import { useParams } from "react-router-dom";
 
-import { AuthContext } from "../store/auth-context";
+import useAuth from "../hooks/useAuth";
 import Navbar from "../components/navbar/Navbar";
 import UserDetails from "../components/user/UserDetails";
 import UserList from "../components/user/UserList";
@@ -11,7 +11,7 @@ import CreatePost from "../components/post/CreatePost";
 
 function UserProfile() {
   const { userId } = useParams();
-  const { user } = useContext(AuthContext);
+  const { user } = useAuth();
 
   return (
     <Fragment>

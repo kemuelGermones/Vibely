@@ -1,7 +1,6 @@
-import { useContext } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 
-import { AuthContext } from "./store/auth-context";
+import useAuth from "./hooks/useAuth";
 import Signin from "./pages/Signin";
 import Posts from "./pages/Posts";
 import UserProfile from "./pages/UserProfile";
@@ -13,7 +12,7 @@ import Protected from "./outlet/Protected";
 import Loading from "./pages/Loading";
 
 function App() {
-  const { initialized } = useContext(AuthContext);
+  const { initialized } = useAuth();
 
   if (initialized) {
     return (

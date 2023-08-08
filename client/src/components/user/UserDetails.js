@@ -1,15 +1,14 @@
-import { useContext } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Navigate } from "react-router-dom";
 
-import { AuthContext } from "../../store/auth-context";
 import { getUser } from "../../api/user";
+import useAuth from "../../hooks/useAuth";
 import UserSkeleton from "./UserSkeleton";
 import UserButtonGroup from "./UserButtonGroup";
 import handleError from "../../utils/handleError";
 
 function UserDetails({ id }) {
-  const { user } = useContext(AuthContext);
+  const { user } = useAuth();
 
   const { isLoading, isError, data } = useQuery({
     queryKey: ["users", id],

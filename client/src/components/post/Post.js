@@ -1,12 +1,10 @@
-import { useContext } from "react";
-
-import { AuthContext } from "../../store/auth-context";
+import useAuth from "../../hooks/useAuth";
 import PostCarousel from "./PostCarousel";
 import PostDropdown from "./PostDropdown";
 import PostButtonGroup from "./PostButtonGroup";
 
 function Post({ data }) {
-  const { user } = useContext(AuthContext);
+  const { user } = useAuth();
 
   return (
     <div className="rounded-lg bg-white p-3 shadow">

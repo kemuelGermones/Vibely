@@ -1,14 +1,13 @@
-import { useContext } from "react";
 import { BsTrash, BsHeart } from "react-icons/bs";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-import { AuthContext } from "../../store/auth-context";
 import { deleteComment } from "../../api/comment";
+import useAuth from "../../hooks/useAuth";
 import handleError from "../../utils/handleError";
 
 function CommentButtonGroup({ postId, commentId, userId }) {
-  const { user } = useContext(AuthContext);
+  const { user } = useAuth();
   const queryClient = useQueryClient();
 
   const { isLoading, mutate } = useMutation(deleteComment, {

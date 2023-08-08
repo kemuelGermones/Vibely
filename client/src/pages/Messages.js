@@ -1,6 +1,6 @@
-import { Fragment, useContext } from "react";
+import { Fragment } from "react";
 
-import { AuthContext } from "../store/auth-context";
+import useAuth from "../hooks/useAuth";
 import Advertisement from "../components/advertisement/Advertisement";
 import Navbar from "../components/navbar/Navbar";
 import UserDetails from "../components/user/UserDetails";
@@ -8,7 +8,7 @@ import UserList from "../components/user/UserList";
 import Chats from "../components/chat/Chats";
 
 function Messages() {
-  const { user } = useContext(AuthContext);
+  const { user } = useAuth();
 
   return (
     <Fragment>

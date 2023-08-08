@@ -1,10 +1,9 @@
-import { useContext } from "react";
 import { Outlet, Navigate } from "react-router-dom";
 
-import { AuthContext } from "../store/auth-context";
+import useAuth from "../hooks/useAuth";
 
 function Protected() {
-  const { user } = useContext(AuthContext);
+  const { user } = useAuth();
 
   return user ? <Outlet /> : <Navigate to="/signin" />;
 }
