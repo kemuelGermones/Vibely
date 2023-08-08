@@ -8,7 +8,7 @@ function Error() {
   };
 
   return (
-    <main className="gap-63 flex h-screen flex-col items-center justify-center gap-3">
+    <main className="flex h-screen flex-col items-center justify-center gap-3">
       <h1 className="text-9xl font-semibold text-gray-700">404</h1>
       <h2 className="text-center text-xl text-gray-700">Page not found</h2>
       <p className="text-center text-gray-500">
