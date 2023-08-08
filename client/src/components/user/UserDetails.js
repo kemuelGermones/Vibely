@@ -1,5 +1,6 @@
 import { useContext } from "react";
 import { useQuery } from "@tanstack/react-query";
+import { Navigate } from "react-router-dom";
 
 import { AuthContext } from "../../store/auth-context";
 import { getUser } from "../../api/user";
@@ -20,7 +21,11 @@ function UserDetails({ id }) {
     return <UserSkeleton />;
   }
 
-  return data ? (
+  if (!data.items) {
+    return <Navigate to="/error" />;
+  }
+
+  return (
     <div className="rounded-lg bg-white p-3 shadow">
       <div className="flex flex-col gap-3">
         <div className="flex items-center justify-between">
@@ -46,7 +51,7 @@ function UserDetails({ id }) {
         </div>
       </div>
     </div>
-  ) : null;
+  );
 }
 
 export default UserDetails;
