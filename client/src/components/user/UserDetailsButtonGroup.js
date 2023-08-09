@@ -1,6 +1,6 @@
 import { BsPersonPlus, BsEnvelope } from "react-icons/bs";
 
-function UserButtonGroup() {
+function UserDetailsButtonGroup() {
   const followButton = (
     <button>
       <div data-tooltip-id="tooltip" data-tooltip-content="Follow">
@@ -25,4 +25,4 @@ function UserButtonGroup() {
   );
 }
 
-export default UserButtonGroup;
+export default UserDetailsButtonGroup;

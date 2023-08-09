@@ -27,8 +27,7 @@ function App() {
           <Route path="/messages" element={<Messages />} />
           <Route path="/users/:userId" element={<UserProfile />} />
         </Route>
-        <Route path="/error" element={<Error />} />
-        <Route path="*" element={<Navigate to="/error" />} />
+        <Route path="*" element={<Error />} />
       </Routes>
     );
   }

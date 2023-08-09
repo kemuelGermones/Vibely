@@ -1,17 +1,14 @@
 import { Fragment } from "react";
 import { useParams } from "react-router-dom";
 
-import useAuth from "../hooks/useAuth";
 import Navbar from "../components/navbar/Navbar";
 import UserDetails from "../components/user/UserDetails";
 import UserList from "../components/user/UserList";
 import Advertisement from "../components/advertisement/Advertisement";
 import UserPostList from "../components/user/UserPostList";
-import CreatePost from "../components/post/CreatePost";
 
 function UserProfile() {
   const { userId } = useParams();
-  const { user } = useAuth();
 
   return (
     <Fragment>
@@ -23,7 +20,6 @@ function UserProfile() {
         </aside>
         <section className="flex flex-col gap-3">
           <UserDetails id={userId} />
-          {user.uid === userId ? <CreatePost /> : null}
           <UserPostList id={userId} />
         </section>
       </main>

@@ -1,4 +1,5 @@
 const { User, Avatar } = require("../models");
+const AppError = require("../utils/AppError");
 
 module.exports.getUser = async (req, res, next) => {
   const { userId } = req.params;
@@ -13,6 +14,10 @@ module.exports.getUser = async (req, res, next) => {
       },
     ],
   });
+
+  if (!user) {
+    throw new AppError(400, "user does not exist");
+  }
 
   res
     .status(200)

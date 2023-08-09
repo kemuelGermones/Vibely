@@ -1,4 +1,4 @@
-function UserSkeleton() {
+function UserDetailsLoader() {
   return (
     <div className="rounded-lg bg-white p-3 shadow">
       <div className="flex flex-col gap-3">
@@ -18,4 +18,4 @@ function UserSkeleton() {
   );
 }
 
-export default UserSkeleton;
+export default UserDetailsLoader;
