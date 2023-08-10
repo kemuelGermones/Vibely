@@ -4,13 +4,12 @@ const sequelize = require("../config/sequelize");
 const cloudinary = require("../config/cloudinary");
 
 module.exports.getPosts = async (req, res) => {
-  const { user, page } = req.query;
+  const { page } = req.query;
+
   const limit = 10;
-  const where = user ? { userId: user } : undefined;
   const offset = page ? Number(page) * limit : 0;
 
   const posts = await Post.findAll({
-    where,
     limit,
     offset,
     order: [["createdAt", "DESC"]],

@@ -19,7 +19,7 @@ export const getUserPosts = async ({ id, pageParam }) => {
   const token = await getIdToken(user);
 
   const response = await axios(
-    `http://localhost:5000/posts?page=${pageParam}&user=${id}`,
+    `http://localhost:5000/users/${id}/posts?page=${pageParam}`,
     {
       headers: { Authorization: `Bearer ${token}` },
     }
