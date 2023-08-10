@@ -1,4 +1,4 @@
-function CommentSkeleton() {
+function CommentLoader() {
   return (
     <div className="flex gap-3">
       <div className="h-10 w-10 shrink-0 animate-pulse rounded-full bg-gray-300" />
@@ -12,4 +12,4 @@ function CommentSkeleton() {
   );
 }
 
-export default CommentSkeleton;
+export default CommentLoader;

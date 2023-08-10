@@ -4,8 +4,9 @@ import InfiniteScroll from "react-infinite-scroll-component";
 
 import { getComments } from "../../api/comment";
 import Comment from "./Comment";
-import CommentSkeleton from "./CommentSkeleton";
+import CommentLoader from "./CommentLoader";
 import handleError from "../../utils/handleError";
+import CommentError from "./CommentError";
 
 function CommentList({ postId }) {
   const { data, fetchNextPage, hasNextPage, isLoading, isError } =
@@ -29,8 +30,12 @@ function CommentList({ postId }) {
     return result;
   }, [data]);
 
-  if (isLoading || isError) {
-    return <CommentSkeleton />;
+  if (isLoading) {
+    return <CommentLoader />;
+  }
+
+  if (isError) {
+    return <CommentError />;
   }
 
   return (
@@ -38,7 +43,7 @@ function CommentList({ postId }) {
       className="flex flex-col gap-3"
       scrollableTarget="comments"
       style={{ overflow: "visible" }}
-      loader={<CommentSkeleton />}
+      loader={<CommentLoader />}
       dataLength={comments.length}
       next={fetchNextPage}
       hasMore={hasNextPage}
