@@ -13,8 +13,7 @@ function CommentList({ postId }) {
       queryKey: ["posts", postId, "comments"],
       queryFn: ({ pageParam = 0 }) => getComments({ postId, pageParam }),
       getNextPageParam: (lastPage, allPages) => {
-        const response = lastPage.data;
-        const comments = response.items;
+        const comments = lastPage.items;
         return comments.length ? allPages.length : undefined;
       },
       onError: (error) => handleError(error),
@@ -24,7 +23,7 @@ function CommentList({ postId }) {
     let result = [];
     if (data) {
       data.pages.forEach((page) => {
-        result = result.concat(page.data.items);
+        result = result.concat(page.items);
       });
     }
     return result;

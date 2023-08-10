@@ -11,6 +11,9 @@ import PostList from "../components/post/PostList";
 function UserProfile() {
   const { userId } = useParams();
 
+  const handleQueryFn = ({ pageParam = 0 }) =>
+    getUserPosts({ userId, pageParam });
+
   return (
     <Fragment>
       <Navbar />
@@ -20,12 +23,10 @@ function UserProfile() {
           <UserList />
         </aside>
         <section className="flex flex-col gap-3">
-          <UserDetails id={userId} />
+          <UserDetails userId={userId} />
           <PostList
             queryKey={["users", userId, "posts"]}
-            queryFn={({ pageParam = 0 }) =>
-              getUserPosts({ id: userId, pageParam })
-            }
+            queryFn={handleQueryFn}
           />
         </section>
       </main>

@@ -5,10 +5,10 @@ import UserDetailsLoader from "./UserDetailsLoader";
 import UserDetailsButtonGroup from "./UserDetailsButtonGroup";
 import UserDetailsError from "./UserDetailsError";
 
-function UserDetails({ id }) {
+function UserDetails({ userId }) {
   const { isLoading, isError, data } = useQuery({
-    queryKey: ["users", id],
-    queryFn: () => getUser(id),
+    queryKey: ["users", userId],
+    queryFn: () => getUser(userId),
   });
 
   if (isLoading) {

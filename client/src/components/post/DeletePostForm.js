@@ -5,7 +5,7 @@ import { deletePost } from "../../api/post";
 import useModal from "../../hooks/useModal";
 import handleError from "../../utils/handleError";
 
-function DeletePostForm({ id }) {
+function DeletePostForm({ postId }) {
   const { closeModal } = useModal();
   const queryClient = useQueryClient();
 
@@ -20,7 +20,7 @@ function DeletePostForm({ id }) {
   });
 
   const handleDelete = () => {
-    mutate(id);
+    mutate(postId);
   };
 
   return (

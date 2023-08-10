@@ -5,7 +5,7 @@ import useModal from "../../hooks/useModal";
 import UpdatePostForm from "./UpdatePostForm";
 import DeletePostForm from "./DeletePostForm";
 
-function PostDropdown({ id, caption }) {
+function PostDropdown({ postId, caption }) {
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
   const { openModal } = useModal();
 
@@ -31,11 +31,11 @@ function PostDropdown({ id, caption }) {
   };
 
   const showUpdatePostForm = () => {
-    openModal(<UpdatePostForm id={id} caption={caption} />);
+    openModal(<UpdatePostForm postId={postId} caption={caption} />);
   };
 
   const showDeletePostForm = () => {
-    openModal(<DeletePostForm id={id} />);
+    openModal(<DeletePostForm postId={postId} />);
   };
 
   return (

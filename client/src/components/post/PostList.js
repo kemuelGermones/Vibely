@@ -12,8 +12,7 @@ function PostList({ queryKey, queryFn }) {
       queryKey,
       queryFn,
       getNextPageParam: (lastPage, allPages) => {
-        const response = lastPage.data;
-        const posts = response.items;
+        const posts = lastPage.items;
         return posts.length ? allPages.length : undefined;
       },
     });
@@ -22,7 +21,7 @@ function PostList({ queryKey, queryFn }) {
     let result = [];
     if (data) {
       data.pages.forEach((page) => {
-        result = result.concat(page.data.items);
+        result = result.concat(page.items);
       });
     }
     return result;

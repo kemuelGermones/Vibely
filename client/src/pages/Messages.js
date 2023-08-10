@@ -15,7 +15,7 @@ function Messages() {
       <Navbar />
       <main className="container mx-auto mt-12 grid h-[calc(100vh-3rem)] grid-rows-1 p-3 sm:grid-cols-[1fr_1.5fr] sm:gap-3 lg:grid-cols-[1fr_1.5fr_1fr]">
         <aside className="hidden sm:block sm:flex sm:flex-col sm:gap-3">
-          <UserDetails id={user.uid} />
+          <UserDetails userId={user.uid} />
           <UserList />
         </aside>
         <section>

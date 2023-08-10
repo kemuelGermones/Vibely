@@ -3,11 +3,11 @@ import { BsHeart, BsChat } from "react-icons/bs";
 import useModal from "../../hooks/useModal";
 import CommentModal from "../comment/CommentModal";
 
-function PostButtonGroup({ id, totalComments }) {
+function PostButtonGroup({ postId, totalComments }) {
   const { openModal } = useModal();
 
   const showComments = () => {
-    openModal(<CommentModal postId={id} />);
+    openModal(<CommentModal postId={postId} />);
   };
 
   const likeButton = (

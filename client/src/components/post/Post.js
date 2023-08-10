@@ -25,12 +25,12 @@ function Post({ data }) {
             </div>
           </div>
           {data.user.id === user.uid ? (
-            <PostDropdown id={data.id} caption={data.caption} />
+            <PostDropdown postId={data.id} caption={data.caption} />
           ) : null}
         </div>
         <p>{data.caption}</p>
         <PostCarousel images={data.images} />
-        <PostButtonGroup id={data.id} totalComments={data.comments} />
+        <PostButtonGroup postId={data.id} totalComments={data.comments} />
       </div>
     </div>
   );

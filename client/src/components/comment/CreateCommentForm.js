@@ -35,8 +35,8 @@ function CreateCommentForm({ postId }) {
     validationSchema: yup.object({
       description: yup.string().required(),
     }),
-    onSubmit: (data) => {
-      mutate({ postId, data });
+    onSubmit: (values) => {
+      mutate({ postId, values });
     },
   });
 

@@ -6,7 +6,7 @@ import { updatePost } from "../../api/post";
 import useModal from "../../hooks/useModal";
 import handleError from "../../utils/handleError";
 
-function UpdatePostForm({ id, caption }) {
+function UpdatePostForm({ postId, caption }) {
   const { closeModal } = useModal();
   const queryClient = useQueryClient();
 
@@ -28,8 +28,8 @@ function UpdatePostForm({ id, caption }) {
       validationSchema: yup.object({
         caption: yup.string().required(),
       }),
-      onSubmit: (data) => {
-        mutate({ id, data });
+      onSubmit: (values) => {
+        mutate({ postId, values });
       },
     });
 

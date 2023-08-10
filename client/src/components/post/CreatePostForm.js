@@ -39,8 +39,8 @@ function CreatePostForm() {
       caption: yup.string().required(),
       images: yup.mixed().test("images", "images is invalid", validateImages),
     }),
-    onSubmit: (data) => {
-      mutate(data);
+    onSubmit: (values) => {
+      mutate(values);
     },
   });
 

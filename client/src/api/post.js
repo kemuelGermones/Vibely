@@ -4,31 +4,31 @@ import axios from "axios";
 import { auth } from "../config/firebase";
 
 export const createPost = async (values) => {
-  const formData = new FormData();
+  const formValues = new FormData();
 
   for (let value in values) {
     const result = Array.isArray(values[value]);
     if (result) {
-      values[value].forEach((data) => {
-        formData.append(value, data);
+      values[value].forEach((values) => {
+        formValues.append(value, values);
       });
     } else {
-      formData.append(value, values[value]);
+      formValues.append(value, values[value]);
     }
   }
 
   const user = auth.currentUser;
   const token = await getIdToken(user);
 
-  await axios.post("http://localhost:5000/posts", formData, {
+  await axios.post("http://localhost:5000/posts", formValues, {
     headers: {
-      "Content-Type": "multipart/form-data",
+      "Content-Type": "multipart/form-values",
       Authorization: `Bearer ${token}`,
     },
   });
 };
 
-export const getPosts = async ({ pageParam = 0 }) => {
+export const getPosts = async (pageParam) => {
   const user = auth.currentUser;
   const token = await getIdToken(user);
 
@@ -39,25 +39,25 @@ export const getPosts = async ({ pageParam = 0 }) => {
     }
   );
 
-  return response;
+  return response.data;
 };
 
-export const updatePost = async ({ id, data }) => {
+export const updatePost = async ({ postId, values }) => {
   const user = auth.currentUser;
   const token = await getIdToken(user);
 
-  await axios.patch(`http://localhost:5000/posts/${id}`, data, {
+  await axios.patch(`http://localhost:5000/posts/${postId}`, values, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
   });
 };
 
-export const deletePost = async (id) => {
+export const deletePost = async (postId) => {
   const user = auth.currentUser;
   const token = await getIdToken(user);
 
-  await axios.delete(`http://localhost:5000/posts/${id}`, {
+  await axios.delete(`http://localhost:5000/posts/${postId}`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
