@@ -9,7 +9,7 @@ import handleError from "../../utils/handleError";
 import useModal from "../../hooks/useModal";
 
 function CreatePostForm() {
-  const { closeModal } = useModal;
+  const { closeModal } = useModal();
   const queryClient = useQueryClient();
 
   const { mutate, isLoading } = useMutation(createPost, {

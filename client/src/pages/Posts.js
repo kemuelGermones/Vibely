@@ -1,5 +1,6 @@
 import { Fragment } from "react";
 
+import { getPosts } from "../api/post";
 import useAuth from "../hooks/useAuth";
 import Navbar from "../components/navbar/Navbar";
 import UserList from "../components/user/UserList";
@@ -21,7 +22,7 @@ function Posts() {
         </aside>
         <section className="flex flex-col gap-3">
           <CreatePost />
-          <PostList />
+          <PostList queryKey={["posts"]} queryFn={getPosts} />
         </section>
         <aside className="hidden lg:block">
           <Advertisement />

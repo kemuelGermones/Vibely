@@ -1,11 +1,12 @@
 import { Fragment } from "react";
 import { useParams } from "react-router-dom";
 
+import { getUserPosts } from "../api/user";
 import Navbar from "../components/navbar/Navbar";
 import UserDetails from "../components/user/UserDetails";
 import UserList from "../components/user/UserList";
 import Advertisement from "../components/advertisement/Advertisement";
-import UserPostList from "../components/user/UserPostList";
+import PostList from "../components/post/PostList";
 
 function UserProfile() {
   const { userId } = useParams();
@@ -20,7 +21,12 @@ function UserProfile() {
         </aside>
         <section className="flex flex-col gap-3">
           <UserDetails id={userId} />
-          <UserPostList id={userId} />
+          <PostList
+            queryKey={["users", userId, "posts"]}
+            queryFn={({ pageParam = 0 }) =>
+              getUserPosts({ id: userId, pageParam })
+            }
+          />
         </section>
       </main>
     </Fragment>

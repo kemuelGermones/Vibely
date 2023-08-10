@@ -1,4 +1,4 @@
-function PostSkeleton() {
+function PostLoader() {
   return (
     <div className="rounded-lg bg-white p-3 shadow">
       <div className="flex flex-col gap-3">
@@ -26,4 +26,4 @@ function PostSkeleton() {
   );
 }
 
-export default PostSkeleton;
+export default PostLoader;

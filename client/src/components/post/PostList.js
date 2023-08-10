@@ -2,22 +2,20 @@ import { useMemo } from "react";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import InfiniteScroll from "react-infinite-scroll-component";
 
-import { getPosts } from "../../api/post";
 import Post from "./Post";
-import PostSkeleton from "./PostSkeleton";
-import handleError from "../../utils/handleError";
+import PostLoader from "./PostLoader";
+import PostError from "./PostError";
 
-function PostList() {
+function PostList({ queryKey, queryFn }) {
   const { data, fetchNextPage, hasNextPage, isLoading, isError } =
     useInfiniteQuery({
-      queryKey: ["posts"],
-      queryFn: getPosts,
+      queryKey,
+      queryFn,
       getNextPageParam: (lastPage, allPages) => {
         const response = lastPage.data;
         const posts = response.items;
         return posts.length ? allPages.length : undefined;
       },
-      onError: (error) => handleError(error),
     });
 
   const posts = useMemo(() => {
@@ -30,15 +28,19 @@ function PostList() {
     return result;
   }, [data]);
 
-  if (isLoading || isError) {
-    return <PostSkeleton />;
+  if (isLoading) {
+    return <PostLoader />;
+  }
+
+  if (isError) {
+    return <PostError />;
   }
 
   return (
     <InfiniteScroll
       className="flex flex-col gap-3"
       style={{ overflow: "visible" }}
-      loader={<PostSkeleton />}
+      loader={<PostLoader />}
       dataLength={posts.length}
       next={fetchNextPage}
       hasMore={hasNextPage}
