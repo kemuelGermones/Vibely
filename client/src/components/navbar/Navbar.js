@@ -48,7 +48,7 @@ function Navbar() {
   return (
     <nav className="fixed left-0 top-0 z-20 w-full bg-yellow-300">
       <main className="container mx-auto flex items-center gap-3 px-3">
-        <div className="text-lg font-bold">Vibely</div>
+        <h1 className="font-shrikhand text-xl">Vibely</h1>
         <ul className="grid h-12 w-full grid-cols-5 sm:w-80">
           <li
             className="flex cursor-pointer items-center justify-center hover:bg-yellow-400"

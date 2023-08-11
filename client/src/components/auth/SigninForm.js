@@ -31,9 +31,7 @@ function SigninForm() {
   return (
     <div className="rounded-lg bg-white p-3 shadow">
       <div className="flex flex-col gap-3 ">
-        <h1 className="text-center text-lg font-semibold">
-          Sign in to your account
-        </h1>
+        <h1 className="text-center font-shrikhand text-2xl">Vibely</h1>
         <form className="flex flex-col gap-3" onSubmit={handleSubmit}>
           <input
             className={`w-full rounded-lg p-3 shadow ${
