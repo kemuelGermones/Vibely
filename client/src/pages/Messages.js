@@ -2,10 +2,9 @@ import { Fragment } from "react";
 
 import useAuth from "../hooks/useAuth";
 import Advertisement from "../components/advertisement/Advertisement";
-import Navbar from "../components/navbar/Navbar";
-import UserDetails from "../components/user/UserDetails";
-import UserList from "../components/user/UserList";
-import Chats from "../components/chat/Chats";
+import Navbar from "../components/ui/Navbar";
+import User from "../components/user/User";
+import ListMessage from "../components/message/ListMessage";
 
 function Messages() {
   const { user } = useAuth();
@@ -13,13 +12,12 @@ function Messages() {
   return (
     <Fragment>
       <Navbar />
-      <main className="container mx-auto mt-12 grid h-[calc(100vh-3rem)] grid-rows-1 p-3 sm:grid-cols-[1fr_1.5fr] sm:gap-3 lg:grid-cols-[1fr_1.5fr_1fr]">
+      <main className="container mx-auto mt-12 p-3 sm:grid sm:grid-cols-[1fr_1.5fr] sm:gap-3 lg:grid-cols-[1fr_1.5fr_1fr]">
         <aside className="hidden sm:block sm:flex sm:flex-col sm:gap-3">
-          <UserDetails userId={user.uid} />
-          <UserList />
+          <User userId={user.uid} />
         </aside>
         <section>
-          <Chats />
+          <ListMessage />
         </section>
         <aside className="hidden lg:block">
           <Advertisement />

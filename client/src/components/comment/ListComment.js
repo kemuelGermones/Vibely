@@ -3,12 +3,12 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import InfiniteScroll from "react-infinite-scroll-component";
 
 import { getComments } from "../../api/comment";
-import Comment from "./Comment";
-import CommentLoader from "./CommentLoader";
 import handleError from "../../utils/handleError";
-import CommentError from "./CommentError";
+import Comment from "./Comment";
+import LoadComment from "./LoadComment";
+import ErrorComment from "./ErrorComment";
 
-function CommentList({ postId }) {
+function ListComment({ postId }) {
   const { data, fetchNextPage, hasNextPage, isLoading, isError } =
     useInfiniteQuery({
       queryKey: ["posts", postId, "comments"],
@@ -31,28 +31,38 @@ function CommentList({ postId }) {
   }, [data]);
 
   if (isLoading) {
-    return <CommentLoader />;
+    return (
+      <div className="h-80 overflow-y-auto">
+        <LoadComment />
+      </div>
+    );
   }
 
   if (isError) {
-    return <CommentError />;
+    return (
+      <div className="h-80 overflow-y-auto">
+        <ErrorComment />
+      </div>
+    );
   }
 
   return (
-    <InfiniteScroll
-      className="flex flex-col gap-3"
-      scrollableTarget="comments"
-      style={{ overflow: "visible" }}
-      loader={<CommentLoader />}
-      dataLength={comments.length}
-      next={fetchNextPage}
-      hasMore={hasNextPage}
-    >
-      {comments.map((comment) => (
-        <Comment postId={postId} data={comment} key={comment.id} />
-      ))}
-    </InfiniteScroll>
+    <div id="comments" className="h-80 overflow-y-auto">
+      <InfiniteScroll
+        className="flex flex-col gap-3"
+        scrollableTarget="comments"
+        style={{ overflow: "visible" }}
+        loader={<LoadComment />}
+        dataLength={comments.length}
+        next={fetchNextPage}
+        hasMore={hasNextPage}
+      >
+        {comments.map((comment) => (
+          <Comment postId={postId} data={comment} key={comment.id} />
+        ))}
+      </InfiniteScroll>
+    </div>
   );
 }
 
-export default CommentList;
+export default ListComment;

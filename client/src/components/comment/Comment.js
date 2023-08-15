@@ -1,18 +1,14 @@
-import CommentButtonGroup from "./CommentButtonGroup";
+import CommentButtons from "./CommentButtons";
+import Avatar from "../ui/Avatar";
 
 function Comment({ postId, data }) {
   return (
-    <div className="flex gap-3">
-      <div className="h-10 w-10 shrink-0">
-        <img
-          className="h-full w-full rounded-full object-cover"
-          src={data.user.avatar.url}
-        />
-      </div>
-      <div className="flex w-full flex-col">
+    <div className="flex gap-3 [&>*:nth-child(2)]:grow">
+      <Avatar src={data.user.avatar.url} />
+      <div className="flex flex-col">
         <div className="flex justify-between">
           <div className="font-semibold">{data.user.username}</div>
-          <CommentButtonGroup
+          <CommentButtons
             postId={postId}
             commentId={data.id}
             userId={data.user.id}

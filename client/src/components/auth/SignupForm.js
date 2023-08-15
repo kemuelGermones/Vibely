@@ -6,6 +6,11 @@ import * as yup from "yup";
 import { signup } from "../../api/auth";
 import validateAvatar from "../../utils/validateAvatar";
 import handleError from "../../utils/handleError";
+import Card from "../ui/Card";
+import Form from "../ui/Form";
+import Input from "../ui/Input";
+import FileInput from "../ui/FileInput";
+import Button from "../ui/Button";
 
 function SignupForm() {
   const { mutate, isLoading } = useMutation(signup, {
@@ -49,136 +54,95 @@ function SignupForm() {
   };
 
   return (
-    <div className="rounded-lg bg-white p-3 shadow">
-      <div className="flex flex-col gap-3">
-        <h1 className="text-center font-shrikhand text-2xl">Vibely</h1>
-        <form className="flex flex-col gap-3" onSubmit={handleSubmit}>
-          <div className="flex flex-col gap-3 sm:flex-row">
-            <input
-              className={`w-full rounded-lg p-3 shadow ${
-                touched.firstname && errors.firstname
-                  ? "border-red-500 bg-[url('../public/warning.svg')] bg-[length:1.3rem] bg-[right_0.5rem_center] bg-no-repeat focus:border-red-500 focus:ring-red-500"
-                  : "border-yellow-300 focus:border-yellow-300 focus:ring-yellow-300"
-              }`}
-              id="firstname"
-              name="firstname"
-              type="text"
-              placeholder="Enter first name"
-              value={values.firstname}
-              onChange={handleChange}
-              onBlur={handleBlur}
-            />
-            <input
-              className={`w-full rounded-lg p-3 shadow ${
-                touched.lastname && errors.lastname
-                  ? "border-red-500 bg-[url('../public/warning.svg')] bg-[length:1.3rem] bg-[right_0.5rem_center] bg-no-repeat focus:border-red-500 focus:ring-red-500"
-                  : "border-yellow-300 focus:border-yellow-300 focus:ring-yellow-300"
-              }`}
-              id="lastname"
-              name="lastname"
-              type="text"
-              placeholder="Enter last name"
-              value={values.lastname}
-              onChange={handleChange}
-              onBlur={handleBlur}
+    <Card>
+      <h1 className="text-center font-shrikhand text-2xl">Vibely</h1>
+      <Form onSubmit={handleSubmit}>
+        <div className="flex flex-col gap-3 sm:flex-row">
+          <Input
+            error={touched.firstname && errors.firstname}
+            id="firstname"
+            name="firstname"
+            type="text"
+            placeholder="Enter first name"
+            value={values.firstname}
+            onChange={handleChange}
+            onBlur={handleBlur}
+          />
+          <Input
+            error={touched.lastname && errors.lastname}
+            id="lastname"
+            name="lastname"
+            type="text"
+            placeholder="Enter last name"
+            value={values.lastname}
+            onChange={handleChange}
+            onBlur={handleBlur}
+          />
+        </div>
+        <Input
+          error={touched.username && errors.username}
+          id="username"
+          name="username"
+          type="text"
+          placeholder="Enter username"
+          value={values.username}
+          onChange={handleChange}
+          onBlur={handleBlur}
+        />
+        <Input
+          error={touched.email && errors.email}
+          id="email"
+          name="email"
+          type="email"
+          placeholder="Enter email"
+          value={values.email}
+          onChange={handleChange}
+          onBlur={handleBlur}
+        />
+        <Input
+          error={touched.password && errors.password}
+          id="password"
+          name="password"
+          type="password"
+          placeholder="Enter password (at least 6 characters)"
+          value={values.password}
+          onChange={handleChange}
+          onBlur={handleBlur}
+        />
+        <FileInput
+          error={touched.avatar && errors.avatar}
+          title="Choose profile picture"
+          description="Upload your avatar PNG, JPG or JPEG."
+          id="avatar"
+          name="avatar"
+          onChange={handleChangeAvatar}
+          onBlur={handleBlur}
+        >
+          <div className="h-24 w-24 shrink-0">
+            <img
+              className="h-full w-full rounded-full bg-yellow-100 object-cover"
+              src={
+                values.avatar && !errors.avatar
+                  ? URL.createObjectURL(values.avatar)
+                  : "./person.svg"
+              }
             />
           </div>
-          <input
-            className={`w-full rounded-lg p-3 shadow ${
-              touched.username && errors.username
-                ? "border-red-500 bg-[url('../public/warning.svg')] bg-[length:1.3rem] bg-[right_0.5rem_center] bg-no-repeat focus:border-red-500 focus:ring-red-500"
-                : "border-yellow-300 focus:border-yellow-300 focus:ring-yellow-300"
-            }`}
-            id="username"
-            name="username"
-            type="text"
-            placeholder="Enter username"
-            value={values.username}
-            onChange={handleChange}
-            onBlur={handleBlur}
-          />
-          <input
-            className={`w-full rounded-lg p-3 shadow ${
-              touched.email && errors.email
-                ? "border-red-500 bg-[url('../public/warning.svg')] bg-[length:1.3rem] bg-[right_0.5rem_center] bg-no-repeat focus:border-red-500 focus:ring-red-500"
-                : "border-yellow-300 focus:border-yellow-300 focus:ring-yellow-300"
-            }`}
-            id="email"
-            name="email"
-            type="email"
-            placeholder="Enter email"
-            value={values.email}
-            onChange={handleChange}
-            onBlur={handleBlur}
-          />
-          <input
-            className={`w-full rounded-lg p-3 shadow ${
-              touched.password && errors.password
-                ? "border-red-500 bg-[url('../public/warning.svg')] bg-[length:1.3rem] bg-[right_0.5rem_center] bg-no-repeat focus:border-red-500 focus:ring-red-500"
-                : "border-yellow-300 focus:border-yellow-300 focus:ring-yellow-300"
-            }`}
-            id="password"
-            name="password"
-            type="password"
-            placeholder="Enter password (at least 6 characters)"
-            value={values.password}
-            onChange={handleChange}
-            onBlur={handleBlur}
-          />
-          <label
-            className={`relative block flex w-full cursor-pointer flex-col gap-3 rounded-lg border p-6 shadow ${
-              touched.avatar && errors.avatar
-                ? "border-red-500 bg-[url('../public/warning.svg')] bg-[length:1.3rem] bg-[right_0.5rem_top_0.5rem] bg-no-repeat"
-                : "border-yellow-300"
-            }`}
-            htmlFor="avatar"
-          >
-            <div className="mx-auto h-24 w-24 shrink-0">
-              <img
-                className="h-full w-full rounded-full bg-yellow-100 object-cover"
-                src={
-                  values.avatar && !errors.avatar
-                    ? URL.createObjectURL(values.avatar)
-                    : "./person.svg"
-                }
-              />
-            </div>
-            <h2 className="text-center text-xl text-gray-700">
-              Choose profile picture
-            </h2>
-            <p className="text-center text-gray-500">
-              Upload your avatar PNG, JPG or JPEG.
-            </p>
-            <input
-              className="absolute -z-10 w-0"
-              id="avatar"
-              name="avatar"
-              type="file"
-              onChange={handleChangeAvatar}
-              onBlur={handleBlur}
-            />
-          </label>
-          <button
-            className={`w-full rounded-lg bg-yellow-300 p-2 font-semibold shadow ${
-              isLoading ? "" : "hover:bg-yellow-400"
-            } focus:outline-none"`}
-            type="submit"
-            disabled={isLoading}
-          >
-            {isLoading ? "Loading..." : "Submit"}
-          </button>
-        </form>
-        <p className="text-center">
-          Have an account?{" "}
-          <Link
-            className="text-blue-600 underline underline-offset-4"
-            to="/signin"
-          >
-            Sign in
-          </Link>
-        </p>
-      </div>
-    </div>
+        </FileInput>
+        <Button type="submit" disabled={isLoading}>
+          {isLoading ? "Loading..." : "Submit"}
+        </Button>
+      </Form>
+      <p className="text-center">
+        Have an account?{" "}
+        <Link
+          className="text-blue-600 underline underline-offset-4"
+          to="/signin"
+        >
+          Sign in
+        </Link>
+      </p>
+    </Card>
   );
 }
 

@@ -4,6 +4,10 @@ import * as yup from "yup";
 
 import { createComment } from "../../api/comment";
 import handleError from "../../utils/handleError";
+import Avatar from "../ui/Avatar";
+import Form from "../ui/Form";
+import Textarea from "../ui/Textarea";
+import Button from "../ui/Button";
 
 function CreateCommentForm({ postId }) {
   const queryClient = useQueryClient();
@@ -41,20 +45,11 @@ function CreateCommentForm({ postId }) {
   });
 
   return (
-    <div className="flex gap-3">
-      <div className="h-10 w-10 shrink-0">
-        <img
-          className="h-full w-full rounded-full object-cover"
-          src="https://images.pexels.com/photos/1334945/pexels-photo-1334945.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-        />
-      </div>
-      <form className="flex w-full flex-col gap-3" onSubmit={handleSubmit}>
-        <textarea
-          className={`resize-none rounded-lg p-3 shadow ${
-            touched.description && errors.description
-              ? "border-red-500 bg-[url('../public/warning.svg')] bg-[length:1.3rem] bg-[right_0.5rem_top_0.5rem] bg-no-repeat focus:border-red-500 focus:ring-red-500"
-              : "border-yellow-300 focus:border-yellow-300 focus:ring-yellow-300"
-          }`}
+    <div className="flex gap-3 [&>*:nth-child(2)]:grow">
+      <Avatar src="https://images.pexels.com/photos/1334945/pexels-photo-1334945.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" />
+      <Form onSubmit={handleSubmit}>
+        <Textarea
+          error={touched.description && errors.description}
           id="description"
           name="description"
           type="text"
@@ -63,16 +58,10 @@ function CreateCommentForm({ postId }) {
           onChange={handleChange}
           onBlur={handleBlur}
         />
-        <button
-          className={`rounded-lg bg-yellow-300 p-2 font-semibold shadow ${
-            isLoading ? "" : "hover:bg-yellow-400"
-          } focus:outline-none"`}
-          type="submit"
-          disabled={isLoading}
-        >
+        <Button type="submit" disabled={isLoading}>
           {isLoading ? "Loading..." : "Submit"}
-        </button>
-      </form>
+        </Button>
+      </Form>
     </div>
   );
 }

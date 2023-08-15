@@ -5,8 +5,9 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { deleteComment } from "../../api/comment";
 import useAuth from "../../hooks/useAuth";
 import handleError from "../../utils/handleError";
+import IconButton from "../ui/IconButton";
 
-function CommentButtonGroup({ postId, commentId, userId }) {
+function CommentButtons({ postId, commentId, userId }) {
   const { user } = useAuth();
   const queryClient = useQueryClient();
 
@@ -26,23 +27,19 @@ function CommentButtonGroup({ postId, commentId, userId }) {
   };
 
   const deleteButton = (
-    <button type="button" disabled={isLoading} onClick={handleDelete}>
-      <div data-tooltip-id="tooltip" data-tooltip-content="Delete">
-        {isLoading ? (
-          <AiOutlineLoading3Quarters className="animate-spin outline-none" />
-        ) : (
-          <BsTrash className="outline-none" />
-        )}
-      </div>
-    </button>
+    <IconButton content="Delete" disabled={isLoading} onClick={handleDelete}>
+      {isLoading ? (
+        <AiOutlineLoading3Quarters className="animate-spin outline-none" />
+      ) : (
+        <BsTrash className="outline-none" />
+      )}
+    </IconButton>
   );
 
   const likeButton = (
-    <button type="button">
-      <div data-tooltip-id="tooltip" data-tooltip-content="Like">
-        <BsHeart />
-      </div>
-    </button>
+    <IconButton content="Like">
+      <BsHeart />
+    </IconButton>
   );
 
   return (
@@ -53,4 +50,4 @@ function CommentButtonGroup({ postId, commentId, userId }) {
   );
 }
 
-export default CommentButtonGroup;
+export default CommentButtons;

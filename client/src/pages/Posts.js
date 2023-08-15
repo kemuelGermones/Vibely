@@ -2,10 +2,9 @@ import { Fragment } from "react";
 
 import { getPosts } from "../api/post";
 import useAuth from "../hooks/useAuth";
-import Navbar from "../components/navbar/Navbar";
-import UserList from "../components/user/UserList";
-import UserDetails from "../components/user/UserDetails";
-import PostList from "../components/post/PostList";
+import Navbar from "../components/ui/Navbar";
+import User from "../components/user/User";
+import ListPost from "../components/post/ListPost";
 import Advertisement from "../components/advertisement/Advertisement";
 import CreatePost from "../components/post/CreatePost";
 
@@ -19,12 +18,11 @@ function Posts() {
       <Navbar />
       <main className="container mx-auto mt-12 p-3 sm:grid sm:grid-cols-[1fr_1.5fr] sm:gap-3 lg:grid-cols-[1fr_1.5fr_1fr]">
         <aside className="hidden sm:block sm:flex sm:flex-col sm:gap-3">
-          <UserDetails userId={user.uid} />
-          <UserList />
+          <User userId={user.uid} />
         </aside>
         <section className="flex flex-col gap-3">
           <CreatePost />
-          <PostList queryKey={["posts"]} queryFn={handleQueryFn} />
+          <ListPost queryKey={["posts"]} queryFn={handleQueryFn} />
         </section>
         <aside className="hidden lg:block">
           <Advertisement />

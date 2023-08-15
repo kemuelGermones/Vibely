@@ -1,38 +1,60 @@
+import { BsThreeDots, BsXLg } from "react-icons/bs";
+
 import useAuth from "../../hooks/useAuth";
-import PostCarousel from "./PostCarousel";
-import PostDropdown from "./PostDropdown";
-import PostButtonGroup from "./PostButtonGroup";
+import useModal from "../../hooks/useModal";
+import UpdatePostForm from "./UpdatePostForm";
+import DeletePostForm from "./DeletePostForm";
+import PostButtons from "./PostButtons";
+import IconButton from "../ui/IconButton";
+import Card from "../ui/Card";
+import Avatar from "../ui/Avatar";
+import Header from "../ui/Header";
+import Carousel from "../ui/Carousel";
 
 function Post({ data }) {
   const { user } = useAuth();
+  const { openModal } = useModal();
 
+  const showUpdatePostForm = () => {
+    openModal(<UpdatePostForm postId={data.id} caption={data.caption} />);
+  };
+
+  const showDeletePostForm = () => {
+    openModal(<DeletePostForm postId={data.id} />);
+  };
+
+  const updateButton = (
+    <IconButton content="Update" onClick={showUpdatePostForm}>
+      <BsThreeDots size="1.5em" />
+    </IconButton>
+  );
+
+  const deleteButton = (
+    <IconButton content="Delete" onClick={showDeletePostForm}>
+      <BsXLg size="1.3em" />
+    </IconButton>
+  );
   return (
-    <div className="rounded-lg bg-white p-3 shadow">
-      <div className="flex flex-col gap-3">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="h-10 w-10 shrink-0">
-              <img
-                className="h-full w-full rounded-full object-cover"
-                src={data.user.avatar.url}
-              />
-            </div>
-            <div>
-              <div className="font-semibold">{data.user.username}</div>
-              <div className="text-sm text-gray-500">
-                {`${data.user.firstname} ${data.user.lastname}`}
-              </div>
-            </div>
-          </div>
-          {data.user.id === user.uid ? (
-            <PostDropdown postId={data.id} caption={data.caption} />
-          ) : null}
+    <Card>
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-3">
+          <Avatar src={data.user.avatar.url} />
+          <Header
+            username={data.user.username}
+            fullname={`${data.user.firstname} ${data.user.lastname}`}
+          />
         </div>
-        <p>{data.caption}</p>
-        <PostCarousel images={data.images} />
-        <PostButtonGroup postId={data.id} totalComments={data.comments} />
+        {data.user.id === user.uid ? (
+          <div className="flex gap-3">
+            {updateButton}
+            {deleteButton}
+          </div>
+        ) : null}
       </div>
-    </div>
+      <p>{data.caption}</p>
+      <Carousel images={data.images} />
+      <PostButtons postId={data.id} totalComments={data.comments} />
+    </Card>
   );
 }
 

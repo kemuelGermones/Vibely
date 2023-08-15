@@ -1,8 +1,10 @@
 import { BsExclamationTriangle } from "react-icons/bs";
 
-function CommentError() {
+import Card from "../ui/Card";
+
+function ErrorPost() {
   return (
-    <div className="flex gap-3">
+    <Card>
       <BsExclamationTriangle
         className="w-10 shrink-0 text-red-500"
         size="1.5em"
@@ -11,8 +13,8 @@ function CommentError() {
         <h1 className="font-semibold">Something went wrong</h1>
         <p>An error occured while trying to fetch posts.</p>
       </div>
-    </div>
+    </Card>
   );
 }
 
-export default CommentError;
+export default ErrorPost;
