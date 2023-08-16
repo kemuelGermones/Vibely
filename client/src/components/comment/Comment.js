@@ -1,4 +1,4 @@
-import CommentButtons from "./CommentButtons";
+import CommentIcons from "./CommentIcons";
 import Avatar from "../ui/Avatar";
 
 function Comment({ postId, data }) {
@@ -8,7 +8,7 @@ function Comment({ postId, data }) {
       <div className="flex flex-col">
         <div className="flex justify-between">
           <div className="font-semibold">{data.user.username}</div>
-          <CommentButtons
+          <CommentIcons
             postId={postId}
             commentId={data.id}
             userId={data.user.id}

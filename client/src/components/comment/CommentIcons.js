@@ -7,7 +7,7 @@ import useAuth from "../../hooks/useAuth";
 import handleError from "../../utils/handleError";
 import IconButton from "../ui/IconButton";
 
-function CommentButtons({ postId, commentId, userId }) {
+function CommentIcons({ postId, commentId, userId }) {
   const { user } = useAuth();
   const queryClient = useQueryClient();
 
@@ -26,28 +26,26 @@ function CommentButtons({ postId, commentId, userId }) {
     mutate({ postId, commentId });
   };
 
-  const deleteButton = (
-    <IconButton content="Delete" disabled={isLoading} onClick={handleDelete}>
-      {isLoading ? (
-        <AiOutlineLoading3Quarters className="animate-spin outline-none" />
-      ) : (
-        <BsTrash className="outline-none" />
-      )}
-    </IconButton>
-  );
-
-  const likeButton = (
-    <IconButton content="Like">
-      <BsHeart />
-    </IconButton>
-  );
-
   return (
     <div className="flex items-center gap-3">
-      {user.uid === userId ? deleteButton : null}
-      {likeButton}
+      {user.uid === userId ? (
+        <IconButton
+          content="Delete"
+          disabled={isLoading}
+          onClick={handleDelete}
+        >
+          {isLoading ? (
+            <AiOutlineLoading3Quarters className="animate-spin" />
+          ) : (
+            <BsTrash />
+          )}
+        </IconButton>
+      ) : null}
+      <IconButton content="Like">
+        <BsHeart />
+      </IconButton>
     </div>
   );
 }
 
-export default CommentButtons;
+export default CommentIcons;
