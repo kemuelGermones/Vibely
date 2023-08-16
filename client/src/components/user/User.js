@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 
 import { getUser } from "../../api/user";
 import LoadUser from "./LoadUser";
-import UserButtons from "./UserButtons";
+import UserIcons from "./UserIcons";
 import ErrorUser from "./ErrorUser";
 import Card from "../ui/Card";
 import Avatar from "../ui/Avatar";
@@ -33,7 +33,7 @@ function User({ userId }) {
             </div>
           </div>
         </div>
-        <UserButtons />
+        <UserIcons />
       </div>
       <div className="flex justify-around">
         <button>100 followers</button>
