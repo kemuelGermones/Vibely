@@ -12,7 +12,7 @@ function ListMessage() {
       <h1>Messages</h1>
       <ul className="h-[calc(100vh-8.3rem)] overflow-y-auto">
         <li
-          className="cursor-pointer rounded-lg p-3 hover:bg-yellow-300"
+          className="cursor-pointer rounded-lg p-3 hover:bg-yellow-400"
           onClick={() => {
             openModal(<Message />);
           }}

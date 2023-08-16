@@ -13,7 +13,7 @@ function Textarea({
       className={`resize-none rounded-lg p-3 shadow ${height ? height : ""}  ${
         error
           ? "border-red-500 bg-[url('../public/warning.svg')] bg-[length:1.3rem] bg-[right_0.5rem_top_0.5rem] bg-no-repeat focus:border-red-500 focus:ring-red-500"
-          : "border-yellow-300 focus:border-yellow-300 focus:ring-yellow-300"
+          : "border-yellow-400 focus:border-yellow-400 focus:ring-yellow-400"
       }`}
       id={id}
       name={name}

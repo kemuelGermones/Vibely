@@ -1,5 +1,7 @@
 import { useNavigate } from "react-router-dom";
 
+import Button from "../components/ui/Button";
+
 function Error() {
   const navigate = useNavigate();
 
@@ -14,13 +16,9 @@ function Error() {
       <p className="text-center text-gray-500">
         Oops! We couldn't find the page you are looking for.
       </p>
-      <button
-        className="rounded-lg bg-gray-500 px-4 py-2 text-sm font-semibold text-white shadow hover:bg-gray-700 focus:outline-none"
-        type="button"
-        onClick={handleHomepage}
-      >
+      <Button theme="secondary" type="button" onClick={handleHomepage}>
         Go to homepage
-      </button>
+      </Button>
     </main>
   );
 }

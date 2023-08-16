@@ -78,7 +78,7 @@ function CreatePostForm() {
           onChange={handleChangeImages}
           onBlur={handleBlur}
         >
-          <BsCloudUpload className="text-yellow-300" size="2.5em" />
+          <BsCloudUpload className="text-yellow-400" size="2.5em" />
         </FileInput>
         <Button type="submit" disabled={isLoading}>
           {isLoading ? "Loading..." : "Submit"}

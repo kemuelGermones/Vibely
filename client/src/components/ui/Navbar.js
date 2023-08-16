@@ -51,12 +51,12 @@ function Navbar() {
 
   return (
     <Fragment>
-      <nav className="fixed left-0 top-0 z-20 w-full bg-yellow-300">
+      <nav className="fixed left-0 top-0 z-20 w-full bg-yellow-400">
         <main className="container mx-auto flex items-center gap-3 px-3">
           <h1 className="font-shrikhand text-xl">Vibely</h1>
           <ul className="grid h-12 w-full grid-cols-5 sm:w-80">
             <li
-              className="flex cursor-pointer items-center justify-center hover:bg-yellow-400"
+              className="flex cursor-pointer items-center justify-center hover:bg-yellow-500"
               data-tooltip-id="navbar"
               data-tooltip-content="Search"
               onClick={showSearch}
@@ -64,7 +64,7 @@ function Navbar() {
               <BsSearch className="shrink-0" size="1.5em" />
             </li>
             <li
-              className="flex cursor-pointer items-center justify-center hover:bg-yellow-400"
+              className="flex cursor-pointer items-center justify-center hover:bg-yellow-500"
               data-tooltip-id="navbar"
               data-tooltip-content="Posts"
               onClick={navigateToPosts}
@@ -72,7 +72,7 @@ function Navbar() {
               <BsLayoutTextWindowReverse className="shrink-0" size="1.5em" />
             </li>
             <li
-              className="flex cursor-pointer items-center justify-center hover:bg-yellow-400"
+              className="flex cursor-pointer items-center justify-center hover:bg-yellow-500"
               data-tooltip-id="navbar"
               data-tooltip-content="Messages"
               onClick={navigateToMessages}
@@ -80,7 +80,7 @@ function Navbar() {
               <BsEnvelope className="shrink-0" size="1.5em" />
             </li>
             <li
-              className="flex cursor-pointer items-center justify-center hover:bg-yellow-400"
+              className="flex cursor-pointer items-center justify-center hover:bg-yellow-500"
               data-tooltip-id="navbar"
               data-tooltip-content="Profile"
               onClick={navigateToProfile}
@@ -88,7 +88,7 @@ function Navbar() {
               <BsPerson className="shrink-0" size="1.5em" />
             </li>
             <li
-              className="flex cursor-pointer items-center justify-center hover:bg-yellow-400"
+              className="flex cursor-pointer items-center justify-center hover:bg-yellow-500"
               data-tooltip-id="navbar"
               data-tooltip-content="Sign out"
               onClick={handleSignout}

@@ -120,7 +120,7 @@ function SignupForm() {
         >
           <div className="h-24 w-24 shrink-0">
             <img
-              className="h-full w-full rounded-full bg-yellow-100 object-cover"
+              className="h-full w-full rounded-full bg-yellow-400 object-cover"
               src={
                 values.avatar && !errors.avatar
                   ? URL.createObjectURL(values.avatar)
