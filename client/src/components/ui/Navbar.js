@@ -5,9 +5,8 @@ import { Tooltip } from "react-tooltip";
 import {
   BsSearch,
   BsPerson,
-  BsChatSquareText,
   BsBoxArrowRight,
-  BsLayoutTextWindowReverse,
+  BsCardText,
   BsEnvelope,
 } from "react-icons/bs";
 import "react-tooltip/dist/react-tooltip.css";
@@ -69,7 +68,7 @@ function Navbar() {
               data-tooltip-content="Posts"
               onClick={navigateToPosts}
             >
-              <BsLayoutTextWindowReverse className="shrink-0" size="1.5em" />
+              <BsCardText className="shrink-0" size="1.5em" />
             </li>
             <li
               className="flex cursor-pointer items-center justify-center hover:bg-yellow-500"

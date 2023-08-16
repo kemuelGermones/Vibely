@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { BsXCircle } from "react-icons/bs";
+import { BsTrash } from "react-icons/bs";
 
 import { deletePost } from "../../api/post";
 import useModal from "../../hooks/useModal";
@@ -28,7 +28,7 @@ function DeletePostModal({ postId }) {
   return (
     <Card>
       <div className="flex cursor-pointer flex-col items-center gap-3 rounded-lg border border-red-500 p-6 shadow">
-        <BsXCircle className="text-red-500" size="2.5em" />
+        <BsTrash className="text-red-500" size="2.5em" />
         <h1 className="text-center text-xl text-gray-700">Are you sure?</h1>
         <p className="text-center text-gray-500">
           You won't be able to revert this.
