@@ -1,13 +1,13 @@
-import { BsThreeDots, BsXLg } from "react-icons/bs";
+import { BsPencilSquare, BsTrash } from "react-icons/bs";
 
 import useAuth from "../../hooks/useAuth";
 import useModal from "../../hooks/useModal";
 import UpdatePostForm from "./UpdatePostForm";
 import DeletePostModal from "./DeletePostModal";
 import PostIcons from "./PostIcons";
-import IconButton from "../ui/IconButton";
 import Card from "../ui/Card";
 import Avatar from "../ui/Avatar";
+import Dropdown from "../ui/Dropdown";
 import Carousel from "../ui/Carousel";
 
 function Post({ data }) {
@@ -22,17 +22,6 @@ function Post({ data }) {
     openModal(<DeletePostModal postId={data.id} />);
   };
 
-  const updateButton = (
-    <IconButton content="Update" onClick={showUpdatePostForm}>
-      <BsThreeDots size="1.5em" />
-    </IconButton>
-  );
-
-  const deleteButton = (
-    <IconButton content="Delete" onClick={showDeletePostModal}>
-      <BsXLg size="1.3em" />
-    </IconButton>
-  );
   return (
     <Card>
       <div className="flex items-center justify-between">
@@ -46,10 +35,16 @@ function Post({ data }) {
           </div>
         </div>
         {data.user.id === user.uid ? (
-          <div className="flex gap-3">
-            {updateButton}
-            {deleteButton}
-          </div>
+          <Dropdown>
+            <button onClick={showUpdatePostForm}>
+              <BsPencilSquare />
+              <div>Update</div>
+            </button>
+            <button onClick={showDeletePostModal}>
+              <BsTrash />
+              <div>Delete</div>
+            </button>
+          </Dropdown>
         ) : null}
       </div>
       <p>{data.caption}</p>
