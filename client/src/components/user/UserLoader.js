@@ -1,6 +1,6 @@
 import Card from "../ui/Card";
 
-function LoadUser() {
+function UserLoader() {
   return (
     <Card>
       <div className="flex items-center gap-3">
@@ -18,4 +18,4 @@ function LoadUser() {
   );
 }
 
-export default LoadUser;
+export default UserLoader;

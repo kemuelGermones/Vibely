@@ -1,9 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
 
 import { getUser } from "../../api/user";
-import LoadUser from "./LoadUser";
+import UserLoader from "./UserLoader";
 import UserIcons from "./UserIcons";
-import ErrorUser from "./ErrorUser";
+import UserError from "./UserError";
 import Card from "../ui/Card";
 import Avatar from "../ui/Avatar";
 
@@ -14,11 +14,11 @@ function User({ userId }) {
   });
 
   if (isLoading) {
-    return <LoadUser />;
+    return <UserLoader />;
   }
 
   if (isError) {
-    return <ErrorUser />;
+    return <UserError />;
   }
 
   return (

@@ -2,7 +2,7 @@ import { BsExclamationTriangle } from "react-icons/bs";
 
 import Card from "../ui/Card";
 
-function ErrorUser() {
+function UserError() {
   return (
     <Card>
       <div className="flex gap-3 [&>*:nth-child(2)]:grow">
@@ -19,4 +19,4 @@ function ErrorUser() {
   );
 }
 
-export default ErrorUser;
+export default UserError;
