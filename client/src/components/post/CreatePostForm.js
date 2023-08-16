@@ -74,6 +74,7 @@ function CreatePostForm() {
           description="Upload less than or equals to 5 images PNG, JPG or JPEG."
           id="images"
           name="images"
+          multiple={true}
           onChange={handleChangeImages}
           onBlur={handleBlur}
         >

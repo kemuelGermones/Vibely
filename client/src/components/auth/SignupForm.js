@@ -114,6 +114,7 @@ function SignupForm() {
           description="Upload your avatar PNG, JPG or JPEG."
           id="avatar"
           name="avatar"
+          multiple={false}
           onChange={handleChangeAvatar}
           onBlur={handleBlur}
         >

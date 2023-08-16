@@ -4,6 +4,7 @@ function FileInput({
   description,
   id,
   name,
+  multiple,
   onChange,
   onBlur,
   children,
@@ -25,6 +26,7 @@ function FileInput({
         type="file"
         id={id}
         name={name}
+        multiple={multiple}
         onChange={onChange}
         onBlur={onBlur}
       />
