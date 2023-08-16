@@ -1,14 +1,14 @@
 import { BsHeart, BsChatSquare } from "react-icons/bs";
 
 import useModal from "../../hooks/useModal";
-import ModalComment from "../comment/ModalComment";
+import CommentModal from "../comment/CommentModal";
 import IconButton from "../ui/IconButton";
 
 function PostIcons({ postId, totalComments }) {
   const { openModal } = useModal();
 
   const showComments = () => {
-    openModal(<ModalComment postId={postId} />);
+    openModal(<CommentModal postId={postId} />);
   };
 
   return (

@@ -1,6 +1,6 @@
 import { BsExclamationTriangle } from "react-icons/bs";
 
-function ErrorComment() {
+function CommentError() {
   return (
     <div className="flex gap-3 [&>*:nth-child(2)]:grow">
       <BsExclamationTriangle
@@ -15,4 +15,4 @@ function ErrorComment() {
   );
 }
 
-export default ErrorComment;
+export default CommentError;

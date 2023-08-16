@@ -1,14 +1,14 @@
 import CreateCommentForm from "./CreateCommentForm";
-import ListComment from "./ListComment";
+import CommentList from "./CommentList";
 import Card from "../ui/Card";
 
-function ModalComment({ postId }) {
+function CommentModal({ postId }) {
   return (
     <Card>
       <CreateCommentForm postId={postId} />
-      <ListComment postId={postId} />
+      <CommentList postId={postId} />
     </Card>
   );
 }
 
-export default ModalComment;
+export default CommentModal;
