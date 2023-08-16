@@ -4,7 +4,7 @@ import useAuth from "../../hooks/useAuth";
 import useModal from "../../hooks/useModal";
 import UpdatePostForm from "./UpdatePostForm";
 import DeletePostForm from "./DeletePostForm";
-import PostButtons from "./PostButtons";
+import PostIcons from "./PostIcons";
 import IconButton from "../ui/IconButton";
 import Card from "../ui/Card";
 import Avatar from "../ui/Avatar";
@@ -54,7 +54,7 @@ function Post({ data }) {
       </div>
       <p>{data.caption}</p>
       <Carousel images={data.images} />
-      <PostButtons postId={data.id} totalComments={data.comments} />
+      <PostIcons postId={data.id} totalComments={data.comments} />
     </Card>
   );
 }
