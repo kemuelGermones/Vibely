@@ -4,7 +4,7 @@ import useAuth from "../hooks/useAuth";
 import Advertisement from "../components/advertisement/Advertisement";
 import Navbar from "../components/ui/Navbar";
 import User from "../components/user/User";
-import ListMessage from "../components/message/ListMessage";
+import MessageList from "../components/message/MessageList";
 
 function Messages() {
   const { user } = useAuth();
@@ -17,7 +17,7 @@ function Messages() {
           <User userId={user.uid} />
         </aside>
         <section>
-          <ListMessage />
+          <MessageList />
         </section>
         <aside className="hidden lg:block">
           <Advertisement />

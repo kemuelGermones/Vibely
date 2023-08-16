@@ -3,7 +3,7 @@ import Card from "../ui/Card";
 import Message from "./Message";
 import Avatar from "../ui/Avatar";
 
-function ListMessage() {
+function MessageList() {
   const { openModal } = useModal();
 
   return (
@@ -29,4 +29,4 @@ function ListMessage() {
   );
 }
 
-export default ListMessage;
+export default MessageList;
