@@ -4,7 +4,7 @@ import { getPosts } from "../api/post";
 import useAuth from "../hooks/useAuth";
 import Navbar from "../components/ui/Navbar";
 import User from "../components/user/User";
-import ListPost from "../components/post/ListPost";
+import PostList from "../components/post/PostList";
 import Advertisement from "../components/advertisement/Advertisement";
 import CreatePost from "../components/post/CreatePost";
 
@@ -22,7 +22,7 @@ function Posts() {
         </aside>
         <section className="flex flex-col gap-3">
           <CreatePost />
-          <ListPost queryKey={["posts"]} queryFn={handleQueryFn} />
+          <PostList queryKey={["posts"]} queryFn={handleQueryFn} />
         </section>
         <aside className="hidden lg:block">
           <Advertisement />

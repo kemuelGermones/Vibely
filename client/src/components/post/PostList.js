@@ -3,10 +3,10 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import InfiniteScroll from "react-infinite-scroll-component";
 
 import Post from "./Post";
-import LoadPost from "./LoadPost";
-import ErrorPost from "./ErrorPost";
+import PostLoader from "./PostLoader";
+import PostError from "./PostError";
 
-function ListPost({ queryKey, queryFn }) {
+function PostList({ queryKey, queryFn }) {
   const { data, fetchNextPage, hasNextPage, isLoading, isError } =
     useInfiniteQuery({
       queryKey,
@@ -28,18 +28,18 @@ function ListPost({ queryKey, queryFn }) {
   }, [data]);
 
   if (isLoading) {
-    return <LoadPost />;
+    return <PostLoader />;
   }
 
   if (isError) {
-    return <ErrorPost />;
+    return <PostError />;
   }
 
   return (
     <InfiniteScroll
       className="flex flex-col gap-3"
       style={{ overflow: "visible" }}
-      loader={<LoadPost />}
+      loader={<PostLoader />}
       dataLength={posts.length}
       next={fetchNextPage}
       hasMore={hasNextPage}
@@ -51,4 +51,4 @@ function ListPost({ queryKey, queryFn }) {
   );
 }
 
-export default ListPost;
+export default PostList;

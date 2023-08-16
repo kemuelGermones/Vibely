@@ -7,7 +7,7 @@ import handleError from "../../utils/handleError";
 import Card from "../ui/Card";
 import Button from "../ui/Button";
 
-function DeletePostForm({ postId }) {
+function DeletePostModal({ postId }) {
   const { closeModal } = useModal();
   const queryClient = useQueryClient();
 
@@ -56,4 +56,4 @@ function DeletePostForm({ postId }) {
   );
 }
 
-export default DeletePostForm;
+export default DeletePostModal;

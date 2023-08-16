@@ -1,6 +1,6 @@
 import Card from "../ui/Card";
 
-function LoadPost() {
+function PostLoader() {
   return (
     <Card>
       <div className="flex items-center gap-3">
@@ -26,4 +26,4 @@ function LoadPost() {
   );
 }
 
-export default LoadPost;
+export default PostLoader;

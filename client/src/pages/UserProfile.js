@@ -5,7 +5,7 @@ import { getUserPosts } from "../api/user";
 import Navbar from "../components/ui/Navbar";
 import User from "../components/user/User";
 import Advertisement from "../components/advertisement/Advertisement";
-import ListPost from "../components/post/ListPost";
+import PostList from "../components/post/PostList";
 
 function UserProfile() {
   const { userId } = useParams();
@@ -22,7 +22,7 @@ function UserProfile() {
         </aside>
         <section className="flex flex-col gap-3">
           <User userId={userId} />
-          <ListPost
+          <PostList
             queryKey={["users", userId, "posts"]}
             queryFn={handleQueryFn}
           />

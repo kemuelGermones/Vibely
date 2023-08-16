@@ -3,7 +3,7 @@ import { BsThreeDots, BsXLg } from "react-icons/bs";
 import useAuth from "../../hooks/useAuth";
 import useModal from "../../hooks/useModal";
 import UpdatePostForm from "./UpdatePostForm";
-import DeletePostForm from "./DeletePostForm";
+import DeletePostModal from "./DeletePostModal";
 import PostIcons from "./PostIcons";
 import IconButton from "../ui/IconButton";
 import Card from "../ui/Card";
@@ -18,8 +18,8 @@ function Post({ data }) {
     openModal(<UpdatePostForm postId={data.id} caption={data.caption} />);
   };
 
-  const showDeletePostForm = () => {
-    openModal(<DeletePostForm postId={data.id} />);
+  const showDeletePostModal = () => {
+    openModal(<DeletePostModal postId={data.id} />);
   };
 
   const updateButton = (
@@ -29,7 +29,7 @@ function Post({ data }) {
   );
 
   const deleteButton = (
-    <IconButton content="Delete" onClick={showDeletePostForm}>
+    <IconButton content="Delete" onClick={showDeletePostModal}>
       <BsXLg size="1.3em" />
     </IconButton>
   );
