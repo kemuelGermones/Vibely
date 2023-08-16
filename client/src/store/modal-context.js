@@ -18,13 +18,13 @@ export function ModalContextProvider({ children }) {
     document.body.style.overflow = "unset";
   };
 
-  const modalWithBackdrop = modal ? (
+  const popOver = modal ? (
     <Fragment>
       <div
         className="fixed left-0 top-0 z-30 h-screen w-full bg-stone-900/20 backdrop-blur-sm"
         onClick={closeModal}
       ></div>
-      <main className="container fixed left-1/2 top-1/2 z-40 -translate-x-1/2 -translate-y-1/2 px-3 sm:max-w-screen-sm">
+      <main className="fixed left-1/2 top-1/2 z-40 w-[calc(100vw-24px)] -translate-x-1/2 -translate-y-1/2 sm:w-[640px]">
         {modal}
       </main>
     </Fragment>
@@ -32,7 +32,7 @@ export function ModalContextProvider({ children }) {
 
   return (
     <ModalContext.Provider value={{ openModal, closeModal }}>
-      {modalWithBackdrop}
+      {popOver}
       {children}
     </ModalContext.Provider>
   );
