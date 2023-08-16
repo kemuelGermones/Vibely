@@ -13,7 +13,7 @@ function CreatePost() {
 
   return (
     <Card>
-      <div className="flex items-center gap-3">
+      <div className="flex items-center gap-3 [&>*:nth-child(2)]:grow">
         <Avatar src="https://images.pexels.com/photos/1334945/pexels-photo-1334945.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" />
         <Input
           type="text"
