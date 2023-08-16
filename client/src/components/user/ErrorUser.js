@@ -5,7 +5,7 @@ import Card from "../ui/Card";
 function ErrorUser() {
   return (
     <Card>
-      <div className="flex gap-3">
+      <div className="flex gap-3 [&>*:nth-child(2)]:grow">
         <BsExclamationTriangle
           className="w-10 shrink-0 text-red-500"
           size="1.5em"
