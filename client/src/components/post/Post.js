@@ -8,7 +8,6 @@ import PostButtons from "./PostButtons";
 import IconButton from "../ui/IconButton";
 import Card from "../ui/Card";
 import Avatar from "../ui/Avatar";
-import Header from "../ui/Header";
 import Carousel from "../ui/Carousel";
 
 function Post({ data }) {
@@ -39,10 +38,12 @@ function Post({ data }) {
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
           <Avatar src={data.user.avatar.url} />
-          <Header
-            username={data.user.username}
-            fullname={`${data.user.firstname} ${data.user.lastname}`}
-          />
+          <div>
+            <div className="font-semibold">{data.user.username}</div>
+            <div className="text-sm text-gray-500">
+              {`${data.user.firstname} ${data.user.lastname}`}
+            </div>
+          </div>
         </div>
         {data.user.id === user.uid ? (
           <div className="flex gap-3">

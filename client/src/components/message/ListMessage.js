@@ -2,7 +2,6 @@ import useModal from "../../hooks/useModal";
 import Card from "../ui/Card";
 import Message from "./Message";
 import Avatar from "../ui/Avatar";
-import Header from "../ui/Header";
 
 function ListMessage() {
   const { openModal } = useModal();
@@ -19,7 +18,10 @@ function ListMessage() {
         >
           <div className="flex items-center gap-3">
             <Avatar src="https://images.pexels.com/photos/1334945/pexels-photo-1334945.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" />
-            <Header username="theAdmiral" fullname="John Doe" />
+            <div>
+              <div className="font-semibold">theAdmiral</div>
+              <div className="text-sm text-gray-500">John Doe</div>
+            </div>
           </div>
         </li>
       </ul>

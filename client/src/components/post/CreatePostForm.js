@@ -8,7 +8,6 @@ import validateImages from "../../utils/validateImages";
 import handleError from "../../utils/handleError";
 import useModal from "../../hooks/useModal";
 import Card from "../ui/Card";
-import Form from "../ui/Form";
 import Textarea from "../ui/Textarea";
 import FileInput from "../ui/FileInput";
 import Button from "../ui/Button";
@@ -55,7 +54,7 @@ function CreatePostForm() {
 
   return (
     <Card>
-      <Form onSubmit={handleSubmit}>
+      <form className="flex flex-col gap-3" onSubmit={handleSubmit}>
         <Textarea
           id="caption"
           name="caption"
@@ -83,7 +82,7 @@ function CreatePostForm() {
         <Button type="submit" disabled={isLoading}>
           {isLoading ? "Loading..." : "Submit"}
         </Button>
-      </Form>
+      </form>
     </Card>
   );
 }

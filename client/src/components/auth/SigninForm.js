@@ -6,7 +6,6 @@ import * as yup from "yup";
 import { signin } from "../../api/auth";
 import handleError from "../../utils/handleError";
 import Card from "../ui/Card";
-import Form from "../ui/Form";
 import Input from "../ui/Input";
 import Button from "../ui/Button";
 
@@ -35,7 +34,7 @@ function SigninForm() {
   return (
     <Card>
       <h1 className="text-center font-shrikhand text-2xl">Vibely</h1>
-      <Form onSubmit={handleSubmit}>
+      <form className="flex flex-col gap-3" onSubmit={handleSubmit}>
         <Input
           error={touched.email && errors.email}
           id="email"
@@ -59,7 +58,7 @@ function SigninForm() {
         <Button type="submit" disabled={isLoading}>
           {isLoading ? "Loading..." : "Submit"}
         </Button>
-      </Form>
+      </form>
       <p className="text-center">
         No account?{" "}
         <Link

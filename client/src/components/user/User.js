@@ -6,7 +6,6 @@ import UserButtons from "./UserButtons";
 import ErrorUser from "./ErrorUser";
 import Card from "../ui/Card";
 import Avatar from "../ui/Avatar";
-import Header from "../ui/Header";
 
 function User({ userId }) {
   const { isLoading, isError, data } = useQuery({
@@ -27,10 +26,12 @@ function User({ userId }) {
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
           <Avatar src={data.items.avatar.url} />
-          <Header
-            username={data.items.username}
-            fullname={`${data.items.firstname} ${data.items.lastname}`}
-          />
+          <div>
+            <div className="font-semibold">{data.items.username}</div>
+            <div className="text-sm text-gray-500">
+              {`${data.items.firstname} ${data.items.lastname}`}
+            </div>
+          </div>
         </div>
         <UserButtons />
       </div>

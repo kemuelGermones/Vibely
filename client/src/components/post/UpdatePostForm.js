@@ -6,7 +6,6 @@ import { updatePost } from "../../api/post";
 import useModal from "../../hooks/useModal";
 import handleError from "../../utils/handleError";
 import Card from "../ui/Card";
-import Form from "../ui/Form";
 import Textarea from "../ui/Textarea";
 import Button from "../ui/Button";
 
@@ -39,7 +38,7 @@ function UpdatePostForm({ postId, caption }) {
 
   return (
     <Card>
-      <Form onSubmit={handleSubmit}>
+      <form className="flex flex-col gap-3" onSubmit={handleSubmit}>
         <Textarea
           height="h-44"
           id="caption"
@@ -53,7 +52,7 @@ function UpdatePostForm({ postId, caption }) {
         <Button type="submit" disabled={isLoading}>
           {isLoading ? "Loading..." : "Submit"}
         </Button>
-      </Form>
+      </form>
     </Card>
   );
 }

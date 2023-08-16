@@ -7,7 +7,6 @@ import { signup } from "../../api/auth";
 import validateAvatar from "../../utils/validateAvatar";
 import handleError from "../../utils/handleError";
 import Card from "../ui/Card";
-import Form from "../ui/Form";
 import Input from "../ui/Input";
 import FileInput from "../ui/FileInput";
 import Button from "../ui/Button";
@@ -56,7 +55,7 @@ function SignupForm() {
   return (
     <Card>
       <h1 className="text-center font-shrikhand text-2xl">Vibely</h1>
-      <Form onSubmit={handleSubmit}>
+      <form className="flex flex-col gap-3" onSubmit={handleSubmit}>
         <div className="flex flex-col gap-3 sm:flex-row">
           <Input
             error={touched.firstname && errors.firstname}
@@ -132,7 +131,7 @@ function SignupForm() {
         <Button type="submit" disabled={isLoading}>
           {isLoading ? "Loading..." : "Submit"}
         </Button>
-      </Form>
+      </form>
       <p className="text-center">
         Have an account?{" "}
         <Link
