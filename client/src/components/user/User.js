@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 
 import { getUser } from "../../api/user";
+import useAuth from "../../hooks/useAuth";
 import UserLoader from "./UserLoader";
 import UserIcons from "./UserIcons";
 import UserError from "./UserError";
@@ -8,6 +9,8 @@ import Card from "../ui/Card";
 import Avatar from "../ui/Avatar";
 
 function User({ userId }) {
+  const { user } = useAuth();
+
   const { isLoading, isError, data } = useQuery({
     queryKey: ["users", userId],
     queryFn: () => getUser(userId),
@@ -33,7 +36,7 @@ function User({ userId }) {
             </div>
           </div>
         </div>
-        <UserIcons />
+        {userId !== user.uid ? <UserIcons /> : null}
       </div>
       <div className="flex justify-around">
         <button>100 followers</button>

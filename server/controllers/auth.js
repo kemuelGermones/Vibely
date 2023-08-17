@@ -19,6 +19,7 @@ module.exports.signup = async (req, res) => {
       email: req.body.email,
       password: req.body.password,
       uid: user.id,
+      photoURL: req.file.url,
     });
   });
 
