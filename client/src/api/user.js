@@ -13,17 +13,3 @@ export const getUser = async (userId) => {
 
   return response.data;
 };
-
-export const getUserPosts = async ({ userId, pageParam }) => {
-  const user = auth.currentUser;
-  const token = await getIdToken(user);
-
-  const response = await axios(
-    `http://localhost:5000/users/${userId}/posts?page=${pageParam}`,
-    {
-      headers: { Authorization: `Bearer ${token}` },
-    }
-  );
-
-  return response.data;
-};

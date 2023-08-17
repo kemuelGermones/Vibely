@@ -2,15 +2,16 @@ import { useMemo } from "react";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import InfiniteScroll from "react-infinite-scroll-component";
 
+import { getPosts } from "../../api/post";
 import Post from "./Post";
 import PostLoader from "./PostLoader";
 import PostError from "./PostError";
 
-function PostList({ queryKey, queryFn }) {
+function PostList({ userId }) {
   const { data, fetchNextPage, hasNextPage, isLoading, isError } =
     useInfiniteQuery({
-      queryKey,
-      queryFn,
+      queryKey: userId ? ["posts", { user: userId }] : ["posts"],
+      queryFn: ({ pageParam = 0 }) => getPosts({ userId, pageParam }),
       getNextPageParam: (lastPage, allPages) => {
         const posts = lastPage.items;
         return posts.length ? allPages.length : undefined;

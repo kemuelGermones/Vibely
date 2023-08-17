@@ -19,8 +19,9 @@ export const getComments = async ({ postId, pageParam }) => {
   const token = await getIdToken(user);
 
   const response = await axios(
-    `http://localhost:5000/posts/${postId}/comments?page=${pageParam}`,
+    `http://localhost:5000/posts/${postId}/comments`,
     {
+      params: { page: pageParam },
       headers: { Authorization: `Bearer ${token}` },
     }
   );

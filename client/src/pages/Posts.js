@@ -1,6 +1,5 @@
 import { Fragment } from "react";
 
-import { getPosts } from "../api/post";
 import useAuth from "../hooks/useAuth";
 import Navbar from "../components/ui/Navbar";
 import User from "../components/user/User";
@@ -11,8 +10,6 @@ import CreatePost from "../components/post/CreatePost";
 function Posts() {
   const { user } = useAuth();
 
-  const handleQueryFn = ({ pageParam = 0 }) => getPosts(pageParam);
-
   return (
     <Fragment>
       <Navbar />
@@ -22,7 +19,7 @@ function Posts() {
         </aside>
         <section className="flex flex-col gap-3">
           <CreatePost />
-          <PostList queryKey={["posts"]} queryFn={handleQueryFn} />
+          <PostList />
         </section>
         <aside className="hidden lg:block">
           <Advertisement />
