@@ -28,16 +28,16 @@ export const createPost = async (values) => {
   });
 };
 
-export const getPosts = async ({ userId, pageParam }) => {
+export const getPosts = async ({ page, search }) => {
   const user = auth.currentUser;
   const token = await getIdToken(user);
 
   const response = await axios("http://localhost:5000/posts", {
-    params: { page: pageParam, user: userId },
+    params: { page, search },
     headers: { Authorization: `Bearer ${token}` },
   });
 
-  return response.data;
+  return response.data.items;
 };
 
 export const updatePost = async ({ postId, values }) => {

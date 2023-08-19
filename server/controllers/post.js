@@ -5,9 +5,9 @@ const cloudinary = require("../config/cloudinary");
 
 module.exports.getPosts = async (req, res) => {
   const limit = 10;
-  const { page, user } = req.query;
+  const { page, search } = req.query;
   const offset = page ? Number(page) * limit : 0;
-  const where = user ? { userId: user } : undefined;
+  const where = search ? { userId: search } : undefined;
 
   const posts = await Post.findAll({
     limit,
