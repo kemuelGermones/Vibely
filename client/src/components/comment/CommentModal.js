@@ -6,7 +6,9 @@ function CommentModal({ postId }) {
   return (
     <Card>
       <CreateCommentForm postId={postId} />
-      <CommentList postId={postId} />
+      <div id="commentList" className="h-80 overflow-y-auto">
+        <CommentList postId={postId} />
+      </div>
     </Card>
   );
 }

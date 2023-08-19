@@ -14,19 +14,19 @@ export const createComment = async ({ postId, values }) => {
   });
 };
 
-export const getComments = async ({ postId, pageParam }) => {
+export const getComments = async ({ postId, page }) => {
   const user = auth.currentUser;
   const token = await getIdToken(user);
 
   const response = await axios(
     `http://localhost:5000/posts/${postId}/comments`,
     {
-      params: { page: pageParam },
+      params: { page },
       headers: { Authorization: `Bearer ${token}` },
     }
   );
 
-  return response.data;
+  return response.data.items;
 };
 
 export const deleteComment = async ({ postId, commentId }) => {
