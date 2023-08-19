@@ -13,14 +13,14 @@ const queryClient = new QueryClient();
 const appRoot = ReactDOM.createRoot(document.getElementById("app-root"));
 
 appRoot.render(
-  <QueryClientProvider client={queryClient}>
-    <AuthContextProvider>
-      <ModalContextProvider>
-        <BrowserRouter>
+  <BrowserRouter>
+    <QueryClientProvider client={queryClient}>
+      <AuthContextProvider>
+        <ModalContextProvider>
           <ToastContainer />
           <App />
-        </BrowserRouter>
-      </ModalContextProvider>
-    </AuthContextProvider>
-  </QueryClientProvider>
+        </ModalContextProvider>
+      </AuthContextProvider>
+    </QueryClientProvider>
+  </BrowserRouter>
 );

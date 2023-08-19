@@ -14,7 +14,7 @@ import "react-tooltip/dist/react-tooltip.css";
 import { signout } from "../../api/auth";
 import useModal from "../../hooks/useModal";
 import useAuth from "../../hooks/useAuth";
-import Search from "../search/Search";
+import SearchModal from "../search/SearchModal";
 import handleError from "../../utils/handleError";
 
 function Navbar() {
@@ -33,7 +33,7 @@ function Navbar() {
   };
 
   const showSearch = () => {
-    openModal(<Search />);
+    openModal(<SearchModal />);
   };
 
   const navigateToPosts = () => {

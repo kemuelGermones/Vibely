@@ -13,3 +13,15 @@ export const getUser = async (userId) => {
 
   return response.data;
 };
+
+export const getUsers = async ({ page, search }) => {
+  const user = auth.currentUser;
+  const token = await getIdToken(user);
+
+  const response = await axios("http://localhost:5000/users", {
+    params: { page, search },
+    headers: { Authorization: `Bearer ${token}` },
+  });
+
+  return response.data.items;
+};
