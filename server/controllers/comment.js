@@ -1,16 +1,16 @@
 const { Comment, User, Avatar } = require("../models");
 
 module.exports.getComments = async (req, res, next) => {
+  const limit = 10;
   const { postId } = req.params;
   const { page } = req.query;
-  const limit = 10;
   const offset = page ? Number(page) * limit : 0;
 
   const comments = await Comment.findAll({
-    where: { postId },
-    order: [["createdAt", "ASC"]],
     limit,
     offset,
+    where: { postId },
+    order: [["createdAt", "ASC"]],
     include: [
       {
         model: User,
