@@ -3,8 +3,8 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import { BsExclamationTriangle } from "react-icons/bs";
 import InfiniteScroll from "react-infinite-scroll-component";
 
-import { getUsers } from "../../api/user";
-import SearchItem from "./SearchItem";
+import { getUsers } from "../../apis/user";
+import SearchDetails from "./SearchDetails";
 
 function Loader() {
   return (
@@ -20,12 +20,12 @@ function Loader() {
 
 function Error() {
   return (
-    <div className="flex items-center gap-3 p-3 [&>*:nth-child(2)]:grow">
+    <div className="flex items-center gap-3 p-3">
       <BsExclamationTriangle
         className="w-10 shrink-0 text-red-500"
         size="1.5em"
       />
-      <div className="flex flex-col">
+      <div className="flex w-full flex-col">
         <div className="font-semibold">Something went wrong</div>
         <div className="text-sm text-gray-500">
           An error occured while trying to fetch users.
@@ -79,7 +79,7 @@ function SearchList({ search }) {
       hasMore={hasNextPage}
     >
       {users.map((user) => (
-        <SearchItem data={user} key={user.id} />
+        <SearchDetails data={user} key={user.id} />
       ))}
     </InfiniteScroll>
   );

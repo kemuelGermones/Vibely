@@ -1,7 +1,7 @@
 import { signInWithEmailAndPassword, signOut } from "firebase/auth";
 import axios from "axios";
 
-import { auth } from "../config/firebase";
+import { auth } from "../configs/firebase";
 
 export const signup = async (values) => {
   const formData = new FormData();

@@ -5,8 +5,8 @@ import App from "./App";
 import "react-toastify/dist/ReactToastify.css";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter } from "react-router-dom";
-import { ModalContextProvider } from "./store/modal-context";
-import { AuthContextProvider } from "./store/auth-context";
+import { ModalContextProvider } from "./stores/ModalContext";
+import { AuthContextProvider } from "./stores/AuthContext";
 import { ToastContainer } from "react-toastify";
 
 const queryClient = new QueryClient();

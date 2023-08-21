@@ -3,13 +3,12 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import { BsExclamationTriangle } from "react-icons/bs";
 import InfiniteScroll from "react-infinite-scroll-component";
 
-import { getPosts } from "../../api/post";
-import Post from "./Post";
-import Card from "../ui/Card";
+import { getPosts } from "../../apis/post";
+import PostDetails from "./PostDetails";
 
 function Loader() {
   return (
-    <Card>
+    <div className="card flex flex-col gap-3">
       <div className="flex items-center gap-3">
         <div className="h-10 w-10 shrink-0 animate-pulse rounded-full bg-gray-300" />
         <div className="flex w-full flex-col gap-1">
@@ -29,14 +28,14 @@ function Loader() {
         <div className="h-3.5 w-1/4 animate-pulse rounded-full bg-gray-300" />
         <div className="h-3.5 w-1/4 animate-pulse rounded-full bg-gray-300" />
       </div>
-    </Card>
+    </div>
   );
 }
 
 function Error() {
   return (
-    <Card>
-      <div className="flex items-center gap-3 [&>*:nth-child(2)]:grow">
+    <div className="card">
+      <div className="flex items-center gap-3">
         <BsExclamationTriangle
           className="w-10 shrink-0 text-red-500"
           size="1.5em"
@@ -48,7 +47,7 @@ function Error() {
           </div>
         </div>
       </div>
-    </Card>
+    </div>
   );
 }
 
@@ -91,7 +90,7 @@ function PostList({ userId }) {
       hasMore={hasNextPage}
     >
       {posts.map((post) => (
-        <Post data={post} key={post.id} />
+        <PostDetails data={post} key={post.id} />
       ))}
     </InfiniteScroll>
   );

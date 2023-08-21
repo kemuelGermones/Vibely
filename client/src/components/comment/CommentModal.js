@@ -1,15 +1,14 @@
 import CreateCommentForm from "./CreateCommentForm";
 import CommentList from "./CommentList";
-import Card from "../ui/Card";
 
 function CommentModal({ postId }) {
   return (
-    <Card>
+    <div className="card flex flex-col gap-3">
       <CreateCommentForm postId={postId} />
       <div id="commentList" className="h-80 overflow-y-auto">
         <CommentList postId={postId} />
       </div>
-    </Card>
+    </div>
   );
 }
 

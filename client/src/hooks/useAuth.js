@@ -1,6 +1,6 @@
 import { useContext } from "react";
 
-import { AuthContext } from "../store/auth-context";
+import { AuthContext } from "../stores/AuthContext";
 
 function useAuth() {
   const { user, initialized } = useContext(AuthContext);

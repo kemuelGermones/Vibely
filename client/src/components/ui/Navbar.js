@@ -11,7 +11,7 @@ import {
 } from "react-icons/bs";
 import "react-tooltip/dist/react-tooltip.css";
 
-import { signout } from "../../api/auth";
+import { signout } from "../../apis/auth";
 import useModal from "../../hooks/useModal";
 import useAuth from "../../hooks/useAuth";
 import SearchModal from "../search/SearchModal";
@@ -52,7 +52,7 @@ function Navbar() {
     <Fragment>
       <nav className="fixed left-0 top-0 z-20 w-full bg-yellow-400">
         <main className="container mx-auto flex items-center gap-3 px-3">
-          <h1 className="font-shrikhand text-xl">Vibely</h1>
+          <div className="font-shrikhand text-xl">Vibely</div>
           <ul className="grid h-12 w-full grid-cols-5 sm:w-80">
             <li
               className="flex cursor-pointer items-center justify-center hover:bg-yellow-500"

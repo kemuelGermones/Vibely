@@ -1,7 +1,7 @@
 import { getIdToken } from "firebase/auth";
 import axios from "axios";
 
-import { auth } from "../config/firebase";
+import { auth } from "../configs/firebase";
 
 export const getUser = async (userId) => {
   const user = auth.currentUser;
@@ -11,7 +11,7 @@ export const getUser = async (userId) => {
     headers: { Authorization: `Bearer ${token}` },
   });
 
-  return response.data;
+  return response.data.items;
 };
 
 export const getUsers = async ({ page, search }) => {

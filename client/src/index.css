@@ -2,10 +2,46 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&family=Shrikhand&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&family=Shrikhand&display=swap");
 
 @layer base {
   body {
     @apply bg-yellow-200;
   }
+}
+
+.card {
+  @apply rounded-lg bg-white p-3 shadow;
+}
+
+.btn-primary {
+  @apply rounded-lg bg-yellow-400 px-4 py-2 font-semibold text-white shadow hover:bg-yellow-500 focus:outline-none;
+}
+
+.btn-secondary {
+  @apply rounded-lg bg-gray-500 px-4 py-2 font-semibold text-white shadow hover:bg-gray-700 focus:outline-none;
+}
+
+.btn-warning {
+  @apply rounded-lg bg-red-500 px-4 py-2 font-semibold text-white shadow hover:bg-red-600 focus:outline-none;
+}
+
+.input-primary {
+  @apply rounded-lg border-yellow-400 p-3 shadow focus:border-yellow-400 focus:ring-yellow-400;
+}
+
+.input-warning {
+  @apply rounded-lg border-red-500 bg-[url('../public/warning.svg')] bg-[length:1.3rem] bg-[right_0.5rem_center] bg-no-repeat p-3 shadow focus:border-red-500 focus:ring-red-500;
+}
+
+.search_input-primary {
+  @apply rounded-lg border-yellow-400 bg-[url('../public/search.svg')] bg-[length:1.7rem] bg-[left_0.5rem_center] bg-no-repeat py-3 pl-12 pr-3 shadow focus:border-yellow-400 focus:ring-yellow-400;
+}
+
+.textarea-primary {
+  @apply resize-none rounded-lg border-yellow-400 p-3 shadow focus:border-yellow-400 focus:ring-yellow-400;
+}
+
+.textarea-warning {
+  @apply resize-none rounded-lg border-red-500 bg-[url('../public/warning.svg')] bg-[length:1.3rem] bg-[right_0.5rem_top_0.5rem] bg-no-repeat p-3 shadow focus:border-red-500 focus:ring-red-500;
 }

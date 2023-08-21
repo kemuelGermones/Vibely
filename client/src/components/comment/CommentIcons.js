@@ -2,7 +2,7 @@ import { BsTrash, BsHeart } from "react-icons/bs";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-import { deleteComment } from "../../api/comment";
+import { deleteComment } from "../../apis/comment";
 import useAuth from "../../hooks/useAuth";
 import handleError from "../../utils/handleError";
 import IconButton from "../ui/IconButton";

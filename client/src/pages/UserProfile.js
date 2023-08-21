@@ -2,7 +2,7 @@ import { Fragment } from "react";
 import { useParams } from "react-router-dom";
 
 import Navbar from "../components/ui/Navbar";
-import User from "../components/user/User";
+import UserDetails from "../components/user/UserDetails";
 import Advertisement from "../components/advertisement/Advertisement";
 import PostList from "../components/post/PostList";
 
@@ -17,7 +17,7 @@ function UserProfile() {
           <Advertisement />
         </aside>
         <section className="flex flex-col gap-3">
-          <User userId={userId} />
+          <UserDetails userId={userId} />
           <PostList userId={userId} />
         </section>
       </main>

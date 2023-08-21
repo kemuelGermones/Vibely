@@ -1,9 +1,7 @@
 import useModal from "../../hooks/useModal";
 import useAuth from "../../hooks/useAuth";
 import CreatePostForm from "./CreatePostForm";
-import Card from "../ui/Card";
 import Avatar from "../ui/Avatar";
-import Input from "../ui/Input";
 
 function CreatePost() {
   const { openModal } = useModal();
@@ -14,16 +12,17 @@ function CreatePost() {
   };
 
   return (
-    <Card>
-      <div className="flex items-center gap-3 [&>*:nth-child(2)]:grow">
+    <div className="card">
+      <div className="flex items-center gap-3">
         <Avatar src={user.photoURL} />
-        <Input
+        <input
+          className="input-primary w-full"
           type="text"
           placeholder="What's on your mind"
           onClick={showCreatePostForm}
         />
       </div>
-    </Card>
+    </div>
   );
 }
 

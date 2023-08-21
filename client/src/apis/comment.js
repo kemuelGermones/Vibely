@@ -1,7 +1,7 @@
 import { getIdToken } from "firebase/auth";
 import axios from "axios";
 
-import { auth } from "../config/firebase";
+import { auth } from "../configs/firebase";
 
 export const createComment = async ({ postId, values }) => {
   const user = auth.currentUser;

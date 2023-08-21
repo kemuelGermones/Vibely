@@ -1,13 +1,13 @@
-import Card from "../ui/Card";
 import Avatar from "../ui/Avatar";
-import Textarea from "../ui/Textarea";
-import Button from "../ui/Button";
 
-function Message() {
+function MessageModal() {
   return (
-    <Card>
+    <div className="card flex flex-col gap-3">
       <div className="flex items-center gap-3">
-        <Avatar src="https://images.pexels.com/photos/1334945/pexels-photo-1334945.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" />
+        <Avatar
+          src="https://images.pexels.com/photos/1334945/pexels-photo-1334945.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+          alt="theAdmiral"
+        />
         <div>
           <div className="font-semibold">theAdmiral</div>
           <div className="text-sm text-gray-500">John Doe</div>
@@ -22,11 +22,13 @@ function Message() {
         </li>
       </ul>
       <form className="flex flex-col gap-3">
-        <Textarea placeholder="Message" />
-        <Button type="submit">Send</Button>
+        <textarea className="textarea-primary" placeholder="Enter message" />
+        <button className="btn-primary" type="submit">
+          Send
+        </button>
       </form>
-    </Card>
+    </div>
   );
 }
 
-export default Message;
+export default MessageModal;

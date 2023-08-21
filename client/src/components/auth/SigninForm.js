@@ -3,11 +3,8 @@ import { useFormik } from "formik";
 import { Link } from "react-router-dom";
 import * as yup from "yup";
 
-import { signin } from "../../api/auth";
+import { signin } from "../../apis/auth";
 import handleError from "../../utils/handleError";
-import Card from "../ui/Card";
-import Input from "../ui/Input";
-import Button from "../ui/Button";
 
 function SigninForm() {
   const { mutate, isLoading } = useMutation(signin, {
@@ -32,11 +29,13 @@ function SigninForm() {
     });
 
   return (
-    <Card>
-      <h1 className="text-center font-shrikhand text-2xl">Vibely</h1>
+    <div className="card flex flex-col gap-3">
+      <div className="text-center font-shrikhand text-2xl">Vibely</div>
       <form className="flex flex-col gap-3" onSubmit={handleSubmit}>
-        <Input
-          error={touched.email && errors.email}
+        <input
+          className={
+            touched.email && errors.email ? "input-warning" : "input-primary"
+          }
           id="email"
           name="email"
           type="email"
@@ -45,8 +44,12 @@ function SigninForm() {
           onChange={handleChange}
           onBlur={handleBlur}
         />
-        <Input
-          error={touched.password && errors.password}
+        <input
+          className={
+            touched.password && errors.password
+              ? "input-warning"
+              : "input-primary"
+          }
           id="password"
           name="password"
           type="password"
@@ -55,11 +58,11 @@ function SigninForm() {
           onChange={handleChange}
           onBlur={handleBlur}
         />
-        <Button type="submit" disabled={isLoading}>
+        <button className="btn-primary" type="submit" disabled={isLoading}>
           {isLoading ? "Loading..." : "Submit"}
-        </Button>
+        </button>
       </form>
-      <p className="text-center">
+      <div className="text-center">
         No account?{" "}
         <Link
           className="text-blue-500 underline underline-offset-4"
@@ -67,8 +70,8 @@ function SigninForm() {
         >
           Sign up
         </Link>
-      </p>
-    </Card>
+      </div>
+    </div>
   );
 }
 

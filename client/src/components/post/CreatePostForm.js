@@ -3,14 +3,11 @@ import { useFormik } from "formik";
 import { BsCloudUpload } from "react-icons/bs";
 import * as yup from "yup";
 
-import { createPost } from "../../api/post";
+import { createPost } from "../../apis/post";
 import validateImages from "../../utils/validateImages";
 import handleError from "../../utils/handleError";
 import useModal from "../../hooks/useModal";
-import Card from "../ui/Card";
-import Textarea from "../ui/Textarea";
 import FileInput from "../ui/FileInput";
-import Button from "../ui/Button";
 
 function CreatePostForm() {
   const { closeModal } = useModal();
@@ -53,9 +50,14 @@ function CreatePostForm() {
   };
 
   return (
-    <Card>
+    <div className="card">
       <form className="flex flex-col gap-3" onSubmit={handleSubmit}>
-        <Textarea
+        <textarea
+          className={
+            touched.caption && errors.caption
+              ? "textarea-warning"
+              : "textarea-primary"
+          }
           id="caption"
           name="caption"
           type="text"
@@ -65,7 +67,7 @@ function CreatePostForm() {
           onBlur={handleBlur}
         />
         <FileInput
-          error={touched.images && errors.images}
+          hasError={touched.images && errors.images}
           title={
             values.images.length && !errors.images
               ? `${values.images.length} images chosen`
@@ -80,11 +82,11 @@ function CreatePostForm() {
         >
           <BsCloudUpload className="text-yellow-400" size="2.5em" />
         </FileInput>
-        <Button type="submit" disabled={isLoading}>
+        <button className="btn-primary" type="submit" disabled={isLoading}>
           {isLoading ? "Loading..." : "Submit"}
-        </Button>
+        </button>
       </form>
-    </Card>
+    </div>
   );
 }
 

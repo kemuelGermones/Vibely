@@ -1,7 +1,5 @@
 import { useMemo } from "react";
 
-import Card from "../ui/Card";
-
 const PROJECTS = [
   {
     name: "Trackero",
@@ -44,14 +42,14 @@ function Advertisement() {
   }, []);
 
   return (
-    <Card>
-      <h1 className="text-sm text-gray-500">Sponsored</h1>
+    <div className="card flex flex-col gap-3">
+      <div className="text-sm text-gray-500">Sponsored</div>
       <a className="flex flex-col gap-3" href={project.link} target="_blank">
         <img className="rounded-lg" src={project.image} alt={project.name} />
-        <h1>{project.name}</h1>
-        <p className="text-sm text-gray-500">{project.description}</p>
+        <div>{project.name}</div>
+        <div className="text-sm text-gray-500">{project.description}</div>
       </a>
-    </Card>
+    </div>
   );
 }
 

@@ -3,13 +3,10 @@ import { useFormik } from "formik";
 import { useMutation } from "@tanstack/react-query";
 import * as yup from "yup";
 
-import { signup } from "../../api/auth";
+import { signup } from "../../apis/auth";
 import validateAvatar from "../../utils/validateAvatar";
 import handleError from "../../utils/handleError";
-import Card from "../ui/Card";
-import Input from "../ui/Input";
 import FileInput from "../ui/FileInput";
-import Button from "../ui/Button";
 
 function SignupForm() {
   const { mutate, isLoading } = useMutation(signup, {
@@ -53,12 +50,16 @@ function SignupForm() {
   };
 
   return (
-    <Card>
-      <h1 className="text-center font-shrikhand text-2xl">Vibely</h1>
+    <div className="card flex flex-col gap-3">
+      <div className="text-center font-shrikhand text-2xl">Vibely</div>
       <form className="flex flex-col gap-3" onSubmit={handleSubmit}>
         <div className="flex flex-col gap-3 sm:flex-row">
-          <Input
-            error={touched.firstname && errors.firstname}
+          <input
+            className={
+              touched.firstname && errors.firstname
+                ? "input-warning w-full"
+                : "input-primary w-full"
+            }
             id="firstname"
             name="firstname"
             type="text"
@@ -67,8 +68,12 @@ function SignupForm() {
             onChange={handleChange}
             onBlur={handleBlur}
           />
-          <Input
-            error={touched.lastname && errors.lastname}
+          <input
+            className={
+              touched.lastname && errors.lastname
+                ? "input-warning w-full"
+                : "input-primary w-full"
+            }
             id="lastname"
             name="lastname"
             type="text"
@@ -78,8 +83,12 @@ function SignupForm() {
             onBlur={handleBlur}
           />
         </div>
-        <Input
-          error={touched.username && errors.username}
+        <input
+          className={
+            touched.username && errors.username
+              ? "input-warning"
+              : "input-primary"
+          }
           id="username"
           name="username"
           type="text"
@@ -88,8 +97,10 @@ function SignupForm() {
           onChange={handleChange}
           onBlur={handleBlur}
         />
-        <Input
-          error={touched.email && errors.email}
+        <input
+          className={
+            touched.email && errors.email ? "input-warning" : "input-primary"
+          }
           id="email"
           name="email"
           type="email"
@@ -98,18 +109,22 @@ function SignupForm() {
           onChange={handleChange}
           onBlur={handleBlur}
         />
-        <Input
-          error={touched.password && errors.password}
+        <input
+          className={
+            touched.password && errors.password
+              ? "input-warning"
+              : "input-primary"
+          }
           id="password"
           name="password"
           type="password"
-          placeholder="Enter password (at least 6 characters)"
+          placeholder="Enter password (At least 6 characters)"
           value={values.password}
           onChange={handleChange}
           onBlur={handleBlur}
         />
         <FileInput
-          error={touched.avatar && errors.avatar}
+          hasError={touched.avatar && errors.avatar}
           title="Choose profile picture"
           description="Upload your avatar PNG, JPG or JPEG."
           id="avatar"
@@ -129,11 +144,11 @@ function SignupForm() {
             />
           </div>
         </FileInput>
-        <Button type="submit" disabled={isLoading}>
+        <button className="btn-primary" type="submit" disabled={isLoading}>
           {isLoading ? "Loading..." : "Submit"}
-        </Button>
+        </button>
       </form>
-      <p className="text-center">
+      <div className="text-center">
         Have an account?{" "}
         <Link
           className="text-blue-600 underline underline-offset-4"
@@ -141,8 +156,8 @@ function SignupForm() {
         >
           Sign in
         </Link>
-      </p>
-    </Card>
+      </div>
+    </div>
   );
 }
 

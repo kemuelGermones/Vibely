@@ -15,7 +15,7 @@ function Dropdown({ children }) {
   const hideDropdown = () => {
     setIsDropdownVisible(false);
   };
-  
+
   const handleStopPropagation = (event) => {
     event.stopPropagation();
   };
@@ -32,7 +32,7 @@ function Dropdown({ children }) {
       </button>
       {isDropdownVisible ? (
         <div
-          className="absolute right-1/2 top-full w-32 rounded bg-neutral-900 p-2 text-white"
+          className="absolute right-1/2 top-full z-10 w-32 rounded bg-neutral-900 p-2 text-white"
           onClick={handleStopPropagation}
         >
           <div

@@ -5,12 +5,11 @@ import useModal from "../../hooks/useModal";
 import UpdatePostForm from "./UpdatePostForm";
 import DeletePostModal from "./DeletePostModal";
 import PostIcons from "./PostIcons";
-import Card from "../ui/Card";
 import Avatar from "../ui/Avatar";
 import Dropdown from "../ui/Dropdown";
 import Carousel from "../ui/Carousel";
 
-function Post({ data }) {
+function PostDetails({ data }) {
   const { user } = useAuth();
   const { openModal } = useModal();
 
@@ -23,10 +22,10 @@ function Post({ data }) {
   };
 
   return (
-    <Card>
+    <div className="card flex flex-col gap-3">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <Avatar src={data.user.avatar.url} />
+          <Avatar src={data.user.avatar.url} alt={data.user.username} />
           <div>
             <div className="font-semibold">{data.user.username}</div>
             <div className="text-sm text-gray-500">
@@ -47,11 +46,11 @@ function Post({ data }) {
           </Dropdown>
         ) : null}
       </div>
-      <p>{data.caption}</p>
+      <div>{data.caption}</div>
       <Carousel images={data.images} />
       <PostIcons postId={data.id} totalComments={data.comments} />
-    </Card>
+    </div>
   );
 }
 
-export default Post;
+export default PostDetails;

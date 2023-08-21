@@ -2,14 +2,14 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useFormik } from "formik";
 import * as yup from "yup";
 
-import { createComment } from "../../api/comment";
+import { createComment } from "../../apis/comment";
+import useAuth from "../../hooks/useAuth";
 import handleError from "../../utils/handleError";
 import Avatar from "../ui/Avatar";
-import Textarea from "../ui/Textarea";
-import Button from "../ui/Button";
 
 function CreateCommentForm({ postId }) {
   const queryClient = useQueryClient();
+  const { user } = useAuth();
 
   const { mutate, isLoading } = useMutation(createComment, {
     onSuccess: (data, varaibles, context) => {
@@ -44,11 +44,15 @@ function CreateCommentForm({ postId }) {
   });
 
   return (
-    <div className="flex gap-3 [&>*:nth-child(2)]:grow">
-      <Avatar src="https://images.pexels.com/photos/1334945/pexels-photo-1334945.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" />
-      <form className="flex flex-col gap-3" onSubmit={handleSubmit}>
-        <Textarea
-          error={touched.description && errors.description}
+    <div className="flex gap-3">
+      <Avatar src={user.photoURL} />
+      <form className="flex w-full flex-col gap-3" onSubmit={handleSubmit}>
+        <textarea
+          className={
+            touched.description && errors.description
+              ? "textarea-warning w-full"
+              : "textarea-primary w-full"
+          }
           id="description"
           name="description"
           type="text"
@@ -57,9 +61,9 @@ function CreateCommentForm({ postId }) {
           onChange={handleChange}
           onBlur={handleBlur}
         />
-        <Button type="submit" disabled={isLoading}>
+        <button className="btn-primary" type="submit" disabled={isLoading}>
           {isLoading ? "Loading..." : "Submit"}
-        </Button>
+        </button>
       </form>
     </div>
   );

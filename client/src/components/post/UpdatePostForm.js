@@ -2,12 +2,9 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useFormik } from "formik";
 import * as yup from "yup";
 
-import { updatePost } from "../../api/post";
+import { updatePost } from "../../apis/post";
 import useModal from "../../hooks/useModal";
 import handleError from "../../utils/handleError";
-import Card from "../ui/Card";
-import Textarea from "../ui/Textarea";
-import Button from "../ui/Button";
 
 function UpdatePostForm({ postId, caption }) {
   const { closeModal } = useModal();
@@ -37,23 +34,26 @@ function UpdatePostForm({ postId, caption }) {
     });
 
   return (
-    <Card>
+    <div className="card">
       <form className="flex flex-col gap-3" onSubmit={handleSubmit}>
-        <Textarea
-          height="h-44"
+        <textarea
+          className={
+            touched.caption && errors.caption
+              ? "textarea-warning h-44"
+              : "textarea-primary h-44"
+          }
           id="caption"
           name="caption"
           placeholder="Enter caption"
-          error={touched.caption && errors.caption}
           value={values.caption}
           onChange={handleChange}
           onBlur={handleBlur}
         />
-        <Button type="submit" disabled={isLoading}>
+        <button className="btn-primary" type="submit" disabled={isLoading}>
           {isLoading ? "Loading..." : "Submit"}
-        </Button>
+        </button>
       </form>
-    </Card>
+    </div>
   );
 }
 

@@ -1,5 +1,4 @@
 import { Routes, Route, Navigate } from "react-router-dom";
-
 import useAuth from "./hooks/useAuth";
 import Signin from "./pages/Signin";
 import Posts from "./pages/Posts";
@@ -7,8 +6,8 @@ import UserProfile from "./pages/UserProfile";
 import Error from "./pages/Error";
 import Messages from "./pages/Messages";
 import Signup from "./pages/Signup";
-import Unprotected from "./outlet/Unprotected";
-import Protected from "./outlet/Protected";
+import Unprotected from "./outlets/Unprotected";
+import Protected from "./outlets/Protected";
 import Loading from "./pages/Loading";
 
 function App() {
