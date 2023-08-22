@@ -27,6 +27,7 @@ function Carousel({ images }) {
             <img
               className="min-w-0 flex-[0_0_100%]"
               src={image.url}
+              alt={image.filename}
               key={image.id}
             />
           ))}
@@ -60,7 +61,9 @@ function Carousel({ images }) {
     );
   }
 
-  return <img className="rounded-lg" src={images[0].url} />;
+  return (
+    <img className="rounded-lg" src={images[0].url} alt={images[0].filename} />
+  );
 }
 
 export default Carousel;

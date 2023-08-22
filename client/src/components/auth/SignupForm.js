@@ -161,6 +161,7 @@ function SignupForm() {
                   ? URL.createObjectURL(values.avatar)
                   : "./person.svg"
               }
+              alt="Profile picture"
             />
           </div>
         </FileInput>
