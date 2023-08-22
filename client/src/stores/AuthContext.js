@@ -13,7 +13,6 @@ export function AuthContextProvider({ children }) {
 
   useEffect(() => {
     const unsub = onAuthStateChanged(auth, (user) => {
-      console.log(user);
       setClient({ user, initialized: true });
     });
 
