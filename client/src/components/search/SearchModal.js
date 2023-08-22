@@ -8,7 +8,8 @@ function SearchModal() {
   const debouncedSearch = useDebounce(search, 500);
 
   const handleOnChange = (event) => {
-    setSearch(event.target.value);
+    const text = event.target.value;
+    setSearch(text.trim());
   };
 
   return (
@@ -17,7 +18,6 @@ function SearchModal() {
         className="search_input-primary"
         type="text"
         placeholder="Enter username"
-        value={search}
         onChange={handleOnChange}
       />
       <div id="searchList" className="h-80 overflow-y-auto">
