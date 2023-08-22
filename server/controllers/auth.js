@@ -16,11 +16,11 @@ module.exports.signup = async (req, res) => {
     );
 
     await admin.auth().createUser({
+      displayName: req.body.username,
       email: req.body.email,
       password: req.body.password,
-      uid: user.id,
       photoURL: req.file.url,
-      n
+      uid: user.id,
     });
   });
 
