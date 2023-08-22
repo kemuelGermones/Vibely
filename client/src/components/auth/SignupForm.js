@@ -33,9 +33,24 @@ function SignupForm() {
       avatar: null,
     },
     validationSchema: yup.object({
-      firstname: yup.string().required(),
-      lastname: yup.string().required(),
-      username: yup.string().required(),
+      firstname: yup
+        .string()
+        .min(2)
+        .max(30)
+        .matches(/^[a-z]+$/i)
+        .required(),
+      lastname: yup
+        .string()
+        .min(2)
+        .max(30)
+        .matches(/^[a-z]+$/i)
+        .required(),
+      username: yup
+        .string()
+        .min(2)
+        .max(30)
+        .matches(/^[a-z]+$/i)
+        .required(),
       email: yup.string().email().required(),
       password: yup.string().min(6).required(),
       avatar: yup.mixed().test("avatar", "avatar is invalid", validateAvatar),
@@ -52,6 +67,11 @@ function SignupForm() {
   return (
     <div className="card flex flex-col gap-3">
       <div className="text-center font-shrikhand text-2xl">Vibely</div>
+      <div className="rounded-lg bg-yellow-200 p-3 text-gray-500">
+        Note: Firstname, lastname and username should only contain alpha
+        characters with a minimum of 2 characters and a maximum of 30
+        characters. Also, password must contain atleast 6 characters.
+      </div>
       <form className="flex flex-col gap-3" onSubmit={handleSubmit}>
         <div className="flex flex-col gap-3 sm:flex-row">
           <input
@@ -63,7 +83,7 @@ function SignupForm() {
             id="firstname"
             name="firstname"
             type="text"
-            placeholder="Enter first name"
+            placeholder="Enter firstname"
             value={values.firstname}
             onChange={handleChange}
             onBlur={handleBlur}
@@ -77,7 +97,7 @@ function SignupForm() {
             id="lastname"
             name="lastname"
             type="text"
-            placeholder="Enter last name"
+            placeholder="Enter lastname"
             value={values.lastname}
             onChange={handleChange}
             onBlur={handleBlur}
@@ -118,7 +138,7 @@ function SignupForm() {
           id="password"
           name="password"
           type="password"
-          placeholder="Enter password (At least 6 characters)"
+          placeholder="Enter password"
           value={values.password}
           onChange={handleChange}
           onBlur={handleBlur}

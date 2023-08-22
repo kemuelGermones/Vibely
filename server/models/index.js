@@ -14,18 +14,36 @@ const User = sequelize.define(
     firstname: {
       type: DataTypes.STRING,
       allowNull: false,
+      validate: {
+        isAlpha: true,
+        min: 2,
+        max: 30,
+      },
     },
     lastname: {
       type: DataTypes.STRING,
       allowNull: false,
+      validate: {
+        isAlpha: true,
+        min: 2,
+        max: 30,
+      },
     },
     username: {
       type: DataTypes.STRING,
       allowNull: false,
+      validate: {
+        isAlpha: true,
+        min: 2,
+        max: 30,
+      },
     },
     email: {
       type: DataTypes.STRING,
       allowNull: false,
+      validate: {
+        isEmail: true,
+      },
     },
   },
   {

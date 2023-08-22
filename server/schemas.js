@@ -36,9 +36,24 @@ module.exports.commentSchema = Joi.object({
 });
 
 module.exports.signupSchema = Joi.object({
-  firstname: Joi.string().escapeHTML().required(),
-  lastname: Joi.string().escapeHTML().required(),
-  username: Joi.string().escapeHTML().required(),
+  firstname: Joi.string()
+    .min(2)
+    .max(30)
+    .regex(/^[a-z]+$/i)
+    .escapeHTML()
+    .required(),
+  lastname: Joi.string()
+    .min(2)
+    .max(30)
+    .regex(/^[a-z]+$/i)
+    .escapeHTML()
+    .required(),
+  username: Joi.string()
+    .min(2)
+    .max(30)
+    .regex(/^[a-z]+$/i)
+    .escapeHTML()
+    .required(),
   email: Joi.string().email().escapeHTML().required(),
   password: Joi.string().min(6).escapeHTML().required(),
 });

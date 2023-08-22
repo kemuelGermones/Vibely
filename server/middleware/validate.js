@@ -52,15 +52,28 @@ module.exports.validateSignup = (req, res, next) => {
   }
 
   User.findOne({
+    where: { username: req.body.username },
+  })
+    .then((user) => {
+      if (user) {
+        throw new AppError(400, '"username" has already been taken');
+      }
+    })
+    .catch((error) => {
+      next(error);
+    });
+
+  User.findOne({
     where: { email: req.body.email },
   })
     .then((user) => {
       if (user) {
         throw new AppError(400, "user exist already");
       }
-      next();
     })
     .catch((error) => {
       next(error);
     });
+
+  next();
 };
