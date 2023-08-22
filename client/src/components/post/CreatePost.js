@@ -14,7 +14,7 @@ function CreatePost() {
   return (
     <div className="card">
       <div className="flex items-center gap-3">
-        <Avatar src={user.photoURL} />
+        <Avatar src={user.photoURL} alt={user.displayName} />
         <input
           className="input-primary w-full"
           type="text"

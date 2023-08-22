@@ -45,7 +45,7 @@ function CreateCommentForm({ postId }) {
 
   return (
     <div className="flex gap-3">
-      <Avatar src={user.photoURL} />
+      <Avatar src={user.photoURL} alt={user.displayName}/>
       <form className="flex w-full flex-col gap-3" onSubmit={handleSubmit}>
         <textarea
           className={
