@@ -3,7 +3,17 @@ const { Post, Comment } = require("../models");
 const AppError = require("../utils/AppError");
 
 module.exports.authenticate = (req, res, next) => {
-  const token = req.headers.authorization.split(" ")[1];
+  const bearerToken = req.headers.authorization;
+
+  if (!bearerToken) {
+    throw new AppError(400, "bearer token is required");
+  }
+
+  if (!/^Bearer\s[^\s]/.test(bearerToken)) {
+    throw new AppError(400, "invalid bearer token");
+  }
+
+  const token = bearerToken.split(" ")[1];
 
   admin
     .auth()
