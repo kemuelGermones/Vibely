@@ -77,3 +77,38 @@ module.exports.validateSignup = (req, res, next) => {
 
   next();
 };
+
+module.exports.validateFollowUser = (req, res, next) => {
+  const { userId } = req.params;
+  const { uid } = req.user;
+
+  if (userId === uid) {
+    throw new AppError(400, "you are not allowed to follow this user");
+  }
+
+  User.findOne({ where: { id: userId } })
+    .then((user) => {
+      if (!user) {
+        throw new AppError(400, "user does not exist");
+      }
+      next();
+    })
+    .catch((error) => {
+      next(error);
+    });
+};
+
+module.exports.validateUnfollowUser = (req, res, next) => {
+  const { userId } = req.params;
+
+  User.findOne({ where: { id: userId } })
+    .then((user) => {
+      if (!user) {
+        throw new AppError(400, "user does not exist");
+      }
+      next();
+    })
+    .catch((error) => {
+      next(error);
+    });
+};

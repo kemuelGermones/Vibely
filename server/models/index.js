@@ -137,6 +137,8 @@ const Comment = sequelize.define(
   }
 );
 
+const Follow = sequelize.define("follows", {}, { updatedAt: false });
+
 User.hasOne(Avatar);
 Avatar.belongsTo(User);
 
@@ -152,4 +154,15 @@ Image.belongsTo(Post);
 Post.hasMany(Comment);
 Comment.belongsTo(Post);
 
-module.exports = { User, Avatar, Post, Image, Comment };
+User.belongsToMany(User, {
+  foreignKey: "follower_id",
+  as: "follower",
+  through: Follow,
+});
+User.belongsToMany(User, {
+  foreignKey: "followee_id",
+  as: "followee",
+  through: Follow,
+});
+
+module.exports = { User, Avatar, Post, Image, Comment, Follow };
