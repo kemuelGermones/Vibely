@@ -28,9 +28,7 @@ module.exports.uploadImages = (req, res, next) => {
       }));
       next();
     })
-    .catch((error) => {
-      next(error);
-    });
+    .catch((error) => next(error));
 };
 
 module.exports.uploadAvatar = (req, res, next) => {
@@ -49,7 +47,5 @@ module.exports.uploadAvatar = (req, res, next) => {
       req.file = { url: avatar.url, filename: avatar.public_id };
       next();
     })
-    .catch((error) => {
-      next(error);
-    });
+    .catch((error) => next(error));
 };

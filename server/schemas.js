@@ -35,7 +35,7 @@ module.exports.commentSchema = Joi.object({
   description: Joi.string().escapeHTML().required(),
 });
 
-module.exports.signupSchema = Joi.object({
+module.exports.userSchema = Joi.object({
   firstname: Joi.string()
     .min(2)
     .max(30)

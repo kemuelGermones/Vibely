@@ -7,12 +7,15 @@ const {
   updatePost,
   deletePost,
 } = require("../controllers/post");
-const {
-  validateCreatePost,
-  validateUpdatePost,
-} = require("../middleware/validate");
 const express = require("express");
 const wrapAsync = require("../utils/wrapAsync");
+
+const {
+  validatePostCaption,
+  validatePostImages,
+  validatePostId,
+  validatePostOwner,
+} = require("../middleware/validate");
 
 const router = express.Router();
 
@@ -22,7 +25,8 @@ router.post(
   "/",
   authenticate,
   multerCreatePost,
-  validateCreatePost,
+  validatePostCaption,
+  validatePostImages,
   uploadImages,
   wrapAsync(createPost)
 );
@@ -30,11 +34,18 @@ router.post(
 router.patch(
   "/:postId",
   authenticate,
-  isPostOwner,
-  validateUpdatePost,
+  validatePostId,
+  validatePostOwner,
+  validatePostCaption,
   wrapAsync(updatePost)
 );
 
-router.delete("/:postId", authenticate, isPostOwner, wrapAsync(deletePost));
+router.delete(
+  "/:postId",
+  authenticate,
+  validatePostId,
+  validatePostOwner,
+  wrapAsync(deletePost)
+);
 
 module.exports = router;

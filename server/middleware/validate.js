@@ -1,34 +1,34 @@
-const { User } = require("../models");
-const { postSchema, commentSchema, signupSchema } = require("../schemas");
+const { User, Post, Comment, Follow } = require("../models");
+const { postSchema, commentSchema, userSchema } = require("../schemas");
 const AppError = require("../utils/AppError");
 
-module.exports.validateCreatePost = (req, res, next) => {
-  const { error } = postSchema.validate(req.body);
+module.exports.validatePostId = (req, res, next) => {
+  const { postId } = req.params;
 
-  if (error) {
-    const message = error.details[0].message;
-    throw new AppError(400, message);
-  }
-
-  if (req.files.length === 0) {
-    throw new AppError(400, '"images" is required');
-  }
-
-  next();
+  Post.findOne({ where: { id: postId } })
+    .then((post) => {
+      if (!post) {
+        throw new AppError(400, "post doesn't exist");
+      }
+      next();
+    })
+    .catch((error) => next(error));
 };
 
-module.exports.validateUpdatePost = (req, res, next) => {
-  const { error } = postSchema.validate(req.body);
+module.exports.validateCommentId = (req, res, next) => {
+  const { commentId } = req.params;
 
-  if (error) {
-    const message = error.details[0].message;
-    throw new AppError(400, message);
-  }
-
-  next();
+  Comment.findOne({ where: { id: commentId } })
+    .then((comment) => {
+      if (!comment) {
+        throw new AppError(400, "comment doesn't exist");
+      }
+      next();
+    })
+    .catch((error) => next(error));
 };
 
-module.exports.validateComment = (req, res, next) => {
+module.exports.validateCommentDescription = (req, res, next) => {
   const { error } = commentSchema.validate(req.body);
 
   if (error) {
@@ -39,8 +39,99 @@ module.exports.validateComment = (req, res, next) => {
   next();
 };
 
-module.exports.validateSignup = (req, res, next) => {
-  const { error } = signupSchema.validate(req.body);
+module.exports.validateCommentOwner = (req, res, next) => {
+  const { commentId } = req.params;
+  const { uid } = req.user;
+
+  Comment.findOne({ where: { id: commentId } })
+    .then((comment) => {
+      if (comment.userId !== uid) {
+        throw new AppError(400, "you are not allowed to delete this comment");
+      }
+      next();
+    })
+    .catch((error) => next(error));
+};
+
+module.exports.validatePostImages = (req, res, next) => {
+  if (req.files.length === 0) {
+    throw new AppError(400, '"images" is required');
+  }
+
+  next();
+};
+
+module.exports.validatePostCaption = (req, res, next) => {
+  const { error } = postSchema.validate(req.body);
+
+  if (error) {
+    const message = error.details[0].message;
+    throw new AppError(400, message);
+  }
+
+  next();
+};
+
+module.exports.validatePostOwner = (req, res, next) => {
+  const { postId } = req.params;
+  const { uid } = req.user;
+
+  Post.findOne({ where: { id: postId } })
+    .then((post) => {
+      if (post.userId !== uid) {
+        throw new AppError(
+          400,
+          "you are not allowed to update/delete this post"
+        );
+      }
+      next();
+    })
+    .catch((error) => next(error));
+};
+
+module.exports.validateUserId = (req, res, next) => {
+  const { userId } = req.params;
+
+  User.findOne({ where: { id: userId } })
+    .then((user) => {
+      if (!user) {
+        throw new AppError(400, "user doesn't exist");
+      }
+      next();
+    })
+    .catch((error) => next(error));
+};
+
+module.exports.validateFollowee = (req, res, next) => {
+  const { userId } = req.params;
+  const { uid } = req.user;
+
+  if (userId === uid) {
+    throw new AppError(400, "you are not allowed to follow this user");
+  }
+
+  next();
+};
+
+module.exports.validateFollowerToFolloweeAssociation = (req, res, next) => {
+  const { userId } = req.params;
+  const { uid } = req.user;
+
+  Follow.findOne({ where: { follower_id: uid, followee_id: userId } })
+    .then((association) => {
+      if (!association) {
+        throw new AppError(
+          400,
+          "Followee to follower association doesn't exist"
+        );
+      }
+      next();
+    })
+    .catch((error) => next(error));
+};
+
+module.exports.validateUserBody = (req, res, next) => {
+  const { error } = userSchema.validate(req.body);
 
   if (error) {
     const message = error.details[0].message;
@@ -51,64 +142,35 @@ module.exports.validateSignup = (req, res, next) => {
     throw new AppError(400, '"avatar" is required');
   }
 
+  next();
+};
+
+module.exports.validateUsernameAvailability = (req, res, next) => {
+  const { username } = req.body;
+
   User.findOne({
-    where: { username: req.body.username },
+    where: { username },
   })
     .then((user) => {
       if (user) {
         throw new AppError(400, '"username" has already been taken');
       }
+      next();
     })
-    .catch((error) => {
-      next(error);
-    });
+    .catch((error) => next(error));
+};
+
+module.exports.validateUserAvailability = (req, res, next) => {
+  const { email } = req.body;
 
   User.findOne({
-    where: { email: req.body.email },
+    where: { email },
   })
     .then((user) => {
       if (user) {
         throw new AppError(400, "user exist already");
       }
-    })
-    .catch((error) => {
-      next(error);
-    });
-
-  next();
-};
-
-module.exports.validateFollowUser = (req, res, next) => {
-  const { userId } = req.params;
-  const { uid } = req.user;
-
-  if (userId === uid) {
-    throw new AppError(400, "you are not allowed to follow this user");
-  }
-
-  User.findOne({ where: { id: userId } })
-    .then((user) => {
-      if (!user) {
-        throw new AppError(400, "user does not exist");
-      }
       next();
     })
-    .catch((error) => {
-      next(error);
-    });
-};
-
-module.exports.validateUnfollowUser = (req, res, next) => {
-  const { userId } = req.params;
-
-  User.findOne({ where: { id: userId } })
-    .then((user) => {
-      if (!user) {
-        throw new AppError(400, "user does not exist");
-      }
-      next();
-    })
-    .catch((error) => {
-      next(error);
-    });
+    .catch((error) => next(error));
 };

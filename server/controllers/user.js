@@ -1,29 +1,5 @@
 const { User, Avatar, Follow } = require("../models");
 const { Op } = require("sequelize");
-const AppError = require("../utils/AppError");
-
-module.exports.getUser = async (req, res, next) => {
-  const { userId } = req.params;
-
-  const user = await User.findOne({
-    where: { id: userId },
-    include: [
-      {
-        model: Avatar,
-        as: "avatar",
-        attributes: { exclude: ["userId"] },
-      },
-    ],
-  });
-
-  if (!user) {
-    throw new AppError(400, "user does not exist");
-  }
-
-  res
-    .status(200)
-    .json({ status: 200, items: user, message: "successfully fetched user" });
-};
 
 module.exports.getUsers = async (req, res, next) => {
   const limit = 10;
@@ -49,11 +25,30 @@ module.exports.getUsers = async (req, res, next) => {
     .json({ status: 200, items: users, message: "successfully fetched users" });
 };
 
+module.exports.getUser = async (req, res, next) => {
+  const { userId } = req.params;
+
+  const user = await User.findOne({
+    where: { id: userId },
+    include: [
+      {
+        model: Avatar,
+        as: "avatar",
+        attributes: { exclude: ["userId"] },
+      },
+    ],
+  });
+
+  res
+    .status(200)
+    .json({ status: 200, items: user, message: "successfully fetched user" });
+};
+
 module.exports.followUser = async (req, res, next) => {
   const { userId } = req.params;
   const { uid } = req.user;
 
-  await Follow.create({ follower_id: userId, followee_id: uid });
+  await Follow.create({ follower_id: uid, followee_id: userId });
 
   res.status(200).json({
     status: 200,
@@ -66,7 +61,7 @@ module.exports.unfollowUser = async (req, res, next) => {
   const { userId } = req.params;
   const { uid } = req.user;
 
-  await Follow.destroy({ where: { follower_id: userId, followee_id: uid } });
+  await Follow.destroy({ where: { follower_id: uid, followee_id: userId } });
 
   res.status(200).json({
     status: 200,

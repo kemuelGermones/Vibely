@@ -6,29 +6,32 @@ const {
 } = require("../controllers/user");
 const { authenticate } = require("../middleware/auth");
 const {
-  validateFollowUser,
-  validateUnfollowUser,
+  validateUserId,
+  validateFollowee,
+  validateFollowerToFolloweeAssociation,
 } = require("../middleware/validate");
 const express = require("express");
 const wrapAsync = require("../utils/wrapAsync");
 
 const router = express.Router();
 
-router.get("/:userId", authenticate, wrapAsync(getUser));
-
 router.get("/", authenticate, wrapAsync(getUsers));
+
+router.get("/:userId", authenticate, validateUserId, wrapAsync(getUser));
 
 router.post(
   "/:userId/follows",
   authenticate,
-  validateFollowUser,
+  validateUserId,
+  validateFollowee,
   wrapAsync(followUser)
 );
 
 router.delete(
   "/:userId/follows",
   authenticate,
-  validateUnfollowUser,
+  validateUserId,
+  validateFollowerToFolloweeAssociation,
   wrapAsync(unfollowUser)
 );
 
