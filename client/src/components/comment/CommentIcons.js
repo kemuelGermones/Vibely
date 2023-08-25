@@ -1,5 +1,4 @@
 import { BsTrash, BsHeart } from "react-icons/bs";
-import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import { deleteComment } from "../../apis/comment";
@@ -34,11 +33,7 @@ function CommentIcons({ postId, commentId, userId }) {
           disabled={isLoading}
           onClick={handleDelete}
         >
-          {isLoading ? (
-            <AiOutlineLoading3Quarters className="animate-spin" />
-          ) : (
-            <BsTrash />
-          )}
+          <BsTrash />
         </IconButton>
       ) : null}
       <IconButton content="Like">
