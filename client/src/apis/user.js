@@ -30,7 +30,7 @@ export const followUser = async (userId) => {
   const user = auth.currentUser;
   const token = await getIdToken(user);
 
-  await axios.post(`http://localhost:5000/users/${userId}/follows`, {
+  await axios.post(`http://localhost:5000/users/${userId}/follows`, undefined, {
     headers: { Authorization: `Bearer ${token}` },
   });
 };
