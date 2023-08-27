@@ -30,7 +30,7 @@ export const followUser = async (userId) => {
   const user = auth.currentUser;
   const token = await getIdToken(user);
 
-  await axios.post(`http://localhost:5000/users/${userId}/follows`, undefined, {
+  await axios.post(`http://localhost:5000/users/${userId}/follow`, undefined, {
     headers: { Authorization: `Bearer ${token}` },
   });
 };
@@ -39,7 +39,7 @@ export const unfollowUser = async (userId) => {
   const user = auth.currentUser;
   const token = await getIdToken(user);
 
-  await axios.delete(`http://localhost:5000/users/${userId}/follows`, {
+  await axios.delete(`http://localhost:5000/users/${userId}/unfollow`, {
     headers: { Authorization: `Bearer ${token}` },
   });
 };

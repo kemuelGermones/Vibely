@@ -76,8 +76,8 @@ function UserDetails({ userId }) {
         ) : null}
       </div>
       <div className="flex justify-around">
-        <button>{`${data.followers} followers`}</button>
-        <button>{`${data.following} following`}</button>
+        <div>{`${data.followers} followers`}</div>
+        <div>{`${data.following} following`}</div>
       </div>
     </div>
   );
