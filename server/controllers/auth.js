@@ -3,23 +3,26 @@ const sequelize = require("../config/sequelize");
 const admin = require("../config/firebase");
 
 module.exports.signup = async (req, res) => {
+  const { firstname, lastname, username, email, password } = req.body;
+  const avatar = req.file;
+
   await sequelize.transaction(async (t) => {
     const user = await User.create(
       {
-        firstname: req.body.firstname,
-        lastname: req.body.lastname,
-        username: req.body.username,
-        email: req.body.email,
-        avatar: req.file,
+        firstname,
+        lastname,
+        username,
+        email,
+        avatar,
       },
       { include: [Avatar], transaction: t }
     );
 
     await admin.auth().createUser({
-      displayName: req.body.username,
-      email: req.body.email,
-      password: req.body.password,
-      photoURL: req.file.url,
+      email,
+      password,
+      displayName: username,
+      photoURL: avatar.url,
       uid: user.id,
     });
   });

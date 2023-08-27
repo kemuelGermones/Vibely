@@ -117,7 +117,7 @@ module.exports.validateFollowerToFolloweeAssociation = (req, res, next) => {
   const { userId } = req.params;
   const { uid } = req.user;
 
-  Follow.findOne({ where: { follower_id: uid, followee_id: userId } })
+  Follow.findOne({ where: { followerId: uid, followeeId: userId } })
     .then((association) => {
       if (!association) {
         throw new AppError(

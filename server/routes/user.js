@@ -4,12 +4,12 @@ const {
   followUser,
   unfollowUser,
 } = require("../controllers/user");
-const { authenticate } = require("../middleware/auth");
 const {
   validateUserId,
   validateFollowee,
   validateFollowerToFolloweeAssociation,
 } = require("../middleware/validate");
+const { authenticate } = require("../middleware/auth");
 const express = require("express");
 const wrapAsync = require("../utils/wrapAsync");
 
@@ -20,7 +20,7 @@ router.get("/", authenticate, wrapAsync(getUsers));
 router.get("/:userId", authenticate, validateUserId, wrapAsync(getUser));
 
 router.post(
-  "/:userId/follows",
+  "/:userId/follow",
   authenticate,
   validateUserId,
   validateFollowee,
@@ -28,7 +28,7 @@ router.post(
 );
 
 router.delete(
-  "/:userId/follows",
+  "/:userId/unfollow",
   authenticate,
   validateUserId,
   validateFollowerToFolloweeAssociation,

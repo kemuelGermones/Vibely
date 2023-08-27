@@ -4,8 +4,8 @@ const sequelize = require("../config/sequelize");
 const cloudinary = require("../config/cloudinary");
 
 module.exports.getPosts = async (req, res) => {
-  const limit = 10;
   const { page, search } = req.query;
+  const limit = 10;
   const offset = page ? Number(page) * limit : 0;
   const where = search ? { userId: search } : undefined;
 
@@ -51,11 +51,14 @@ module.exports.getPosts = async (req, res) => {
 };
 
 module.exports.createPost = async (req, res) => {
+  const { uid } = req.user;
+  const images = req.files;
+
   await Post.create(
     {
       ...req.body,
-      images: req.files,
-      userId: req.user.uid,
+      images,
+      userId: uid,
     },
     { include: [Image] }
   );
@@ -70,7 +73,7 @@ module.exports.createPost = async (req, res) => {
 module.exports.updatePost = async (req, res) => {
   const { postId } = req.params;
 
-  await Post.update({ caption: req.body.caption }, { where: { id: postId } });
+  await Post.update(req.body, { where: { id: postId } });
 
   res.status(200).json({
     status: 200,

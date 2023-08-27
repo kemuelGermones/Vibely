@@ -155,12 +155,13 @@ Post.hasMany(Comment);
 Comment.belongsTo(Post);
 
 User.belongsToMany(User, {
-  foreignKey: "follower_id",
+  foreignKey: "followerId",
   as: "follower",
   through: Follow,
 });
+
 User.belongsToMany(User, {
-  foreignKey: "followee_id",
+  foreignKey: "followeeId",
   as: "followee",
   through: Follow,
 });

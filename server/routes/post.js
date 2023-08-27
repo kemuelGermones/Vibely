@@ -1,21 +1,20 @@
-const { uploadImages } = require("../middleware/cloudinary");
-const { multerCreatePost } = require("../middleware/multer");
-const { isPostOwner, authenticate } = require("../middleware/auth");
 const {
   getPosts,
   createPost,
   updatePost,
   deletePost,
 } = require("../controllers/post");
-const express = require("express");
-const wrapAsync = require("../utils/wrapAsync");
-
 const {
   validatePostCaption,
   validatePostImages,
   validatePostId,
   validatePostOwner,
 } = require("../middleware/validate");
+const { uploadImages } = require("../middleware/cloudinary");
+const { multerCreatePost } = require("../middleware/multer");
+const { authenticate } = require("../middleware/auth");
+const express = require("express");
+const wrapAsync = require("../utils/wrapAsync");
 
 const router = express.Router();
 
