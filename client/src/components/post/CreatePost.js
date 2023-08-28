@@ -19,6 +19,7 @@ function CreatePost() {
           className="input-primary w-full"
           type="text"
           placeholder="What's on your mind"
+          readOnly={true}
           onClick={handleShowCreatePostForm}
         />
       </div>
