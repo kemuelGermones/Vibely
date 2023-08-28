@@ -46,7 +46,7 @@ function Advertisement() {
       <div className="text-sm text-gray-500">Sponsored</div>
       <a className="flex flex-col gap-3" href={project.link} target="_blank">
         <img className="rounded-lg" src={project.image} alt={project.name} />
-        <div>{project.name}</div>
+        <div className="text-sm">{project.name}</div>
         <div className="text-sm text-gray-500">{project.description}</div>
       </a>
     </div>

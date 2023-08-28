@@ -1,10 +1,12 @@
 import { Fragment } from "react";
 
 import useAuth from "../hooks/useAuth";
-import Advertisement from "../components/advertisement/Advertisement";
+import Advertisement from "../components/misc/Advertisement";
 import Navbar from "../components/ui/Navbar";
 import UserDetails from "../components/user/UserDetails";
 import MessageList from "../components/message/MessageList";
+import About from "../components/misc/About";
+import Rules from "../components/misc/Rules";
 
 function Messages() {
   const { user } = useAuth();
@@ -15,6 +17,8 @@ function Messages() {
       <main className="container mx-auto mt-12 p-3 sm:grid sm:grid-cols-[1fr_1.5fr] sm:gap-3 lg:grid-cols-[1fr_1.5fr_1fr]">
         <aside className="hidden sm:block sm:flex sm:flex-col sm:gap-3">
           <UserDetails userId={user.uid} />
+          <About />
+          <Rules />
         </aside>
         <section>
           <MessageList />
