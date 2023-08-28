@@ -4,7 +4,7 @@ import useAuth from "../../hooks/useAuth";
 import useModal from "../../hooks/useModal";
 import UpdatePostForm from "./UpdatePostForm";
 import DeletePostModal from "./DeletePostModal";
-import PostIcons from "./PostIcons";
+import PostDetailsIcons from "./PostDetailsIcons";
 import Avatar from "../ui/Avatar";
 import Dropdown from "../ui/Dropdown";
 import Carousel from "../ui/Carousel";
@@ -13,11 +13,11 @@ function PostDetails({ data }) {
   const { user } = useAuth();
   const { openModal } = useModal();
 
-  const showUpdatePostForm = () => {
+  const handleShowUpdatePostForm = () => {
     openModal(<UpdatePostForm postId={data.id} caption={data.caption} />);
   };
 
-  const showDeletePostModal = () => {
+  const handleShowDeletePostModal = () => {
     openModal(<DeletePostModal postId={data.id} />);
   };
 
@@ -35,11 +35,11 @@ function PostDetails({ data }) {
         </div>
         {data.user.id === user.uid ? (
           <Dropdown>
-            <button onClick={showUpdatePostForm}>
+            <button onClick={handleShowUpdatePostForm}>
               <BsPencilSquare />
               <div>Update</div>
             </button>
-            <button onClick={showDeletePostModal}>
+            <button onClick={handleShowDeletePostModal}>
               <BsTrash />
               <div>Delete</div>
             </button>
@@ -48,7 +48,7 @@ function PostDetails({ data }) {
       </div>
       <div>{data.caption}</div>
       <Carousel images={data.images} />
-      <PostIcons postId={data.id} totalComments={data.comments} />
+      <PostDetailsIcons postId={data.id} totalComments={data.comments} />
     </div>
   );
 }

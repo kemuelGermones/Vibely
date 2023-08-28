@@ -45,7 +45,7 @@ function CreatePostForm() {
     },
   });
 
-  const handleChangeImages = (event) => {
+  const handleOnChangeImages = (event) => {
     setFieldValue("images", [...event.currentTarget.files]);
   };
 
@@ -77,7 +77,7 @@ function CreatePostForm() {
           id="images"
           name="images"
           multiple={true}
-          onChange={handleChangeImages}
+          onChange={handleOnChangeImages}
           onBlur={handleBlur}
         >
           <BsCloudUpload className="text-yellow-400" size="2.5em" />

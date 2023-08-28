@@ -19,7 +19,7 @@ function DeletePostModal({ postId }) {
     },
   });
 
-  const handleDelete = () => {
+  const handleDeletePost = () => {
     mutate(postId);
   };
 
@@ -45,7 +45,7 @@ function DeletePostModal({ postId }) {
           className="btn-warning"
           type="button"
           disabled={isLoading}
-          onClick={handleDelete}
+          onClick={handleDeletePost}
         >
           {isLoading ? "Loading..." : "Delete"}
         </button>

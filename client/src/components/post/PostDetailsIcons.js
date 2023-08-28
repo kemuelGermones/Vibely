@@ -4,10 +4,10 @@ import useModal from "../../hooks/useModal";
 import CommentModal from "../comment/CommentModal";
 import IconButton from "../ui/IconButton";
 
-function PostIcons({ postId, totalComments }) {
+function PostDetailsIcons({ postId, totalComments }) {
   const { openModal } = useModal();
 
-  const showComments = () => {
+  const handleShowCommentModal = () => {
     openModal(<CommentModal postId={postId} />);
   };
 
@@ -17,7 +17,7 @@ function PostIcons({ postId, totalComments }) {
         <BsHeart size="1.5em" />
       </IconButton>
       <div>100</div>
-      <IconButton content="Comments" onClick={showComments}>
+      <IconButton content="Comments" onClick={handleShowCommentModal}>
         <BsChatSquare size="1.5em" />
       </IconButton>
       <div>{totalComments}</div>
@@ -25,4 +25,4 @@ function PostIcons({ postId, totalComments }) {
   );
 }
 
-export default PostIcons;
+export default PostDetailsIcons;

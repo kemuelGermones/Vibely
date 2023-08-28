@@ -6,7 +6,7 @@ import useAuth from "../../hooks/useAuth";
 import handleError from "../../utils/handleError";
 import IconButton from "../ui/IconButton";
 
-function CommentIcons({ postId, commentId, userId }) {
+function CommentDetailsIcons({ postId, commentId, userId }) {
   const { user } = useAuth();
   const queryClient = useQueryClient();
 
@@ -21,7 +21,7 @@ function CommentIcons({ postId, commentId, userId }) {
     },
   });
 
-  const handleDelete = () => {
+  const handleDeleteComment = () => {
     mutate({ postId, commentId });
   };
 
@@ -31,7 +31,7 @@ function CommentIcons({ postId, commentId, userId }) {
         <IconButton
           content="Delete"
           disabled={isLoading}
-          onClick={handleDelete}
+          onClick={handleDeleteComment}
         >
           <BsTrash />
         </IconButton>
@@ -43,4 +43,4 @@ function CommentIcons({ postId, commentId, userId }) {
   );
 }
 
-export default CommentIcons;
+export default CommentDetailsIcons;

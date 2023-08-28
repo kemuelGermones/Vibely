@@ -32,19 +32,19 @@ function Navbar() {
     mutate();
   };
 
-  const showSearch = () => {
+  const handleShowSearchModal = () => {
     openModal(<SearchModal />);
   };
 
-  const navigateToPosts = () => {
+  const handleNavigateToPosts = () => {
     navigate("/posts");
   };
 
-  const navigateToMessages = () => {
+  const handleNavigateToMessages = () => {
     navigate("/messages");
   };
 
-  const navigateToProfile = () => {
+  const handleNavigateToProfile = () => {
     navigate(`/users/${user.uid}`);
   };
 
@@ -58,7 +58,7 @@ function Navbar() {
               className="flex cursor-pointer items-center justify-center hover:bg-yellow-500"
               data-tooltip-id="navbar"
               data-tooltip-content="Search"
-              onClick={showSearch}
+              onClick={handleShowSearchModal}
             >
               <BsSearch className="shrink-0" size="1.5em" />
             </li>
@@ -66,7 +66,7 @@ function Navbar() {
               className="flex cursor-pointer items-center justify-center hover:bg-yellow-500"
               data-tooltip-id="navbar"
               data-tooltip-content="Posts"
-              onClick={navigateToPosts}
+              onClick={handleNavigateToPosts}
             >
               <BsCardText className="shrink-0" size="1.5em" />
             </li>
@@ -74,7 +74,7 @@ function Navbar() {
               className="flex cursor-pointer items-center justify-center hover:bg-yellow-500"
               data-tooltip-id="navbar"
               data-tooltip-content="Messages"
-              onClick={navigateToMessages}
+              onClick={handleNavigateToMessages}
             >
               <BsEnvelope className="shrink-0" size="1.5em" />
             </li>
@@ -82,7 +82,7 @@ function Navbar() {
               className="flex cursor-pointer items-center justify-center hover:bg-yellow-500"
               data-tooltip-id="navbar"
               data-tooltip-content="Profile"
-              onClick={navigateToProfile}
+              onClick={handleNavigateToProfile}
             >
               <BsPerson className="shrink-0" size="1.5em" />
             </li>

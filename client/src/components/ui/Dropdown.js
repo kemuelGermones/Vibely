@@ -5,14 +5,14 @@ function Dropdown({ children }) {
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
 
   useEffect(() => {
-    document.body.addEventListener("click", hideDropdown);
+    document.body.addEventListener("click", handleHideDropdown);
 
     return () => {
-      document.body.removeEventListener("click", hideDropdown);
+      document.body.removeEventListener("click", handleHideDropdown);
     };
   }, []);
 
-  const hideDropdown = () => {
+  const handleHideDropdown = () => {
     setIsDropdownVisible(false);
   };
 
@@ -20,14 +20,14 @@ function Dropdown({ children }) {
     event.stopPropagation();
   };
 
-  const toggleDropdown = (event) => {
+  const handleToggleDropdown = (event) => {
     handleStopPropagation(event);
     setIsDropdownVisible((state) => !state);
   };
 
   return (
     <div className="relative">
-      <button onClick={toggleDropdown}>
+      <button onClick={handleToggleDropdown}>
         <BsThreeDots size="1.5em" />
       </button>
       {isDropdownVisible ? (
@@ -37,7 +37,7 @@ function Dropdown({ children }) {
         >
           <div
             className="[&>button:hover]:bg-neutral-950 [&>button]:flex [&>button]:w-full [&>button]:items-center [&>button]:gap-3 [&>button]:rounded [&>button]:p-2 [&>button]:text-sm"
-            onClick={hideDropdown}
+            onClick={handleHideDropdown}
           >
             {children}
           </div>

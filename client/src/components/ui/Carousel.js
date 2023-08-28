@@ -4,13 +4,13 @@ import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
 function Carousel({ images }) {
   const [currentSlide, setCurrentSlide] = useState(0);
 
-  const previousSlide = () => {
+  const handlePreviousSlide = () => {
     setCurrentSlide((current) =>
       current === 0 ? images.length - 1 : current - 1
     );
   };
 
-  const nextSlide = () => {
+  const handleNextSlide = () => {
     setCurrentSlide((current) =>
       current === images.length - 1 ? 0 : current + 1
     );
@@ -34,14 +34,14 @@ function Carousel({ images }) {
         </div>
         <button
           type="button"
-          onClick={previousSlide}
+          onClick={handlePreviousSlide}
           className="absolute left-4 top-1/2 -translate-y-1/2 rounded-full bg-white/80 p-1 text-gray-800 shadow hover:bg-white"
         >
           <BsChevronLeft />
         </button>
         <button
           type="button"
-          onClick={nextSlide}
+          onClick={handleNextSlide}
           className="absolute right-4 top-1/2 -translate-y-1/2 rounded-full bg-white/80 p-1 text-gray-800 shadow hover:bg-white"
         >
           <BsChevronRight />

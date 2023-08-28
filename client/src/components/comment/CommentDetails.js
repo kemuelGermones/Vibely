@@ -1,4 +1,4 @@
-import CommentIcons from "./CommentIcons";
+import CommentDetailsIcons from "./CommentDetailsIcons";
 import Avatar from "../ui/Avatar";
 
 function CommentDetails({ postId, data }) {
@@ -8,7 +8,7 @@ function CommentDetails({ postId, data }) {
       <div className="flex w-full flex-col">
         <div className="flex justify-between">
           <div className="font-semibold">{data.user.username}</div>
-          <CommentIcons
+          <CommentDetailsIcons
             postId={postId}
             commentId={data.id}
             userId={data.user.id}

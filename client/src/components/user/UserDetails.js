@@ -3,7 +3,7 @@ import { BsExclamationTriangle } from "react-icons/bs";
 
 import { getUser } from "../../apis/user";
 import useAuth from "../../hooks/useAuth";
-import UserIcons from "./UserIcons";
+import UserDetailsIcons from "./UserDetailsIcons";
 import Avatar from "../ui/Avatar";
 
 function Loader() {
@@ -72,7 +72,7 @@ function UserDetails({ userId }) {
           </div>
         </div>
         {userId !== user.uid ? (
-          <UserIcons userId={userId} isFollowed={data.isFollowed} />
+          <UserDetailsIcons userId={userId} isFollowed={data.isFollowed} />
         ) : null}
       </div>
       <div className="flex justify-around">

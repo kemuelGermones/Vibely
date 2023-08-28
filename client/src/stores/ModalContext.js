@@ -8,12 +8,12 @@ export const ModalContext = createContext({
 export function ModalContextProvider({ children }) {
   const [modal, setModal] = useState(null);
 
-  const openModal = (component) => {
+  const handleOpenModal = (component) => {
     setModal(component);
     document.body.style.overflow = "hidden";
   };
 
-  const closeModal = () => {
+  const handleCloseModal = () => {
     setModal(null);
     document.body.style.overflow = "unset";
   };
@@ -22,7 +22,7 @@ export function ModalContextProvider({ children }) {
     <Fragment>
       <div
         className="fixed left-0 top-0 z-30 h-screen w-full bg-stone-900/20 backdrop-blur-sm"
-        onClick={closeModal}
+        onClick={handleCloseModal}
       ></div>
       <main className="fixed left-1/2 top-1/2 z-40 w-[calc(100vw-24px)] -translate-x-1/2 -translate-y-1/2 sm:w-[640px]">
         {modal}
@@ -31,7 +31,9 @@ export function ModalContextProvider({ children }) {
   ) : null;
 
   return (
-    <ModalContext.Provider value={{ openModal, closeModal }}>
+    <ModalContext.Provider
+      value={{ openModal: handleOpenModal, closeModal: handleCloseModal }}
+    >
       {popOver}
       {children}
     </ModalContext.Provider>

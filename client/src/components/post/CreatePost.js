@@ -7,7 +7,7 @@ function CreatePost() {
   const { openModal } = useModal();
   const { user } = useAuth();
 
-  const showCreatePostForm = () => {
+  const handleShowCreatePostForm = () => {
     openModal(<CreatePostForm />);
   };
 
@@ -19,7 +19,7 @@ function CreatePost() {
           className="input-primary w-full"
           type="text"
           placeholder="What's on your mind"
-          onClick={showCreatePostForm}
+          onClick={handleShowCreatePostForm}
         />
       </div>
     </div>

@@ -5,7 +5,7 @@ import { followUser, unfollowUser } from "../../apis/user";
 import IconButton from "../ui/IconButton";
 import handleError from "../../utils/handleError";
 
-function UserIcons({ userId, isFollowed }) {
+function UserDetailsIcons({ userId, isFollowed }) {
   const queryClient = useQueryClient();
 
   const { mutate, isLoading } = useMutation(
@@ -20,7 +20,7 @@ function UserIcons({ userId, isFollowed }) {
     }
   );
 
-  const handleOnCLick = () => {
+  const handleFollowOrUnfollowUser = () => {
     mutate(userId);
   };
 
@@ -28,7 +28,7 @@ function UserIcons({ userId, isFollowed }) {
     <div className="flex gap-3">
       <IconButton
         content={isFollowed ? "Unfollow" : "Follow"}
-        onClick={handleOnCLick}
+        onClick={handleFollowOrUnfollowUser}
         disabled={isLoading}
       >
         {isFollowed ? (
@@ -44,4 +44,4 @@ function UserIcons({ userId, isFollowed }) {
   );
 }
 
-export default UserIcons;
+export default UserDetailsIcons;

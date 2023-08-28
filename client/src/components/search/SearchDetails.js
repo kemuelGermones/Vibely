@@ -7,7 +7,7 @@ function SearchDetails({ data }) {
   const { closeModal } = useModal();
   const navigate = useNavigate();
 
-  const handleOnClick = () => {
+  const handleOnClickSearchDetails = () => {
     closeModal();
     navigate(`/users/${data.id}`);
   };
@@ -15,7 +15,7 @@ function SearchDetails({ data }) {
   return (
     <div
       className="flex cursor-pointer items-center gap-3 rounded-lg p-3 hover:bg-yellow-400"
-      onClick={handleOnClick}
+      onClick={handleOnClickSearchDetails}
     >
       <Avatar src={data.avatar.url} alt={data.username} />
       <div>

@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 function Error() {
   const navigate = useNavigate();
 
-  const handleHomepage = () => {
+  const handleNavigateToHomepage = () => {
     navigate("/");
   };
 
@@ -16,7 +16,11 @@ function Error() {
       <div className="text-center text-gray-500">
         Oops! We couldn't find the page you are looking for.
       </div>
-      <button className="btn-secondary" type="button" onClick={handleHomepage}>
+      <button
+        className="btn-secondary"
+        type="button"
+        onClick={handleNavigateToHomepage}
+      >
         Go to homepage
       </button>
     </main>
