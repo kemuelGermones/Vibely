@@ -31,6 +31,7 @@ module.exports.getUser = async (req, res, next) => {
 
   const user = await User.findOne({
     where: { id: userId },
+    replacements: [uid],
     include: [
       {
         model: Avatar,
@@ -38,7 +39,6 @@ module.exports.getUser = async (req, res, next) => {
         attributes: { exclude: ["userId"] },
       },
     ],
-    replacements: [uid, userId],
     attributes: {
       include: [
         [
@@ -55,7 +55,7 @@ module.exports.getUser = async (req, res, next) => {
         ],
         [
           Sequelize.literal(
-            "(SELECT EXISTS(SELECT * FROM follows WHERE follows.followerId = ? AND follows.followeeId = ?))"
+            "(SELECT EXISTS(SELECT * FROM follows WHERE follows.followerId = ? AND follows.followeeId = users.id))"
           ),
           "isFollowed",
         ],
