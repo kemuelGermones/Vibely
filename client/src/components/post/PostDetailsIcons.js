@@ -1,11 +1,28 @@
-import { BsHeart, BsChatSquare } from "react-icons/bs";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { BsHeart, BsHeartFill, BsChatSquare } from "react-icons/bs";
 
+import { likePost, unlikePost } from "../../apis/post";
+import handleError from "../../utils/handleError";
 import useModal from "../../hooks/useModal";
 import CommentModal from "../comment/CommentModal";
 import IconButton from "../ui/IconButton";
 
-function PostDetailsIcons({ postId, totalComments }) {
+function PostDetailsIcons({ postId, isLiked, likes, comments }) {
   const { openModal } = useModal();
+  const queryClient = useQueryClient();
+
+  const { mutate, isLoading } = useMutation(isLiked ? unlikePost : likePost, {
+    onSuccess: (data, variables, context) => {
+      queryClient.invalidateQueries({ queryKey: ["posts"] });
+    },
+    onError: (error, variables, context) => {
+      handleError(error);
+    },
+  });
+
+  const handleLikeOrUnlikePost = () => {
+    mutate(postId);
+  };
 
   const handleShowCommentModal = () => {
     openModal(<CommentModal postId={postId} />);
@@ -13,14 +30,22 @@ function PostDetailsIcons({ postId, totalComments }) {
 
   return (
     <div className="flex gap-3">
-      <IconButton content="Like">
-        <BsHeart size="1.5em" />
+      <IconButton
+        content={isLiked ? "Unlike" : "like"}
+        onClick={handleLikeOrUnlikePost}
+        disabled={isLoading}
+      >
+        {isLiked ? (
+          <BsHeartFill className="text-yellow-400" size="1.5em" />
+        ) : (
+          <BsHeart size="1.5em" />
+        )}
       </IconButton>
-      <div>100</div>
+      <div>{likes}</div>
       <IconButton content="Comments" onClick={handleShowCommentModal}>
         <BsChatSquare size="1.5em" />
       </IconButton>
-      <div>{totalComments}</div>
+      <div>{comments}</div>
     </div>
   );
 }

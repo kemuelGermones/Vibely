@@ -61,3 +61,25 @@ export const deletePost = async (postId) => {
     },
   });
 };
+
+export const likePost = async (postId) => {
+  const user = auth.currentUser;
+  const token = await getIdToken(user);
+
+  await axios.post(`http://localhost:5000/posts/${postId}/like`, undefined, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+};
+
+export const unlikePost = async (postId) => {
+  const user = auth.currentUser;
+  const token = await getIdToken(user);
+
+  await axios.delete(`http://localhost:5000/posts/${postId}/unlike`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+};

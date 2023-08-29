@@ -48,7 +48,12 @@ function PostDetails({ data }) {
       </div>
       <div>{data.caption}</div>
       <Carousel images={data.images} />
-      <PostDetailsIcons postId={data.id} totalComments={data.comments} />
+      <PostDetailsIcons
+        postId={data.id}
+        isLiked={data.isLiked}
+        likes={data.likes}
+        comments={data.comments}
+      />
     </div>
   );
 }
