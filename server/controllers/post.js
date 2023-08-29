@@ -103,19 +103,21 @@ module.exports.updatePost = async (req, res) => {
 module.exports.deletePost = async (req, res) => {
   const { postId } = req.params;
 
-  const images = await Image.findAll({ where: { postId } });
-
   await sequelize.transaction(async (t) => {
+    const images = await Image.findAll({ where: { postId } });
+
     await Comment.destroy({ where: { postId }, transaction: t });
+
     await Image.destroy({ where: { postId }, transaction: t });
+
     await Post.destroy({ where: { id: postId }, transaction: t });
-  });
 
-  const destroyImagesCloudinary = images.map(async (image) => {
-    await cloudinary.uploader.destroy(image.filename);
-  });
+    const destroyImagesCloudinary = images.map(async (image) => {
+      await cloudinary.uploader.destroy(image.getDataValue("filename"));
+    });
 
-  await Promise.all(destroyImagesCloudinary);
+    await Promise.all(destroyImagesCloudinary);
+  });
 
   res.status(200).json({
     status: 200,
