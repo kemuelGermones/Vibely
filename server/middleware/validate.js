@@ -1,4 +1,4 @@
-const { User, Post, Comment, Follow } = require("../models");
+const { User, Post, Comment, Follow, PostLike } = require("../models");
 const { postSchema, commentSchema, userSchema } = require("../schemas");
 const AppError = require("../utils/AppError");
 
@@ -9,6 +9,70 @@ module.exports.validatePostId = (req, res, next) => {
     .then((post) => {
       if (!post) {
         throw new AppError(400, "post doesn't exist");
+      }
+      next();
+    })
+    .catch((error) => next(error));
+};
+
+module.exports.validatePostCaption = (req, res, next) => {
+  const { error } = postSchema.validate(req.body);
+
+  if (error) {
+    const message = error.details[0].message;
+    throw new AppError(400, message);
+  }
+
+  next();
+};
+
+module.exports.validatePostImages = (req, res, next) => {
+  if (req.files.length === 0) {
+    throw new AppError(400, '"images" is required');
+  }
+
+  next();
+};
+
+module.exports.validatePostOwner = (req, res, next) => {
+  const { postId } = req.params;
+  const { uid } = req.user;
+
+  Post.findOne({ where: { id: postId } })
+    .then((post) => {
+      if (post.userId !== uid) {
+        throw new AppError(
+          400,
+          "you are not allowed to update/delete this post"
+        );
+      }
+      next();
+    })
+    .catch((error) => next(error));
+};
+
+module.exports.validatePostLikeAvailability = (req, res, next) => {
+  const { postId } = req.params;
+  const { uid } = req.user;
+
+  PostLike.findOne({ where: { postId, userId: uid } })
+    .then((association) => {
+      if (association) {
+        throw new AppError(400, "you already liked this post");
+      }
+      next();
+    })
+    .catch((error) => next(error));
+};
+
+module.exports.validatePostLikeAssociation = (req, res, next) => {
+  const { postId } = req.params;
+  const { uid } = req.user;
+
+  PostLike.findOne({ where: { postId, userId: uid } })
+    .then((association) => {
+      if (!association) {
+        throw new AppError(400, "Post to likee association doesn't exist");
       }
       next();
     })
@@ -47,42 +111,6 @@ module.exports.validateCommentOwner = (req, res, next) => {
     .then((comment) => {
       if (comment.userId !== uid) {
         throw new AppError(400, "you are not allowed to delete this comment");
-      }
-      next();
-    })
-    .catch((error) => next(error));
-};
-
-module.exports.validatePostImages = (req, res, next) => {
-  if (req.files.length === 0) {
-    throw new AppError(400, '"images" is required');
-  }
-
-  next();
-};
-
-module.exports.validatePostCaption = (req, res, next) => {
-  const { error } = postSchema.validate(req.body);
-
-  if (error) {
-    const message = error.details[0].message;
-    throw new AppError(400, message);
-  }
-
-  next();
-};
-
-module.exports.validatePostOwner = (req, res, next) => {
-  const { postId } = req.params;
-  const { uid } = req.user;
-
-  Post.findOne({ where: { id: postId } })
-    .then((post) => {
-      if (post.userId !== uid) {
-        throw new AppError(
-          400,
-          "you are not allowed to update/delete this post"
-        );
       }
       next();
     })

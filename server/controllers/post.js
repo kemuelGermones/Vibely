@@ -1,10 +1,11 @@
 const { Sequelize } = require("sequelize");
-const { Post, Image, Comment, User, Avatar } = require("../models");
+const { Post, Image, Comment, User, Avatar, PostLike } = require("../models");
 const sequelize = require("../config/sequelize");
 const cloudinary = require("../config/cloudinary");
 
 module.exports.getPosts = async (req, res) => {
   const { page, search } = req.query;
+  const { uid } = req.user;
   const limit = 10;
   const offset = page ? Number(page) * limit : 0;
   const where = search ? { userId: search } : undefined;
@@ -13,6 +14,7 @@ module.exports.getPosts = async (req, res) => {
     limit,
     offset,
     where,
+    replacements: [uid],
     order: [["createdAt", "DESC"]],
     include: [
       {
@@ -38,10 +40,26 @@ module.exports.getPosts = async (req, res) => {
           ),
           "comments",
         ],
+        [
+          Sequelize.literal(
+            "(SELECT COUNT(*) FROM postLikes WHERE postLikes.postId = posts.id)"
+          ),
+          "likes",
+        ],
+        [
+          Sequelize.literal(
+            "(SELECT EXISTS(SELECT * FROM postLikes WHERE postLikes.userId = ? AND postLikes.postId = posts.id))"
+          ),
+          "isLiked",
+        ],
       ],
       exclude: ["userId"],
     },
   });
+
+  posts.forEach((post) =>
+    post.setDataValue("isLiked", !!post.getDataValue("isLiked"))
+  );
 
   res.status(200).json({
     status: 200,
@@ -103,5 +121,31 @@ module.exports.deletePost = async (req, res) => {
     status: 200,
     items: null,
     message: "successfully deleted a post",
+  });
+};
+
+module.exports.likePost = async (req, res, next) => {
+  const { postId } = req.params;
+  const { uid } = req.user;
+
+  await PostLike.create({ postId, userId: uid });
+
+  res.status(200).json({
+    status: 200,
+    items: null,
+    message: "successfully liked a post",
+  });
+};
+
+module.exports.unlikePost = async (req, res, next) => {
+  const { postId } = req.params;
+  const { uid } = req.user;
+
+  await PostLike.destroy({ where: { postId, userId: uid } });
+
+  res.status(200).json({
+    status: 200,
+    items: null,
+    message: "successfully unliked a post",
   });
 };

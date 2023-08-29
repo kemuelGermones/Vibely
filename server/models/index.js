@@ -70,8 +70,7 @@ const Avatar = sequelize.define(
     },
   },
   {
-    updatedAt: false,
-    createdAt: false,
+    timestamps: false,
   }
 );
 
@@ -113,8 +112,7 @@ const Image = sequelize.define(
     },
   },
   {
-    updatedAt: false,
-    createdAt: false,
+    timestamps: false,
   }
 );
 
@@ -138,6 +136,8 @@ const Comment = sequelize.define(
 );
 
 const Follow = sequelize.define("follows", {}, { updatedAt: false });
+
+const PostLike = sequelize.define("postLikes", {}, { updatedAt: false });
 
 User.hasOne(Avatar);
 Avatar.belongsTo(User);
@@ -166,4 +166,24 @@ User.belongsToMany(User, {
   through: Follow,
 });
 
-module.exports = { User, Avatar, Post, Image, Comment, Follow };
+Post.belongsToMany(User, {
+  foreignKey: "postId",
+  as: "post",
+  through: PostLike,
+});
+
+User.belongsToMany(Post, {
+  foreignKey: "userId",
+  as: "user",
+  through: PostLike,
+});
+
+module.exports = {
+  User,
+  Avatar,
+  Post,
+  Image,
+  Comment,
+  Follow,
+  PostLike,
+};
