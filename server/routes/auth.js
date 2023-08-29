@@ -3,8 +3,8 @@ const {
   validateUsernameAvailability,
   validateUserAvailability,
 } = require("../middleware/validate");
-const { multerSignup } = require("../middleware/multer");
-const { uploadAvatar } = require("../middleware/cloudinary");
+const { parseSignupFormData } = require("../middleware/multer");
+const { uploadAvatarToCloudinary } = require("../middleware/cloudinary");
 const { signup } = require("../controllers/auth");
 const express = require("express");
 const wrapAsync = require("../utils/wrapAsync");
@@ -13,11 +13,11 @@ const router = express.Router();
 
 router.post(
   "/signup",
-  multerSignup,
+  parseSignupFormData,
   validateUserBody,
   validateUsernameAvailability,
   validateUserAvailability,
-  uploadAvatar,
+  uploadAvatarToCloudinary,
   wrapAsync(signup)
 );
 

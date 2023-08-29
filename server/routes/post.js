@@ -14,8 +14,8 @@ const {
   validatePostLikeAvailability,
   validatePostLikeAssociation,
 } = require("../middleware/validate");
-const { uploadImages } = require("../middleware/cloudinary");
-const { multerCreatePost } = require("../middleware/multer");
+const { uploadImagesToCloudinary } = require("../middleware/cloudinary");
+const { parseCreatePostFormData } = require("../middleware/multer");
 const { authenticate } = require("../middleware/auth");
 const express = require("express");
 const wrapAsync = require("../utils/wrapAsync");
@@ -27,10 +27,10 @@ router.get("/", authenticate, wrapAsync(getPosts));
 router.post(
   "/",
   authenticate,
-  multerCreatePost,
+  parseCreatePostFormData,
   validatePostCaption,
   validatePostImages,
-  uploadImages,
+  uploadImagesToCloudinary,
   wrapAsync(createPost)
 );
 

@@ -13,7 +13,7 @@ const fileFilter = (req, file, cb) => {
   cb(null, true);
 };
 
-module.exports.multerCreatePost = (req, res, next) => {
+module.exports.parseCreatePostFormData = (req, res, next) => {
   const limits = { files: 5 };
   const upload = multer({ storage, limits, fileFilter });
   const parse = upload.array("images");
@@ -26,7 +26,7 @@ module.exports.multerCreatePost = (req, res, next) => {
   });
 };
 
-module.exports.multerSignup = (req, res, next) => {
+module.exports.parseSignupFormData = (req, res, next) => {
   const upload = multer({ storage, fileFilter });
   const parse = upload.single("avatar");
 
