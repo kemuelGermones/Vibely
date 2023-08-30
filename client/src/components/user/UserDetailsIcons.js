@@ -8,20 +8,32 @@ import handleError from "../../utils/handleError";
 function UserDetailsIcons({ userId, isFollowed }) {
   const queryClient = useQueryClient();
 
-  const { mutate, isLoading } = useMutation(
-    isFollowed ? unfollowUser : followUser,
-    {
+  const { mutate: mutateFollowUser, isLoading: isLoadingFollowUser } =
+    useMutation(followUser, {
       onSuccess: (data, variables, context) => {
         queryClient.invalidateQueries({ queryKey: ["users", userId] });
       },
       onError: (error, variables, context) => {
         handleError(error);
       },
-    }
-  );
+    });
+
+  const { mutate: mutateUnfollowUser, isLoading: isLoadingUnfollowUser } =
+    useMutation(unfollowUser, {
+      onSuccess: (data, variables, context) => {
+        queryClient.invalidateQueries({ queryKey: ["users", userId] });
+      },
+      onError: (error, variables, context) => {
+        handleError(error);
+      },
+    });
 
   const handleFollowOrUnfollowUser = () => {
-    mutate(userId);
+    if (isFollowed) {
+      mutateUnfollowUser(userId);
+    } else {
+      mutateFollowUser(userId);
+    }
   };
 
   return (
@@ -29,7 +41,7 @@ function UserDetailsIcons({ userId, isFollowed }) {
       <IconButton
         content={isFollowed ? "Unfollow" : "Follow"}
         onClick={handleFollowOrUnfollowUser}
-        disabled={isLoading}
+        disabled={isLoadingFollowUser || isLoadingUnfollowUser}
       >
         {isFollowed ? (
           <BsPersonCheck size="1.5em" />

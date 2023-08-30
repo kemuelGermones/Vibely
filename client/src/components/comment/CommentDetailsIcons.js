@@ -10,19 +10,29 @@ function CommentDetailsIcons({ postId, commentId, userId, isLiked }) {
   const { user } = useAuth();
   const queryClient = useQueryClient();
 
-  const {
-    isLoading: isLoadingLikeOrUnlikeComment,
-    mutate: mutateLikeOrUnlikeComment,
-  } = useMutation(isLiked ? unlikeComment : likeComment, {
-    onSuccess: (data, variables, context) => {
-      queryClient.invalidateQueries({
-        queryKey: ["posts", postId, "comments"],
-      });
-    },
-    onError: (error, variables, context) => {
-      handleError(error);
-    },
-  });
+  const { isLoading: isLoadingLikeComment, mutate: mutateLikeComment } =
+    useMutation(likeComment, {
+      onSuccess: (data, variables, context) => {
+        queryClient.invalidateQueries({
+          queryKey: ["posts", postId, "comments"],
+        });
+      },
+      onError: (error, variables, context) => {
+        handleError(error);
+      },
+    });
+
+  const { isLoading: isLoadingUnlikeComment, mutate: mutateUnlikeComment } =
+    useMutation(unlikeComment, {
+      onSuccess: (data, variables, context) => {
+        queryClient.invalidateQueries({
+          queryKey: ["posts", postId, "comments"],
+        });
+      },
+      onError: (error, variables, context) => {
+        handleError(error);
+      },
+    });
 
   const { isLoading: isLoadingDeleteComment, mutate: mutateDeleteComment } =
     useMutation(deleteComment, {
@@ -37,7 +47,11 @@ function CommentDetailsIcons({ postId, commentId, userId, isLiked }) {
     });
 
   const handleLikeOrUnlikeComment = () => {
-    mutateLikeOrUnlikeComment({ postId, commentId });
+    if (isLiked) {
+      mutateUnlikeComment({ postId, commentId });
+    } else {
+      mutateLikeComment({ postId, commentId });
+    }
   };
 
   const handleDeleteComment = () => {
@@ -58,7 +72,7 @@ function CommentDetailsIcons({ postId, commentId, userId, isLiked }) {
       <IconButton
         content={isLiked ? "Unlike" : "like"}
         onClick={handleLikeOrUnlikeComment}
-        disabled={isLoadingLikeOrUnlikeComment}
+        disabled={isLoadingLikeComment || isLoadingUnlikeComment}
       >
         {isLiked ? <BsHeartFill className="text-yellow-400" /> : <BsHeart />}
       </IconButton>

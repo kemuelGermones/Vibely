@@ -11,17 +11,34 @@ function PostDetailsIcons({ postId, isLiked, likes, comments }) {
   const { openModal } = useModal();
   const queryClient = useQueryClient();
 
-  const { mutate, isLoading } = useMutation(isLiked ? unlikePost : likePost, {
-    onSuccess: (data, variables, context) => {
-      queryClient.invalidateQueries({ queryKey: ["posts"] });
-    },
-    onError: (error, variables, context) => {
-      handleError(error);
-    },
-  });
+  const { mutate: mutateLikePost, isLoading: isLoadingLikePost } = useMutation(
+    likePost,
+    {
+      onSuccess: (data, variables, context) => {
+        queryClient.invalidateQueries({ queryKey: ["posts"] });
+      },
+      onError: (error, variables, context) => {
+        handleError(error);
+      },
+    }
+  );
+
+  const { mutate: mutateUnlikePost, isLoading: isLoadingUnlikePost } =
+    useMutation(unlikePost, {
+      onSuccess: (data, variables, context) => {
+        queryClient.invalidateQueries({ queryKey: ["posts"] });
+      },
+      onError: (error, variables, context) => {
+        handleError(error);
+      },
+    });
 
   const handleLikeOrUnlikePost = () => {
-    mutate(postId);
+    if (isLiked) {
+      mutateUnlikePost(postId);
+    } else {
+      mutateLikePost(postId);
+    }
   };
 
   const handleShowCommentModal = () => {
@@ -33,7 +50,7 @@ function PostDetailsIcons({ postId, isLiked, likes, comments }) {
       <IconButton
         content={isLiked ? "Unlike" : "like"}
         onClick={handleLikeOrUnlikePost}
-        disabled={isLoading}
+        disabled={isLoadingLikePost || isLoadingUnlikePost}
       >
         {isLiked ? (
           <BsHeartFill className="text-yellow-400" size="1.5em" />
