@@ -139,6 +139,8 @@ const Follow = sequelize.define("follows", {}, { updatedAt: false });
 
 const PostLike = sequelize.define("postLikes", {}, { updatedAt: false });
 
+const CommentLike = sequelize.define("commentLikes", {}, { updated: false });
+
 User.hasOne(Avatar);
 Avatar.belongsTo(User);
 
@@ -168,14 +170,22 @@ User.belongsToMany(User, {
 
 Post.belongsToMany(User, {
   foreignKey: "postId",
-  as: "post",
   through: PostLike,
 });
 
 User.belongsToMany(Post, {
   foreignKey: "userId",
-  as: "user",
   through: PostLike,
+});
+
+Comment.belongsToMany(User, {
+  foreignKey: "commentId",
+  through: CommentLike,
+});
+
+User.belongsToMany(Comment, {
+  foreignKey: "userId",
+  through: CommentLike,
 });
 
 module.exports = {
@@ -186,4 +196,5 @@ module.exports = {
   Comment,
   Follow,
   PostLike,
+  CommentLike,
 };

@@ -1,4 +1,11 @@
-const { User, Post, Comment, Follow, PostLike } = require("../models");
+const {
+  User,
+  Post,
+  Comment,
+  Follow,
+  PostLike,
+  CommentLike,
+} = require("../models");
 const { postSchema, commentSchema, userSchema } = require("../schemas");
 const AppError = require("../utils/AppError");
 
@@ -111,6 +118,34 @@ module.exports.validateCommentOwner = (req, res, next) => {
     .then((comment) => {
       if (comment.getDataValue("userId") !== uid) {
         throw new AppError(400, "you are not allowed to delete this comment");
+      }
+      next();
+    })
+    .catch((error) => next(error));
+};
+
+module.exports.validateCommentLikeAvailability = (req, res, next) => {
+  const { commentId } = req.params;
+  const { uid } = req.user;
+
+  CommentLike.findOne({ where: { commentId, userId: uid } })
+    .then((association) => {
+      if (association) {
+        throw new AppError(400, "you already liked this comment");
+      }
+      next();
+    })
+    .catch((error) => next(error));
+};
+
+module.exports.validateCommentLikeAssociation = (req, res, next) => {
+  const { commentId } = req.params;
+  const { uid } = req.user;
+
+  CommentLike.findOne({ where: { commentId, userId: uid } })
+    .then((association) => {
+      if (!association) {
+        throw new AppError(400, "comment to user association doesn't exist");
       }
       next();
     })
