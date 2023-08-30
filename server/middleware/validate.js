@@ -40,7 +40,7 @@ module.exports.validatePostOwner = (req, res, next) => {
 
   Post.findOne({ where: { id: postId } })
     .then((post) => {
-      if (post.userId !== uid) {
+      if (post.getDataValue("userId") !== uid) {
         throw new AppError(
           400,
           "you are not allowed to update/delete this post"
@@ -72,7 +72,7 @@ module.exports.validatePostLikeAssociation = (req, res, next) => {
   PostLike.findOne({ where: { postId, userId: uid } })
     .then((association) => {
       if (!association) {
-        throw new AppError(400, "Post to likee association doesn't exist");
+        throw new AppError(400, "post to user association doesn't exist");
       }
       next();
     })
@@ -80,9 +80,9 @@ module.exports.validatePostLikeAssociation = (req, res, next) => {
 };
 
 module.exports.validateCommentId = (req, res, next) => {
-  const { commentId } = req.params;
+  const { postId, commentId } = req.params;
 
-  Comment.findOne({ where: { id: commentId } })
+  Comment.findOne({ where: { postId, id: commentId } })
     .then((comment) => {
       if (!comment) {
         throw new AppError(400, "comment doesn't exist");
@@ -109,7 +109,7 @@ module.exports.validateCommentOwner = (req, res, next) => {
 
   Comment.findOne({ where: { id: commentId } })
     .then((comment) => {
-      if (comment.userId !== uid) {
+      if (comment.getDataValue("userId") !== uid) {
         throw new AppError(400, "you are not allowed to delete this comment");
       }
       next();
@@ -130,7 +130,7 @@ module.exports.validateUserId = (req, res, next) => {
     .catch((error) => next(error));
 };
 
-module.exports.validateFollowee = (req, res, next) => {
+module.exports.validateFollowAvailability = (req, res, next) => {
   const { userId } = req.params;
   const { uid } = req.user;
 
@@ -138,10 +138,17 @@ module.exports.validateFollowee = (req, res, next) => {
     throw new AppError(400, "you are not allowed to follow this user");
   }
 
-  next();
+  Follow.findOne({ where: { followerId: uid, followeeId: userId } })
+    .then((association) => {
+      if (association) {
+        throw new AppError(400, "you already followed this user");
+      }
+      next();
+    })
+    .catch((error) => next(error));
 };
 
-module.exports.validateFollowerToFolloweeAssociation = (req, res, next) => {
+module.exports.validateFollowAssociation = (req, res, next) => {
   const { userId } = req.params;
   const { uid } = req.user;
 
@@ -150,7 +157,7 @@ module.exports.validateFollowerToFolloweeAssociation = (req, res, next) => {
       if (!association) {
         throw new AppError(
           400,
-          "Followee to follower association doesn't exist"
+          "followee to follower association doesn't exist"
         );
       }
       next();

@@ -6,8 +6,8 @@ const {
 } = require("../controllers/user");
 const {
   validateUserId,
-  validateFollowee,
-  validateFollowerToFolloweeAssociation,
+  validateFollowAvailability,
+  validateFollowAssociation,
 } = require("../middleware/validate");
 const { authenticate } = require("../middleware/auth");
 const express = require("express");
@@ -23,7 +23,7 @@ router.post(
   "/:userId/follow",
   authenticate,
   validateUserId,
-  validateFollowee,
+  validateFollowAvailability,
   wrapAsync(followUser)
 );
 
@@ -31,7 +31,7 @@ router.delete(
   "/:userId/unfollow",
   authenticate,
   validateUserId,
-  validateFollowerToFolloweeAssociation,
+  validateFollowAssociation,
   wrapAsync(unfollowUser)
 );
 
