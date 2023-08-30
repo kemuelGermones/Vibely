@@ -12,6 +12,7 @@ function CommentDetails({ postId, data }) {
             postId={postId}
             commentId={data.id}
             userId={data.user.id}
+            isLiked={data.isLiked}
           />
         </div>
         <div>{data.description}</div>

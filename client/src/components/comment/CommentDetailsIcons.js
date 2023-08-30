@@ -1,16 +1,19 @@
-import { BsTrash, BsHeart } from "react-icons/bs";
+import { BsTrash, BsHeart, BsHeartFill } from "react-icons/bs";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-import { deleteComment } from "../../apis/comment";
+import { deleteComment, likeComment, unlikeComment } from "../../apis/comment";
 import useAuth from "../../hooks/useAuth";
 import handleError from "../../utils/handleError";
 import IconButton from "../ui/IconButton";
 
-function CommentDetailsIcons({ postId, commentId, userId }) {
+function CommentDetailsIcons({ postId, commentId, userId, isLiked }) {
   const { user } = useAuth();
   const queryClient = useQueryClient();
 
-  const { isLoading, mutate } = useMutation(deleteComment, {
+  const {
+    isLoading: isLoadingLikeOrUnlikeComment,
+    mutate: mutateLikeOrUnlikeComment,
+  } = useMutation(isLiked ? unlikeComment : likeComment, {
     onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({
         queryKey: ["posts", postId, "comments"],
@@ -21,8 +24,24 @@ function CommentDetailsIcons({ postId, commentId, userId }) {
     },
   });
 
+  const { isLoading: isLoadingDeleteComment, mutate: mutateDeleteComment } =
+    useMutation(deleteComment, {
+      onSuccess: (data, variables, context) => {
+        queryClient.invalidateQueries({
+          queryKey: ["posts", postId, "comments"],
+        });
+      },
+      onError: (error, variables, context) => {
+        handleError(error);
+      },
+    });
+
+  const handleLikeOrUnlikeComment = () => {
+    mutateLikeOrUnlikeComment({ postId, commentId });
+  };
+
   const handleDeleteComment = () => {
-    mutate({ postId, commentId });
+    mutateDeleteComment({ postId, commentId });
   };
 
   return (
@@ -30,14 +49,18 @@ function CommentDetailsIcons({ postId, commentId, userId }) {
       {user.uid === userId ? (
         <IconButton
           content="Delete"
-          disabled={isLoading}
+          disabled={isLoadingDeleteComment}
           onClick={handleDeleteComment}
         >
           <BsTrash />
         </IconButton>
       ) : null}
-      <IconButton content="Like">
-        <BsHeart />
+      <IconButton
+        content={isLiked ? "Unlike" : "like"}
+        onClick={handleLikeOrUnlikeComment}
+        disabled={isLoadingLikeOrUnlikeComment}
+      >
+        {isLiked ? <BsHeartFill className="text-yellow-400" /> : <BsHeart />}
       </IconButton>
     </div>
   );
