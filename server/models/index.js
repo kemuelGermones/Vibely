@@ -141,20 +141,38 @@ const PostLike = sequelize.define("postLikes", {}, { updatedAt: false });
 
 const CommentLike = sequelize.define("commentLikes", {}, { updated: false });
 
-User.hasOne(Avatar);
-Avatar.belongsTo(User);
+User.hasOne(Avatar, { foreignKey: { allowNull: false }, onDelete: "CASCADE" });
+Avatar.belongsTo(User, {
+  foreignKey: { allowNull: false },
+  onDelete: "CASCADE",
+});
 
-User.hasMany(Post);
-Post.belongsTo(User);
+User.hasMany(Post, { foreignKey: { allowNull: false }, onDelete: "CASCADE" });
+Post.belongsTo(User, { foreignKey: { allowNull: false }, onDelete: "CASCADE" });
 
-User.hasMany(Comment);
-Comment.belongsTo(User);
+User.hasMany(Comment, {
+  foreignKey: { allowNull: false },
+  onDelete: "CASCADE",
+});
+Comment.belongsTo(User, {
+  foreignKey: { allowNull: false },
+  onDelete: "CASCADE",
+});
 
-Post.hasMany(Image);
-Image.belongsTo(Post);
+Post.hasMany(Image, { foreignKey: { allowNull: false }, onDelete: "CASCADE" });
+Image.belongsTo(Post, {
+  foreignKey: { allowNull: false },
+  onDelete: "CASCADE",
+});
 
-Post.hasMany(Comment);
-Comment.belongsTo(Post);
+Post.hasMany(Comment, {
+  foreignKey: { allowNull: false },
+  onDelete: "CASCADE",
+});
+Comment.belongsTo(Post, {
+  foreignKey: { allowNull: false },
+  onDelete: "CASCADE",
+});
 
 User.belongsToMany(User, {
   foreignKey: "followerId",
