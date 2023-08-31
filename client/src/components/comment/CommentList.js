@@ -1,9 +1,9 @@
-import { useMemo } from "react";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { BsExclamationTriangle } from "react-icons/bs";
 import InfiniteScroll from "react-infinite-scroll-component";
 
 import { getComments } from "../../apis/comment";
+import usePages from "../../hooks/usePages";
 import CommentDetails from "./CommentDetails";
 
 function Loader() {
@@ -47,15 +47,7 @@ function CommentList({ postId }) {
       },
     });
 
-  const comments = useMemo(() => {
-    let result = [];
-    if (data) {
-      data.pages.forEach((page) => {
-        result = result.concat(page);
-      });
-    }
-    return result;
-  }, [data]);
+  const comments = usePages(data);
 
   if (isLoading) {
     return <Loader />;

@@ -1,9 +1,9 @@
-import { useMemo } from "react";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { BsExclamationTriangle } from "react-icons/bs";
 import InfiniteScroll from "react-infinite-scroll-component";
 
 import { getPosts } from "../../apis/post";
+import usePages from "../../hooks/usePages";
 import PostDetails from "./PostDetails";
 
 function Loader() {
@@ -62,15 +62,7 @@ function PostList({ userId }) {
       },
     });
 
-  const posts = useMemo(() => {
-    let result = [];
-    if (data) {
-      data.pages.forEach((page) => {
-        result = result.concat(page);
-      });
-    }
-    return result;
-  }, [data]);
+  const posts = usePages(data);
 
   if (isLoading) {
     return <Loader />;

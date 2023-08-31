@@ -60,7 +60,7 @@ function SignupForm() {
     },
   });
 
-  const handleChangeAvatar = (event) => {
+  const handleOnChangeAvatar = (event) => {
     setFieldValue("avatar", event.currentTarget.files[0]);
   };
 
@@ -150,7 +150,7 @@ function SignupForm() {
           id="avatar"
           name="avatar"
           multiple={false}
-          onChange={handleChangeAvatar}
+          onChange={handleOnChangeAvatar}
           onBlur={handleBlur}
         >
           <div className="h-24 w-24 shrink-0">

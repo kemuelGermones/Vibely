@@ -5,7 +5,7 @@ import SearchList from "./SearchList";
 
 function SearchModal() {
   const [search, setSearch] = useState("");
-  const debouncedSearch = useDebounce(search, 500);
+  const debouncedSearch = useDebounce(search);
 
   const handleOnChangeSearchBar = (event) => {
     const text = event.target.value;
