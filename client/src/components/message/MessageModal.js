@@ -14,10 +14,10 @@ function MessageModal() {
         </div>
       </div>
       <ul className="flex h-80 flex-col gap-3 overflow-y-auto rounded-lg bg-yellow-200 p-3">
-        <li className="w-3/4 rounded-lg bg-yellow-300 p-3">
+        <li className="w-3/4 rounded-lg bg-yellow-400 p-3">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit,
         </li>
-        <li className="ml-auto mr-0 w-3/4 rounded-lg bg-yellow-300 p-3">
+        <li className="ml-auto mr-0 w-3/4 rounded-lg bg-yellow-400 p-3">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit,
         </li>
       </ul>
