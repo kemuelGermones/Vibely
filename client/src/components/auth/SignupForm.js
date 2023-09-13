@@ -68,9 +68,9 @@ function SignupForm() {
     <div className="card flex flex-col gap-3">
       <div className="text-center font-shrikhand text-2xl">Vibely</div>
       <div className="rounded-lg bg-yellow-200 p-3 text-gray-500">
-        Note: Firstname, lastname and username should only contain alpha
-        characters with a minimum of 2 characters and a maximum of 30
-        characters. Also, password must contain atleast 6 characters.
+        Note: Firstname, lastname and username should only contain alphabets
+        with a minimum of 2 characters and a maximum of 30 characters. Also,
+        password must contain atleast 6 characters.
       </div>
       <form className="flex flex-col gap-3" onSubmit={handleSubmit}>
         <div className="flex flex-col gap-3 sm:flex-row">
