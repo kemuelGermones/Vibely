@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { BsHeart, BsHeartFill, BsChatSquare } from "react-icons/bs";
 
-import { likePost, unlikePost } from "../../apis/post";
+import { likePost, unlikePost } from "../../apis/postLike";
 import handleError from "../../utils/handleError";
 import useModal from "../../hooks/useModal";
 import CommentModal from "../comment/CommentModal";

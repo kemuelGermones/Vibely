@@ -1,7 +1,8 @@
 import { BsTrash, BsHeart, BsHeartFill } from "react-icons/bs";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-import { deleteComment, likeComment, unlikeComment } from "../../apis/comment";
+import { likeComment, unlikeComment } from "../../apis/commentLike";
+import { deleteComment } from "../../apis/comment";
 import useAuth from "../../hooks/useAuth";
 import handleError from "../../utils/handleError";
 import IconButton from "../ui/IconButton";

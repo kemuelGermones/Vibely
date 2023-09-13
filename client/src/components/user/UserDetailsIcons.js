@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { BsPersonAdd, BsPersonCheck, BsEnvelopePlus } from "react-icons/bs";
 
-import { followUser, unfollowUser } from "../../apis/user";
+import { followUser, unfollowUser } from "../../apis/follow";
 import IconButton from "../ui/IconButton";
 import handleError from "../../utils/handleError";
 
