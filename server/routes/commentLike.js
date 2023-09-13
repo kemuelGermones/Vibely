@@ -1,9 +1,8 @@
 const { likeComment, unlikeComment } = require("../controllers/commentLike");
 const {
-  validatePostId,
-  validateCommentId,
+  validateCommentExistence,
   validateCommentLikeAvailability,
-  validateCommentLikeAssociation,
+  validateCommentLikeExistence,
 } = require("../middleware/validate");
 const { authenticate } = require("../middleware/auth");
 const express = require("express");
@@ -14,8 +13,7 @@ const router = express.Router({ mergeParams: true });
 router.post(
   "/",
   authenticate,
-  validatePostId,
-  validateCommentId,
+  validateCommentExistence,
   validateCommentLikeAvailability,
   wrapAsync(likeComment)
 );
@@ -23,9 +21,7 @@ router.post(
 router.delete(
   "/",
   authenticate,
-  validatePostId,
-  validateCommentId,
-  validateCommentLikeAssociation,
+  validateCommentLikeExistence,
   wrapAsync(unlikeComment)
 );
 

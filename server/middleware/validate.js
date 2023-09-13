@@ -14,7 +14,7 @@ const {
 } = require("../schemas");
 const AppError = require("../utils/AppError");
 
-module.exports.validatePostId = (req, res, next) => {
+module.exports.validatePostExistence = (req, res, next) => {
   const { postId } = req.params;
 
   Post.findOne({ where: { id: postId } })
@@ -68,8 +68,8 @@ module.exports.validatePostLikeAvailability = (req, res, next) => {
   const { uid } = req.user;
 
   PostLike.findOne({ where: { postId, userId: uid } })
-    .then((association) => {
-      if (association) {
+    .then((like) => {
+      if (like) {
         throw new AppError(400, "you already liked this post");
       }
       next();
@@ -77,21 +77,21 @@ module.exports.validatePostLikeAvailability = (req, res, next) => {
     .catch((error) => next(error));
 };
 
-module.exports.validatePostLikeAssociation = (req, res, next) => {
+module.exports.validatePostLikeExistence = (req, res, next) => {
   const { postId } = req.params;
   const { uid } = req.user;
 
   PostLike.findOne({ where: { postId, userId: uid } })
-    .then((association) => {
-      if (!association) {
-        throw new AppError(400, "post to user association doesn't exist");
+    .then((like) => {
+      if (!like) {
+        throw new AppError(400, "post like doesn't exist");
       }
       next();
     })
     .catch((error) => next(error));
 };
 
-module.exports.validateCommentId = (req, res, next) => {
+module.exports.validateCommentExistence = (req, res, next) => {
   const { postId, commentId } = req.params;
 
   Comment.findOne({ where: { postId, id: commentId } })
@@ -116,10 +116,10 @@ module.exports.validateCommentDescription = (req, res, next) => {
 };
 
 module.exports.validateCommentOwner = (req, res, next) => {
-  const { commentId } = req.params;
+  const { postId, commentId } = req.params;
   const { uid } = req.user;
 
-  Comment.findOne({ where: { id: commentId } })
+  Comment.findOne({ where: { postId, id: commentId } })
     .then((comment) => {
       if (comment.getDataValue("userId") !== uid) {
         throw new AppError(400, "you are not allowed to delete this comment");
@@ -134,8 +134,8 @@ module.exports.validateCommentLikeAvailability = (req, res, next) => {
   const { uid } = req.user;
 
   CommentLike.findOne({ where: { commentId, userId: uid } })
-    .then((association) => {
-      if (association) {
+    .then((like) => {
+      if (like) {
         throw new AppError(400, "you already liked this comment");
       }
       next();
@@ -143,73 +143,27 @@ module.exports.validateCommentLikeAvailability = (req, res, next) => {
     .catch((error) => next(error));
 };
 
-module.exports.validateCommentLikeAssociation = (req, res, next) => {
+module.exports.validateCommentLikeExistence = (req, res, next) => {
   const { commentId } = req.params;
   const { uid } = req.user;
 
   CommentLike.findOne({ where: { commentId, userId: uid } })
-    .then((association) => {
-      if (!association) {
-        throw new AppError(400, "comment to user association doesn't exist");
+    .then((like) => {
+      if (!like) {
+        throw new AppError(400, "comment like doesn't exist");
       }
       next();
     })
     .catch((error) => next(error));
 };
 
-module.exports.validateMessageContent = (req, res, next) => {
-  const { error } = messageSchema.validate(req.body);
-
-  if (error) {
-    const message = error.details[0].message;
-    throw new AppError(400, message);
-  }
-
-  next();
-};
-
-module.exports.validateUserId = (req, res, next) => {
+module.exports.validateUserExistence = (req, res, next) => {
   const { userId } = req.params;
 
   User.findOne({ where: { id: userId } })
     .then((user) => {
       if (!user) {
         throw new AppError(400, "user doesn't exist");
-      }
-      next();
-    })
-    .catch((error) => next(error));
-};
-
-module.exports.validateFollowAvailability = (req, res, next) => {
-  const { userId } = req.params;
-  const { uid } = req.user;
-
-  if (userId === uid) {
-    throw new AppError(400, "you are not allowed to follow this user");
-  }
-
-  Follow.findOne({ where: { followerId: uid, followeeId: userId } })
-    .then((association) => {
-      if (association) {
-        throw new AppError(400, "you already followed this user");
-      }
-      next();
-    })
-    .catch((error) => next(error));
-};
-
-module.exports.validateFollowAssociation = (req, res, next) => {
-  const { userId } = req.params;
-  const { uid } = req.user;
-
-  Follow.findOne({ where: { followerId: uid, followeeId: userId } })
-    .then((association) => {
-      if (!association) {
-        throw new AppError(
-          400,
-          "followee to follower association doesn't exist"
-        );
       }
       next();
     })
@@ -259,4 +213,43 @@ module.exports.validateEmailAvailability = (req, res, next) => {
       next();
     })
     .catch((error) => next(error));
+};
+
+module.exports.validateFollowAvailability = (req, res, next) => {
+  const { userId } = req.params;
+  const { uid } = req.user;
+
+  Follow.findOne({ where: { followerId: uid, followeeId: userId } })
+    .then((follow) => {
+      if (follow) {
+        throw new AppError(400, "you already followed this user");
+      }
+      next();
+    })
+    .catch((error) => next(error));
+};
+
+module.exports.validateFollowExistence = (req, res, next) => {
+  const { userId } = req.params;
+  const { uid } = req.user;
+
+  Follow.findOne({ where: { followerId: uid, followeeId: userId } })
+    .then((follow) => {
+      if (!follow) {
+        throw new AppError(400, "follow doesn't exist");
+      }
+      next();
+    })
+    .catch((error) => next(error));
+};
+
+module.exports.validateMessageContent = (req, res, next) => {
+  const { error } = messageSchema.validate(req.body);
+
+  if (error) {
+    const message = error.details[0].message;
+    throw new AppError(400, message);
+  }
+
+  next();
 };

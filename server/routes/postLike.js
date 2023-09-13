@@ -1,8 +1,8 @@
 const { likePost, unlikePost } = require("../controllers/postLike");
 const {
-  validatePostId,
+  validatePostExistence,
   validatePostLikeAvailability,
-  validatePostLikeAssociation,
+  validatePostLikeExistence,
 } = require("../middleware/validate");
 const { authenticate } = require("../middleware/auth");
 const express = require("express");
@@ -13,7 +13,7 @@ const router = express.Router({ mergeParams: true });
 router.post(
   "/",
   authenticate,
-  validatePostId,
+  validatePostExistence,
   validatePostLikeAvailability,
   wrapAsync(likePost)
 );
@@ -21,8 +21,7 @@ router.post(
 router.delete(
   "/",
   authenticate,
-  validatePostId,
-  validatePostLikeAssociation,
+  validatePostLikeExistence,
   wrapAsync(unlikePost)
 );
 

@@ -1,6 +1,6 @@
 const { getMessages, createMessage } = require("../controllers/message");
 const {
-  validateUserId,
+  validateUserExistence,
   validateMessageContent,
 } = require("../middleware/validate");
 const { authenticate } = require("../middleware/auth");
@@ -9,12 +9,12 @@ const wrapAsync = require("../utils/wrapAsync");
 
 const router = express.Router({ mergeParams: true });
 
-router.get("/", authenticate, validateUserId, wrapAsync(getMessages));
+router.get("/", authenticate, validateUserExistence, wrapAsync(getMessages));
 
 router.post(
   "/",
   authenticate,
-  validateUserId,
+  validateUserExistence,
   validateMessageContent,
   wrapAsync(createMessage)
 );

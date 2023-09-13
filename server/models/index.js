@@ -32,6 +32,7 @@ const User = sequelize.define(
     username: {
       type: DataTypes.STRING,
       allowNull: false,
+      unique: true,
       validate: {
         isAlpha: true,
         min: 2,
@@ -41,6 +42,7 @@ const User = sequelize.define(
     email: {
       type: DataTypes.STRING,
       allowNull: false,
+      unique: true,
       validate: {
         isEmail: true,
       },
@@ -67,6 +69,9 @@ const Avatar = sequelize.define(
     url: {
       type: DataTypes.STRING,
       allowNull: false,
+      validate: {
+        isUrl: true,
+      },
     },
   },
   {
@@ -109,6 +114,9 @@ const Image = sequelize.define(
     url: {
       type: DataTypes.STRING,
       allowNull: false,
+      validate: {
+        isUrl: true,
+      },
     },
   },
   {
@@ -156,7 +164,7 @@ const Follow = sequelize.define("follows", {}, { updatedAt: false });
 
 const PostLike = sequelize.define("postLikes", {}, { updatedAt: false });
 
-const CommentLike = sequelize.define("commentLikes", {}, { updated: false });
+const CommentLike = sequelize.define("commentLikes", {}, { updatedAt: false });
 
 User.hasOne(Avatar, { foreignKey: { allowNull: false }, onDelete: "CASCADE" });
 Avatar.belongsTo(User, {

@@ -4,8 +4,8 @@ const {
   deleteComment,
 } = require("../controllers/comment");
 const {
-  validatePostId,
-  validateCommentId,
+  validatePostExistence,
+  validateCommentExistence,
   validateCommentDescription,
   validateCommentOwner,
 } = require("../middleware/validate");
@@ -15,12 +15,12 @@ const wrapAsync = require("../utils/wrapAsync");
 
 const router = express.Router({ mergeParams: true });
 
-router.get("/", authenticate, validatePostId, wrapAsync(getComments));
+router.get("/", authenticate, validatePostExistence, wrapAsync(getComments));
 
 router.post(
   "/",
   authenticate,
-  validatePostId,
+  validatePostExistence,
   validateCommentDescription,
   wrapAsync(createComment)
 );
@@ -28,8 +28,7 @@ router.post(
 router.delete(
   "/:commentId",
   authenticate,
-  validatePostId,
-  validateCommentId,
+  validateCommentExistence,
   validateCommentOwner,
   wrapAsync(deleteComment)
 );

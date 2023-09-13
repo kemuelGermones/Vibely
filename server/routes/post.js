@@ -5,7 +5,7 @@ const {
   deletePost,
 } = require("../controllers/post");
 const {
-  validatePostId,
+  validatePostExistence,
   validatePostOwner,
   validatePostCaption,
   validatePostImages,
@@ -33,7 +33,7 @@ router.post(
 router.patch(
   "/:postId",
   authenticate,
-  validatePostId,
+  validatePostExistence,
   validatePostOwner,
   validatePostCaption,
   wrapAsync(updatePost)
@@ -42,7 +42,7 @@ router.patch(
 router.delete(
   "/:postId",
   authenticate,
-  validatePostId,
+  validatePostExistence,
   validatePostOwner,
   wrapAsync(deletePost)
 );
