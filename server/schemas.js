@@ -27,14 +27,6 @@ const extension = (joi) => ({
 
 const Joi = BaseJoi.extend(extension);
 
-module.exports.postSchema = Joi.object({
-  caption: Joi.string().escapeHTML().required(),
-});
-
-module.exports.commentSchema = Joi.object({
-  description: Joi.string().escapeHTML().required(),
-});
-
 module.exports.userSchema = Joi.object({
   firstname: Joi.string()
     .min(2)
@@ -56,4 +48,16 @@ module.exports.userSchema = Joi.object({
     .required(),
   email: Joi.string().email().escapeHTML().required(),
   password: Joi.string().min(6).escapeHTML().required(),
+});
+
+module.exports.postSchema = Joi.object({
+  caption: Joi.string().escapeHTML().required(),
+});
+
+module.exports.commentSchema = Joi.object({
+  description: Joi.string().escapeHTML().required(),
+});
+
+module.exports.messageSchema = Joi.object({
+  content: Joi.string().escapeHTML().required(),
 });

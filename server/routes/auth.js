@@ -1,7 +1,7 @@
 const {
   validateUserBody,
   validateUsernameAvailability,
-  validateUserAvailability,
+  validateEmailAvailability,
 } = require("../middleware/validate");
 const { parseSignupFormData } = require("../middleware/multer");
 const { uploadAvatarToCloudinary } = require("../middleware/cloudinary");
@@ -16,7 +16,7 @@ router.post(
   parseSignupFormData,
   validateUserBody,
   validateUsernameAvailability,
-  validateUserAvailability,
+  validateEmailAvailability,
   uploadAvatarToCloudinary,
   wrapAsync(signup)
 );

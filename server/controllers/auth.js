@@ -17,7 +17,6 @@ module.exports.signup = async (req, res) => {
       },
       { include: [Avatar], transaction: t }
     );
-
     await admin.auth().createUser({
       email,
       password,

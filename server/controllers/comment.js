@@ -1,5 +1,5 @@
 const { Sequelize } = require("sequelize");
-const { Comment, CommentLike, User, Avatar } = require("../models");
+const { Comment, User, Avatar } = require("../models");
 
 module.exports.getComments = async (req, res, next) => {
   const { postId } = req.params;
@@ -81,31 +81,5 @@ module.exports.deleteComment = async (req, res, next) => {
     status: 200,
     items: null,
     message: "successfully deleted a comment",
-  });
-};
-
-module.exports.likeComment = async (req, res, next) => {
-  const { commentId } = req.params;
-  const { uid } = req.user;
-
-  await CommentLike.create({ commentId, userId: uid });
-
-  res.status(200).json({
-    status: 200,
-    items: null,
-    message: "successfully liked a comment",
-  });
-};
-
-module.exports.unlikeComment = async (req, res, next) => {
-  const { commentId } = req.params;
-  const { uid } = req.user;
-
-  await CommentLike.destroy({ where: { commentId, userId: uid } });
-
-  res.status(200).json({
-    status: 200,
-    items: null,
-    message: "successfully unliked a comment",
   });
 };

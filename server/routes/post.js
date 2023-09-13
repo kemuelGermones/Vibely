@@ -3,16 +3,12 @@ const {
   createPost,
   updatePost,
   deletePost,
-  likePost,
-  unlikePost,
 } = require("../controllers/post");
 const {
   validatePostId,
   validatePostOwner,
   validatePostCaption,
   validatePostImages,
-  validatePostLikeAvailability,
-  validatePostLikeAssociation,
 } = require("../middleware/validate");
 const { uploadImagesToCloudinary } = require("../middleware/cloudinary");
 const { parseCreatePostFormData } = require("../middleware/multer");
@@ -49,22 +45,6 @@ router.delete(
   validatePostId,
   validatePostOwner,
   wrapAsync(deletePost)
-);
-
-router.post(
-  "/:postId/like",
-  authenticate,
-  validatePostId,
-  validatePostLikeAvailability,
-  wrapAsync(likePost)
-);
-
-router.delete(
-  "/:postId/unlike",
-  authenticate,
-  validatePostId,
-  validatePostLikeAssociation,
-  wrapAsync(unlikePost)
 );
 
 module.exports = router;

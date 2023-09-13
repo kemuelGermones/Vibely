@@ -135,6 +135,23 @@ const Comment = sequelize.define(
   }
 );
 
+const Message = sequelize.define(
+  "messages",
+  {
+    id: {
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
+      allowNull: false,
+      primaryKey: true,
+    },
+    content: {
+      type: DataTypes.TEXT,
+      allowNull: false,
+    },
+  },
+  { updatedAt: false }
+);
+
 const Follow = sequelize.define("follows", {}, { updatedAt: false });
 
 const PostLike = sequelize.define("postLikes", {}, { updatedAt: false });
@@ -174,15 +191,36 @@ Comment.belongsTo(Post, {
   onDelete: "CASCADE",
 });
 
-User.belongsToMany(User, {
-  foreignKey: "followerId",
-  as: "follower",
-  through: Follow,
+User.hasMany(Message, {
+  foreignKey: { name: "senderId", allowNull: false },
+  as: "sent",
+  onDelete: "CASCADE",
+});
+Message.belongsTo(User, {
+  foreignKey: { name: "senderId", allowNull: false },
+  as: "sender",
+  onDelete: "CASCADE",
+});
+
+User.hasMany(Message, {
+  foreignKey: { name: "recieverId", allowNull: false },
+  as: "recieved",
+  onDelete: "CASCADE",
+});
+Message.belongsTo(User, {
+  foreignKey: { name: "recieverId", allowNull: false },
+  as: "reciever",
+  onDelete: "CASCADE",
 });
 
 User.belongsToMany(User, {
-  foreignKey: "followeeId",
+  foreignKey: "followerId",
   as: "followee",
+  through: Follow,
+});
+User.belongsToMany(User, {
+  foreignKey: "followeeId",
+  as: "follower",
   through: Follow,
 });
 
@@ -190,7 +228,6 @@ Post.belongsToMany(User, {
   foreignKey: "postId",
   through: PostLike,
 });
-
 User.belongsToMany(Post, {
   foreignKey: "userId",
   through: PostLike,
@@ -200,7 +237,6 @@ Comment.belongsToMany(User, {
   foreignKey: "commentId",
   through: CommentLike,
 });
-
 User.belongsToMany(Comment, {
   foreignKey: "userId",
   through: CommentLike,
@@ -212,6 +248,7 @@ module.exports = {
   Post,
   Image,
   Comment,
+  Message,
   Follow,
   PostLike,
   CommentLike,

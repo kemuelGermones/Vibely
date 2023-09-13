@@ -1,13 +1,8 @@
-const {
-  getComments,
-  createComment,
-  deleteComment,
-} = require("../controllers/comment");
+const { likePost, unlikePost } = require("../controllers/postLike");
 const {
   validatePostId,
-  validateCommentId,
-  validateCommentDescription,
-  validateCommentOwner,
+  validatePostLikeAvailability,
+  validatePostLikeAssociation,
 } = require("../middleware/validate");
 const { authenticate } = require("../middleware/auth");
 const express = require("express");
@@ -15,23 +10,20 @@ const wrapAsync = require("../utils/wrapAsync");
 
 const router = express.Router({ mergeParams: true });
 
-router.get("/", authenticate, validatePostId, wrapAsync(getComments));
-
 router.post(
   "/",
   authenticate,
   validatePostId,
-  validateCommentDescription,
-  wrapAsync(createComment)
+  validatePostLikeAvailability,
+  wrapAsync(likePost)
 );
 
 router.delete(
-  "/:commentId",
+  "/",
   authenticate,
   validatePostId,
-  validateCommentId,
-  validateCommentOwner,
-  wrapAsync(deleteComment)
+  validatePostLikeAssociation,
+  wrapAsync(unlikePost)
 );
 
 module.exports = router;

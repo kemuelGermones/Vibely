@@ -6,7 +6,12 @@ const {
   PostLike,
   CommentLike,
 } = require("../models");
-const { postSchema, commentSchema, userSchema } = require("../schemas");
+const {
+  postSchema,
+  commentSchema,
+  userSchema,
+  messageSchema,
+} = require("../schemas");
 const AppError = require("../utils/AppError");
 
 module.exports.validatePostId = (req, res, next) => {
@@ -152,6 +157,17 @@ module.exports.validateCommentLikeAssociation = (req, res, next) => {
     .catch((error) => next(error));
 };
 
+module.exports.validateMessageContent = (req, res, next) => {
+  const { error } = messageSchema.validate(req.body);
+
+  if (error) {
+    const message = error.details[0].message;
+    throw new AppError(400, message);
+  }
+
+  next();
+};
+
 module.exports.validateUserId = (req, res, next) => {
   const { userId } = req.params;
 
@@ -230,7 +246,7 @@ module.exports.validateUsernameAvailability = (req, res, next) => {
     .catch((error) => next(error));
 };
 
-module.exports.validateUserAvailability = (req, res, next) => {
+module.exports.validateEmailAvailability = (req, res, next) => {
   const { email } = req.body;
 
   User.findOne({
@@ -238,7 +254,7 @@ module.exports.validateUserAvailability = (req, res, next) => {
   })
     .then((user) => {
       if (user) {
-        throw new AppError(400, "user exist already");
+        throw new AppError(400, '"email" has already been taken');
       }
       next();
     })

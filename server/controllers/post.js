@@ -1,7 +1,7 @@
 const { Sequelize } = require("sequelize");
-const { Post, Image, Comment, User, Avatar, PostLike } = require("../models");
-const sequelize = require("../config/sequelize");
+const { Post, Image, User, Avatar } = require("../models");
 const cloudinary = require("../config/cloudinary");
+const sequelize = require("../config/sequelize");
 
 module.exports.getPosts = async (req, res) => {
   const { page, search } = req.query;
@@ -105,42 +105,17 @@ module.exports.deletePost = async (req, res) => {
 
   const images = await Image.findAll({ where: { postId } });
 
-  await Post.destroy({ where: { id: postId } });
-
-  const destroyImagesCloudinary = images.map(async (image) => {
-    await cloudinary.uploader.destroy(image.getDataValue("filename"));
+  await sequelize.transaction(async (t) => {
+    await Post.destroy({ where: { id: postId }, transaction: t });
+    const destroyImagesCloudinary = images.map(async (image) => {
+      await cloudinary.uploader.destroy(image.getDataValue("filename"));
+    });
+    await Promise.all(destroyImagesCloudinary);
   });
-  await Promise.all(destroyImagesCloudinary);
 
   res.status(200).json({
     status: 200,
     items: null,
     message: "successfully deleted a post",
-  });
-};
-
-module.exports.likePost = async (req, res, next) => {
-  const { postId } = req.params;
-  const { uid } = req.user;
-
-  await PostLike.create({ postId, userId: uid });
-
-  res.status(200).json({
-    status: 200,
-    items: null,
-    message: "successfully liked a post",
-  });
-};
-
-module.exports.unlikePost = async (req, res, next) => {
-  const { postId } = req.params;
-  const { uid } = req.user;
-
-  await PostLike.destroy({ where: { postId, userId: uid } });
-
-  res.status(200).json({
-    status: 200,
-    items: null,
-    message: "successfully unliked a post",
   });
 };
