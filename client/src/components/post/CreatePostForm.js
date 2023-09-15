@@ -50,43 +50,41 @@ function CreatePostForm() {
   };
 
   return (
-    <div className="card">
-      <form className="flex flex-col gap-3" onSubmit={handleSubmit}>
-        <textarea
-          className={
-            touched.caption && errors.caption
-              ? "textarea-warning"
-              : "textarea-primary"
-          }
-          id="caption"
-          name="caption"
-          type="text"
-          placeholder="Enter caption"
-          value={values.caption}
-          onChange={handleChange}
-          onBlur={handleBlur}
-        />
-        <FileInput
-          hasError={touched.images && errors.images}
-          title={
-            values.images.length && !errors.images
-              ? `${values.images.length} images chosen`
-              : "Choose images"
-          }
-          description="Upload less than or equals to 5 images PNG, JPG or JPEG."
-          id="images"
-          name="images"
-          multiple={true}
-          onChange={handleOnChangeImages}
-          onBlur={handleBlur}
-        >
-          <BsCloudUpload className="text-yellow-400" size="2.5em" />
-        </FileInput>
-        <button className="btn-primary" type="submit" disabled={isLoading}>
-          {isLoading ? "Loading..." : "Submit"}
-        </button>
-      </form>
-    </div>
+    <form className="card flex flex-col gap-3" onSubmit={handleSubmit}>
+      <textarea
+        className={
+          touched.caption && errors.caption
+            ? "textarea-warning"
+            : "textarea-primary"
+        }
+        id="caption"
+        name="caption"
+        type="text"
+        placeholder="Enter caption"
+        value={values.caption}
+        onChange={handleChange}
+        onBlur={handleBlur}
+      />
+      <FileInput
+        hasError={touched.images && errors.images}
+        title={
+          values.images.length && !errors.images
+            ? `${values.images.length} images chosen`
+            : "Choose images"
+        }
+        description="Upload less than or equals to 5 images PNG, JPG or JPEG."
+        id="images"
+        name="images"
+        multiple={true}
+        onChange={handleOnChangeImages}
+        onBlur={handleBlur}
+      >
+        <BsCloudUpload className="text-yellow-400" size="2.5em" />
+      </FileInput>
+      <button className="btn-primary" type="submit" disabled={isLoading}>
+        {isLoading ? "Loading..." : "Submit"}
+      </button>
+    </form>
   );
 }
 

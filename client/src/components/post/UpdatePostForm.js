@@ -34,26 +34,24 @@ function UpdatePostForm({ postId, caption }) {
     });
 
   return (
-    <div className="card">
-      <form className="flex flex-col gap-3" onSubmit={handleSubmit}>
-        <textarea
-          className={
-            touched.caption && errors.caption
-              ? "textarea-warning h-44"
-              : "textarea-primary h-44"
-          }
-          id="caption"
-          name="caption"
-          placeholder="Enter caption"
-          value={values.caption}
-          onChange={handleChange}
-          onBlur={handleBlur}
-        />
-        <button className="btn-primary" type="submit" disabled={isLoading}>
-          {isLoading ? "Loading..." : "Submit"}
-        </button>
-      </form>
-    </div>
+    <form className="card flex flex-col gap-3" onSubmit={handleSubmit}>
+      <textarea
+        className={
+          touched.caption && errors.caption
+            ? "textarea-warning h-44"
+            : "textarea-primary h-44"
+        }
+        id="caption"
+        name="caption"
+        placeholder="Enter caption"
+        value={values.caption}
+        onChange={handleChange}
+        onBlur={handleBlur}
+      />
+      <button className="btn-primary" type="submit" disabled={isLoading}>
+        {isLoading ? "Loading..." : "Submit"}
+      </button>
+    </form>
   );
 }
 

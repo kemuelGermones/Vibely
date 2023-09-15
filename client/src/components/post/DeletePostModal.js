@@ -25,7 +25,7 @@ function DeletePostModal({ postId }) {
 
   return (
     <div className="card flex flex-col gap-3">
-      <div className="flex cursor-pointer flex-col items-center gap-3 rounded-lg border border-red-500 p-6 shadow">
+      <div className="flex flex-col items-center gap-3 rounded-lg border border-red-500 p-6 shadow">
         <BsTrash className="text-red-500" size="2.5em" />
         <div className="text-center text-xl text-gray-700">Are you sure?</div>
         <div className="text-center text-gray-500">

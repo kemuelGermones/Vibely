@@ -12,17 +12,15 @@ function CreatePost() {
   };
 
   return (
-    <div className="card">
-      <div className="flex items-center gap-3">
-        <Avatar src={user.photoURL} alt={user.displayName} />
-        <input
-          className="input-primary w-full"
-          type="text"
-          placeholder="What's on your mind"
-          readOnly={true}
-          onClick={handleShowCreatePostForm}
-        />
-      </div>
+    <div className="card flex items-center gap-3">
+      <Avatar src={user.photoURL} alt={user.displayName} />
+      <input
+        className="input-primary w-full"
+        type="text"
+        placeholder="What's on your mind"
+        readOnly={true}
+        onClick={handleShowCreatePostForm}
+      />
     </div>
   );
 }

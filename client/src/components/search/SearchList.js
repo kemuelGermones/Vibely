@@ -64,8 +64,8 @@ function SearchList({ search }) {
     <InfiniteScroll
       className="flex flex-col"
       scrollableTarget="searchList"
-      loader={<Loader />}
       style={{ overflow: "visible" }}
+      loader={<Loader />}
       dataLength={users.length}
       next={fetchNextPage}
       hasMore={hasNextPage}

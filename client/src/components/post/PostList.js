@@ -34,17 +34,15 @@ function Loader() {
 
 function Error() {
   return (
-    <div className="card">
-      <div className="flex items-center gap-3">
-        <BsExclamationTriangle
-          className="w-10 shrink-0 text-red-500"
-          size="1.5em"
-        />
-        <div className="flex flex-col">
-          <div className="font-semibold">Something went wrong</div>
-          <div className="text-sm text-gray-500">
-            An error occured while trying to fetch posts.
-          </div>
+    <div className="card flex items-center gap-3">
+      <BsExclamationTriangle
+        className="w-10 shrink-0 text-red-500"
+        size="1.5em"
+      />
+      <div className="flex flex-col">
+        <div className="font-semibold">Something went wrong</div>
+        <div className="text-sm text-gray-500">
+          An error occured while trying to fetch posts.
         </div>
       </div>
     </div>
