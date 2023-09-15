@@ -3,6 +3,7 @@ const { Sequelize, Op } = require("sequelize");
 
 module.exports.getUsers = async (req, res, next) => {
   const { page, search } = req.query;
+  const { uid } = req.user;
   const limit = 10;
   const offset = page ? Number(page) * limit : 0;
   const where = search ? { username: { [Op.startsWith]: search } } : undefined;
@@ -11,6 +12,7 @@ module.exports.getUsers = async (req, res, next) => {
     limit,
     offset,
     where,
+    replacements: [uid],
     include: [
       {
         model: Avatar,
@@ -18,7 +20,33 @@ module.exports.getUsers = async (req, res, next) => {
         attributes: { exclude: ["userId"] },
       },
     ],
+    attributes: {
+      include: [
+        [
+          Sequelize.literal(
+            "(SELECT COUNT(*) FROM follows WHERE follows.followerId = users.id)"
+          ),
+          "following",
+        ],
+        [
+          Sequelize.literal(
+            "(SELECT COUNT(*) FROM follows WHERE follows.followeeId = users.id)"
+          ),
+          "followers",
+        ],
+        [
+          Sequelize.literal(
+            "(SELECT EXISTS(SELECT * FROM follows WHERE follows.followerId = ? AND follows.followeeId = users.id))"
+          ),
+          "isFollowed",
+        ],
+      ],
+    },
   });
+
+  users.forEach((user) =>
+    user.setDataValue("isFollowed", !!user.getDataValue("isFollowed"))
+  );
 
   res
     .status(200)
