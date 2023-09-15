@@ -4,11 +4,11 @@ import useAuth from "../hooks/useAuth";
 import Advertisement from "../components/misc/Advertisement";
 import Navbar from "../components/ui/Navbar";
 import UserDetails from "../components/user/UserDetails";
-import MessageList from "../components/message/MessageList";
+import ConversationList from "../components/conversation/ConversationList";
 import About from "../components/misc/About";
 import Rules from "../components/misc/Rules";
 
-function Messages() {
+function Inbox() {
   const { user } = useAuth();
 
   return (
@@ -21,7 +21,7 @@ function Messages() {
           <Rules />
         </aside>
         <section>
-          <MessageList />
+          <ConversationList />
         </section>
         <aside className="hidden lg:block">
           <Advertisement />
@@ -31,4 +31,4 @@ function Messages() {
   );
 }
 
-export default Messages;
+export default Inbox;

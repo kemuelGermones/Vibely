@@ -2,9 +2,9 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import useAuth from "./hooks/useAuth";
 import Signin from "./pages/Signin";
 import Posts from "./pages/Posts";
-import UserProfile from "./pages/UserProfile";
+import Profile from "./pages/Profile";
 import Error from "./pages/Error";
-import Messages from "./pages/Messages";
+import Inbox from "./pages/Inbox";
 import Signup from "./pages/Signup";
 import Unprotected from "./outlets/Unprotected";
 import Protected from "./outlets/Protected";
@@ -23,8 +23,8 @@ function App() {
         </Route>
         <Route element={<Protected />}>
           <Route path="/posts" element={<Posts />} />
-          <Route path="/messages" element={<Messages />} />
-          <Route path="/users/:userId" element={<UserProfile />} />
+          <Route path="/inbox" element={<Inbox />} />
+          <Route path="/users/:userId" element={<Profile />} />
         </Route>
         <Route path="*" element={<Error />} />
       </Routes>

@@ -71,9 +71,7 @@ function UserDetails({ userId }) {
             </div>
           </div>
         </div>
-        {userId !== user.uid ? (
-          <UserDetailsIcons userId={userId} isFollowed={data.isFollowed} />
-        ) : null}
+        {data.id !== user.uid ? <UserDetailsIcons data={data} /> : null}
       </div>
       <div className="flex justify-around">
         <div>{`${data.followers} followers`}</div>

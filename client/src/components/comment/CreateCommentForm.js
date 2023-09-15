@@ -12,13 +12,13 @@ function CreateCommentForm({ postId }) {
   const { user } = useAuth();
 
   const { mutate, isLoading } = useMutation(createComment, {
-    onSuccess: (data, varaibles, context) => {
+    onSuccess: () => {
       resetForm();
       queryClient.invalidateQueries({
         queryKey: ["posts", postId, "comments"],
       });
     },
-    onError: (error, variables, context) => {
+    onError: (error) => {
       handleError(error);
     },
   });
@@ -45,7 +45,7 @@ function CreateCommentForm({ postId }) {
 
   return (
     <div className="flex gap-3">
-      <Avatar src={user.photoURL} alt={user.displayName}/>
+      <Avatar src={user.photoURL} alt={user.displayName} />
       <form className="flex w-full flex-col gap-3" onSubmit={handleSubmit}>
         <textarea
           className={

@@ -10,7 +10,7 @@ import FileInput from "../ui/FileInput";
 
 function SignupForm() {
   const { mutate, isLoading } = useMutation(signup, {
-    onError: (error, variables, context) => {
+    onError: (error) => {
       handleError(error);
     },
   });

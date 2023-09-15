@@ -7,61 +7,61 @@ import useAuth from "../../hooks/useAuth";
 import handleError from "../../utils/handleError";
 import IconButton from "../ui/IconButton";
 
-function CommentDetailsIcons({ postId, commentId, userId, isLiked }) {
+function CommentDetailsIcons({ postId, data }) {
   const { user } = useAuth();
   const queryClient = useQueryClient();
 
   const { isLoading: isLoadingLikeComment, mutate: mutateLikeComment } =
     useMutation(likeComment, {
-      onSuccess: (data, variables, context) => {
+      onSuccess: () => {
         queryClient.invalidateQueries({
           queryKey: ["posts", postId, "comments"],
         });
       },
-      onError: (error, variables, context) => {
+      onError: (error) => {
         handleError(error);
       },
     });
 
   const { isLoading: isLoadingUnlikeComment, mutate: mutateUnlikeComment } =
     useMutation(unlikeComment, {
-      onSuccess: (data, variables, context) => {
+      onSuccess: () => {
         queryClient.invalidateQueries({
           queryKey: ["posts", postId, "comments"],
         });
       },
-      onError: (error, variables, context) => {
+      onError: (error) => {
         handleError(error);
       },
     });
 
   const { isLoading: isLoadingDeleteComment, mutate: mutateDeleteComment } =
     useMutation(deleteComment, {
-      onSuccess: (data, variables, context) => {
+      onSuccess: () => {
         queryClient.invalidateQueries({
           queryKey: ["posts", postId, "comments"],
         });
       },
-      onError: (error, variables, context) => {
+      onError: (error) => {
         handleError(error);
       },
     });
 
   const handleLikeOrUnlikeComment = () => {
-    if (isLiked) {
-      mutateUnlikeComment({ postId, commentId });
+    if (data.isLiked) {
+      mutateUnlikeComment({ postId, commentId: data.id });
     } else {
-      mutateLikeComment({ postId, commentId });
+      mutateLikeComment({ postId, commentId: data.id });
     }
   };
 
   const handleDeleteComment = () => {
-    mutateDeleteComment({ postId, commentId });
+    mutateDeleteComment({ postId, commentId: data.id });
   };
 
   return (
     <div className="flex items-center gap-3">
-      {user.uid === userId ? (
+      {user.uid === data.user.id ? (
         <IconButton
           content="Delete"
           disabled={isLoadingDeleteComment}
@@ -71,11 +71,15 @@ function CommentDetailsIcons({ postId, commentId, userId, isLiked }) {
         </IconButton>
       ) : null}
       <IconButton
-        content={isLiked ? "Unlike" : "like"}
+        content={data.isLiked ? "Unlike" : "like"}
         onClick={handleLikeOrUnlikeComment}
         disabled={isLoadingLikeComment || isLoadingUnlikeComment}
       >
-        {isLiked ? <BsHeartFill className="text-yellow-400" /> : <BsHeart />}
+        {data.isLiked ? (
+          <BsHeartFill className="text-yellow-400" />
+        ) : (
+          <BsHeart />
+        )}
       </IconButton>
     </div>
   );

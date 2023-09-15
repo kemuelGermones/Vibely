@@ -1,33 +1,90 @@
-import useModal from "../../hooks/useModal";
-import MessageModal from "./MessageModal";
-import Avatar from "../ui/Avatar";
+import { useInfiniteQuery } from "@tanstack/react-query";
+import { BsExclamationTriangle } from "react-icons/bs";
+import InfiniteScroll from "react-infinite-scroll-component";
 
-function MessageList() {
-  const { openModal } = useModal();
+import { getMessages } from "../../apis/message";
+import useAuth from "../../hooks/useAuth";
+import usePages from "../../hooks/usePages";
+
+function Loader() {
+  return (
+    <div className="flex flex-col gap-3">
+      <div className="ml-auto mr-0 w-3/5 rounded-lg bg-yellow-400 p-3">
+        <div className="flex w-full flex-col gap-1">
+          <div className="h-3.5 animate-pulse rounded-full bg-gray-300" />
+          <div className="h-3.5 w-2/6 animate-pulse rounded-full bg-gray-300" />
+        </div>
+      </div>
+      <div className="w-3/5 rounded-lg bg-yellow-300 p-3">
+        <div className="flex w-full flex-col gap-1">
+          <div className="h-3.5 animate-pulse rounded-full bg-gray-300" />
+          <div className="h-3.5 w-2/6 animate-pulse rounded-full bg-gray-300" />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function Error() {
+  return (
+    <div className="flex h-full flex-col items-center justify-center gap-3">
+      <BsExclamationTriangle className="text-red-500" size="2.5em" />
+      <div className="text-center text-xl text-gray-700">
+        Something went wrong
+      </div>
+      <div className="text-center text-gray-500">
+        An error occured while trying to fetch messages.
+      </div>
+    </div>
+  );
+}
+
+function MessageList({ userId }) {
+  const { user } = useAuth();
+
+  const { data, fetchNextPage, hasNextPage, isLoading, isError } =
+    useInfiniteQuery({
+      queryKey: ["users", userId, "messages"],
+      queryFn: ({ pageParam = 0 }) => getMessages({ userId, page: pageParam }),
+      getNextPageParam: (lastPage, allPages) => {
+        return lastPage.length ? allPages.length : undefined;
+      },
+    });
+
+  const messages = usePages(data);
+
+  if (isLoading) {
+    return <Loader />;
+  }
+
+  if (isError) {
+    return <Error />;
+  }
 
   return (
-    <div className="card flex flex-col gap-3">
-      <div>Messages</div>
-      <ul className="h-[calc(100vh-8.3rem)] overflow-y-auto">
-        <li
-          className="cursor-pointer rounded-lg p-3 hover:bg-yellow-400"
-          onClick={() => {
-            openModal(<MessageModal />);
-          }}
+    <InfiniteScroll
+      className="flex flex-col-reverse gap-3"
+      scrollableTarget="messageList"
+      style={{ overflow: "visible" }}
+      loader={<Loader />}
+      inverse={true}
+      dataLength={messages.length}
+      next={fetchNextPage}
+      hasMore={hasNextPage}
+    >
+      {messages.map((message) => (
+        <div
+          className={`${
+            message.sender.id === user.uid
+              ? "ml-auto mr-0 bg-yellow-400"
+              : "bg-yellow-300"
+          } w-3/5 rounded-lg p-3`}
+          key={message.id}
         >
-          <div className="flex items-center gap-3">
-            <Avatar
-              src="https://images.pexels.com/photos/1334945/pexels-photo-1334945.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-              alt="theAdmiral"
-            />
-            <div>
-              <div className="font-semibold">theAdmiral</div>
-              <div className="text-sm text-gray-500">John Doe</div>
-            </div>
-          </div>
-        </li>
-      </ul>
-    </div>
+          {message.content}
+        </div>
+      ))}
+    </InfiniteScroll>
   );
 }
 

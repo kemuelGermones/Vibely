@@ -11,11 +11,11 @@ function UpdatePostForm({ postId, caption }) {
   const queryClient = useQueryClient();
 
   const { mutate, isLoading } = useMutation(updatePost, {
-    onSuccess: (data, variables, context) => {
+    onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["posts"] });
       closeModal();
     },
-    onError: (error, variables, context) => {
+    onError: (error) => {
       handleError(error);
     },
   });

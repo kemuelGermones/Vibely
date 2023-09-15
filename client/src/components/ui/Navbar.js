@@ -40,8 +40,8 @@ function Navbar() {
     navigate("/posts");
   };
 
-  const handleNavigateToMessages = () => {
-    navigate("/messages");
+  const handleNavigateToInbox = () => {
+    navigate("/inbox");
   };
 
   const handleNavigateToProfile = () => {
@@ -73,8 +73,8 @@ function Navbar() {
             <li
               className="flex cursor-pointer items-center justify-center hover:bg-yellow-500"
               data-tooltip-id="navbar"
-              data-tooltip-content="Messages"
-              onClick={handleNavigateToMessages}
+              data-tooltip-content="Inbox"
+              onClick={handleNavigateToInbox}
             >
               <BsEnvelope className="shrink-0" size="1.5em" />
             </li>

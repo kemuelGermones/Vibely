@@ -14,11 +14,11 @@ function CreatePostForm() {
   const queryClient = useQueryClient();
 
   const { mutate, isLoading } = useMutation(createPost, {
-    onSuccess: (data, variables, context) => {
+    onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["posts"] });
       closeModal();
     },
-    onError: (error, variables, context) => {
+    onError: (error) => {
       handleError(error);
     },
   });

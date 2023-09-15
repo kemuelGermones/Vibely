@@ -3,14 +3,19 @@ import axios from "axios";
 
 import { auth } from "../configs/firebase";
 
-export const getMessages = async (userId) => {
+export const getMessages = async ({ userId, page }) => {
   const user = auth.currentUser;
   const token = await getIdToken(user);
 
-  await axios(`http://localhost:5000/users/${userId}/messages`, {
-    params: { page },
-    headers: { Authorization: `Bearer ${token}` },
-  });
+  const response = await axios(
+    `http://localhost:5000/users/${userId}/messages`,
+    {
+      params: { page },
+      headers: { Authorization: `Bearer ${token}` },
+    }
+  );
+
+  return response.data.items;
 };
 
 export const createMessage = async ({ userId, values }) => {

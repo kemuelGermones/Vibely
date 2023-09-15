@@ -7,17 +7,17 @@ import useModal from "../../hooks/useModal";
 import CommentModal from "../comment/CommentModal";
 import IconButton from "../ui/IconButton";
 
-function PostDetailsIcons({ postId, isLiked, likes, comments }) {
+function PostDetailsIcons({ data }) {
   const { openModal } = useModal();
   const queryClient = useQueryClient();
 
   const { mutate: mutateLikePost, isLoading: isLoadingLikePost } = useMutation(
     likePost,
     {
-      onSuccess: (data, variables, context) => {
+      onSuccess: () => {
         queryClient.invalidateQueries({ queryKey: ["posts"] });
       },
-      onError: (error, variables, context) => {
+      onError: (error) => {
         handleError(error);
       },
     }
@@ -25,44 +25,44 @@ function PostDetailsIcons({ postId, isLiked, likes, comments }) {
 
   const { mutate: mutateUnlikePost, isLoading: isLoadingUnlikePost } =
     useMutation(unlikePost, {
-      onSuccess: (data, variables, context) => {
+      onSuccess: () => {
         queryClient.invalidateQueries({ queryKey: ["posts"] });
       },
-      onError: (error, variables, context) => {
+      onError: (error) => {
         handleError(error);
       },
     });
 
   const handleLikeOrUnlikePost = () => {
-    if (isLiked) {
-      mutateUnlikePost(postId);
+    if (data.isLiked) {
+      mutateUnlikePost(data.id);
     } else {
-      mutateLikePost(postId);
+      mutateLikePost(data.id);
     }
   };
 
   const handleShowCommentModal = () => {
-    openModal(<CommentModal postId={postId} />);
+    openModal(<CommentModal postId={data.id} />);
   };
 
   return (
     <div className="flex gap-3">
       <IconButton
-        content={isLiked ? "Unlike" : "like"}
+        content={data.isLiked ? "Unlike" : "Like"}
         onClick={handleLikeOrUnlikePost}
         disabled={isLoadingLikePost || isLoadingUnlikePost}
       >
-        {isLiked ? (
+        {data.isLiked ? (
           <BsHeartFill className="text-yellow-400" size="1.5em" />
         ) : (
           <BsHeart size="1.5em" />
         )}
       </IconButton>
-      <div>{likes}</div>
+      <div>{data.likes}</div>
       <IconButton content="Comments" onClick={handleShowCommentModal}>
         <BsChatSquare size="1.5em" />
       </IconButton>
-      <div>{comments}</div>
+      <div>{data.comments}</div>
     </div>
   );
 }

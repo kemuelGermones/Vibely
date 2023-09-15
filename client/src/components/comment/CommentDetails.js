@@ -8,12 +8,7 @@ function CommentDetails({ postId, data }) {
       <div className="flex w-full flex-col">
         <div className="flex justify-between">
           <div className="font-semibold">{data.user.username}</div>
-          <CommentDetailsIcons
-            postId={postId}
-            commentId={data.id}
-            userId={data.user.id}
-            isLiked={data.isLiked}
-          />
+          <CommentDetailsIcons postId={postId} data={data} />
         </div>
         <div>{data.description}</div>
       </div>

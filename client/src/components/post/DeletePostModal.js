@@ -10,11 +10,11 @@ function DeletePostModal({ postId }) {
   const queryClient = useQueryClient();
 
   const { isLoading, mutate } = useMutation(deletePost, {
-    onSuccess: (data, variables, context) => {
+    onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["posts"] });
       closeModal();
     },
-    onError: (error, variables, context) => {
+    onError: (error) => {
       handleError(error);
     },
   });

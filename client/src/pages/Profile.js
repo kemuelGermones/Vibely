@@ -8,7 +8,7 @@ import PostList from "../components/post/PostList";
 import About from "../components/misc/About";
 import Rules from "../components/misc/Rules";
 
-function UserProfile() {
+function Profile() {
   const { userId } = useParams();
 
   return (
@@ -29,4 +29,4 @@ function UserProfile() {
   );
 }
 
-export default UserProfile;
+export default Profile;
