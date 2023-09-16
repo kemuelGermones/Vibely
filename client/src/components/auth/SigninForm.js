@@ -29,39 +29,37 @@ function SigninForm() {
     });
 
   return (
-    <div className="card flex flex-col gap-3">
+    <form className="card flex flex-col gap-3" onSubmit={handleSubmit}>
       <div className="text-center font-shrikhand text-2xl">Vibely</div>
-      <form className="flex flex-col gap-3" onSubmit={handleSubmit}>
-        <input
-          className={
-            touched.email && errors.email ? "input-warning" : "input-primary"
-          }
-          id="email"
-          name="email"
-          type="email"
-          placeholder="Enter email"
-          value={values.email}
-          onChange={handleChange}
-          onBlur={handleBlur}
-        />
-        <input
-          className={
-            touched.password && errors.password
-              ? "input-warning"
-              : "input-primary"
-          }
-          id="password"
-          name="password"
-          type="password"
-          placeholder="Enter password"
-          value={values.password}
-          onChange={handleChange}
-          onBlur={handleBlur}
-        />
-        <button className="btn-primary" type="submit" disabled={isLoading}>
-          {isLoading ? "Loading..." : "Submit"}
-        </button>
-      </form>
+      <input
+        className={
+          touched.email && errors.email ? "input-warning" : "input-primary"
+        }
+        id="email"
+        name="email"
+        type="email"
+        placeholder="Enter email"
+        value={values.email}
+        onChange={handleChange}
+        onBlur={handleBlur}
+      />
+      <input
+        className={
+          touched.password && errors.password
+            ? "input-warning"
+            : "input-primary"
+        }
+        id="password"
+        name="password"
+        type="password"
+        placeholder="Enter password"
+        value={values.password}
+        onChange={handleChange}
+        onBlur={handleBlur}
+      />
+      <button className="btn-primary" type="submit" disabled={isLoading}>
+        {isLoading ? "Loading..." : "Submit"}
+      </button>
       <div className="text-center">
         No account?{" "}
         <Link
@@ -71,7 +69,7 @@ function SigninForm() {
           Sign up
         </Link>
       </div>
-    </div>
+    </form>
   );
 }
 
