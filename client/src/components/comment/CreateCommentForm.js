@@ -44,9 +44,9 @@ function CreateCommentForm({ postId }) {
   });
 
   return (
-    <div className="flex gap-3">
+    <form className="flex gap-3" onSubmit={handleSubmit}>
       <Avatar src={user.photoURL} alt={user.displayName} />
-      <form className="flex w-full flex-col gap-3" onSubmit={handleSubmit}>
+      <div className="flex w-full flex-col gap-3">
         <textarea
           className={
             touched.description && errors.description
@@ -64,8 +64,8 @@ function CreateCommentForm({ postId }) {
         <button className="btn-primary" type="submit" disabled={isLoading}>
           {isLoading ? "Loading..." : "Submit"}
         </button>
-      </form>
-    </div>
+      </div>
+    </form>
   );
 }
 
