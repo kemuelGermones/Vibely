@@ -8,32 +8,26 @@ import usePages from "../../hooks/usePages";
 
 function Loader() {
   return (
-    <div className="flex flex-col gap-3">
-      <div className="ml-auto mr-0 w-3/5 rounded-lg bg-yellow-400 p-3">
-        <div className="flex w-full flex-col gap-1">
-          <div className="h-3.5 animate-pulse rounded-full bg-gray-300" />
-          <div className="h-3.5 w-2/6 animate-pulse rounded-full bg-gray-300" />
-        </div>
-      </div>
-      <div className="w-3/5 rounded-lg bg-yellow-300 p-3">
-        <div className="flex w-full flex-col gap-1">
-          <div className="h-3.5 animate-pulse rounded-full bg-gray-300" />
-          <div className="h-3.5 w-2/6 animate-pulse rounded-full bg-gray-300" />
-        </div>
-      </div>
+    <div className="flex justify-center gap-2 p-3">
+      <div className="h-3 w-3 animate-[bounce_1s_infinite_-0.3s] rounded-full bg-yellow-400"></div>
+      <div className="h-3 w-3 animate-[bounce_1s_infinite_-0.1s] rounded-full bg-yellow-400"></div>
+      <div className="h-3 w-3 animate-[bounce_1s_infinite_0.1s] rounded-full bg-yellow-400"></div>
     </div>
   );
 }
 
 function Error() {
   return (
-    <div className="flex h-full flex-col items-center justify-center gap-3">
-      <BsExclamationTriangle className="text-red-500" size="2.5em" />
-      <div className="text-center text-xl text-gray-700">
-        Something went wrong
-      </div>
-      <div className="text-center text-gray-500">
-        An error occured while trying to fetch messages.
+    <div className="card flex items-center gap-3">
+      <BsExclamationTriangle
+        className="w-10 shrink-0 text-red-500"
+        size="1.5em"
+      />
+      <div className="flex flex-col">
+        <div className="font-semibold">Something went wrong</div>
+        <div className="text-sm text-gray-500">
+          An error occured while trying to fetch messages.
+        </div>
       </div>
     </div>
   );
@@ -77,8 +71,8 @@ function MessageList({ userId }) {
           className={`${
             message.sender.id === user.uid
               ? "ml-auto mr-0 bg-yellow-400"
-              : "bg-yellow-300"
-          } w-3/5 rounded-lg p-3`}
+              : "ml-0 mr-auto bg-white"
+          } rounded-lg p-3`}
           key={message.id}
         >
           {message.content}
