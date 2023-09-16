@@ -8,10 +8,15 @@ import usePages from "../../hooks/usePages";
 
 function Loader() {
   return (
-    <div className="flex justify-center gap-2 p-3">
-      <div className="h-3 w-3 animate-[bounce_1s_infinite_-0.3s] rounded-full bg-yellow-400"></div>
-      <div className="h-3 w-3 animate-[bounce_1s_infinite_-0.1s] rounded-full bg-yellow-400"></div>
-      <div className="h-3 w-3 animate-[bounce_1s_infinite_0.1s] rounded-full bg-yellow-400"></div>
+    <div className="flex flex-col gap-3">
+      <div className="ml-0 mr-auto flex w-3/5 flex-col gap-1 rounded-lg bg-white p-3">
+        <div className="h-3.5 animate-pulse rounded-full bg-gray-300" />
+        <div className="h-3.5 w-2/6 animate-pulse rounded-full bg-gray-300" />
+      </div>
+      <div className="ml-auto mr-0 flex w-3/5 flex-col gap-1 rounded-lg bg-yellow-400 p-3">
+        <div className="h-3.5 animate-pulse rounded-full bg-gray-300" />
+        <div className="h-3.5 w-2/6 animate-pulse rounded-full bg-gray-300" />
+      </div>
     </div>
   );
 }
@@ -72,7 +77,7 @@ function MessageList({ userId }) {
             message.sender.id === user.uid
               ? "ml-auto mr-0 bg-yellow-400"
               : "ml-0 mr-auto bg-white"
-          } rounded-lg p-3`}
+          } max-w-3/5 rounded-lg p-3`}
           key={message.id}
         >
           {message.content}
