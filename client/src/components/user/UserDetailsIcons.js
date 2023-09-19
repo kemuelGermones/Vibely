@@ -40,7 +40,19 @@ function UserDetailsIcons({ data }) {
   };
 
   const handleShowMessageModal = () => {
-    openModal(<MessageModal data={data} />);
+    openModal(
+      <MessageModal
+        data={{
+          id: data.id,
+          firstname: data.firstname,
+          lastname: data.lastname,
+          username: data.username,
+          email: data.email,
+          createdAt: data.createdAt,
+          avatar: data.avatar,
+        }}
+      />
+    );
   };
 
   return (
