@@ -11,6 +11,7 @@ const postRoute = require("./routes/post");
 const postLikeRoute = require("./routes/postLike");
 const commentRoute = require("./routes/comment");
 const commentLikeRoute = require("./routes/commentLike");
+const contactRoute = require("./routes/contact");
 const AppError = require("./utils/AppError");
 
 const app = express();
@@ -45,6 +46,7 @@ app.use("/posts", postRoute);
 app.use("/posts/:postId/likes", postLikeRoute);
 app.use("/posts/:postId/comments", commentRoute);
 app.use("/posts/:postId/comments/:commentId/likes", commentLikeRoute);
+app.use("/contacts", contactRoute);
 
 app.all("*", (req, res, next) => {
   next(new AppError(400, "not found"));
