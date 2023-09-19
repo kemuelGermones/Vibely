@@ -35,7 +35,7 @@ const PROJECTS = [
   },
 ];
 
-function Advertisement() {
+function AdvertisementDetails() {
   const project = useMemo(() => {
     const randomIndex = Math.floor(Math.random() * PROJECTS.length);
     return PROJECTS[randomIndex];
@@ -53,4 +53,4 @@ function Advertisement() {
   );
 }
 
-export default Advertisement;
+export default AdvertisementDetails;

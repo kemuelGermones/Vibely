@@ -1,4 +1,4 @@
-function Rules() {
+function RegulationDetails() {
   return (
     <div className="card flex flex-col gap-3">
       <div className="text-sm text-gray-500">Rules and regulations</div>
@@ -13,4 +13,4 @@ function Rules() {
   );
 }
 
-export default Rules;
+export default RegulationDetails;

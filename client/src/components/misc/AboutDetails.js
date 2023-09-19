@@ -1,4 +1,4 @@
-function About() {
+function AboutDetails() {
   return (
     <div className="card flex flex-col gap-3">
       <div className="text-sm text-gray-500">About</div>
@@ -11,4 +11,4 @@ function About() {
   );
 }
 
-export default About;
+export default AboutDetails;
