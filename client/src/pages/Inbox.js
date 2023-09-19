@@ -4,7 +4,7 @@ import useAuth from "../hooks/useAuth";
 import Advertisement from "../components/misc/Advertisement";
 import Navbar from "../components/ui/Navbar";
 import UserDetails from "../components/user/UserDetails";
-import ConversationList from "../components/conversation/ConversationList";
+import InboxDetails from "../components/inbox/InboxDetails";
 import About from "../components/misc/About";
 import Rules from "../components/misc/Rules";
 
@@ -21,7 +21,7 @@ function Inbox() {
           <Rules />
         </aside>
         <section>
-          <ConversationList />
+          <InboxDetails />
         </section>
         <aside className="hidden lg:block">
           <Advertisement />
