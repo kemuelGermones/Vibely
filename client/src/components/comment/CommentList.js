@@ -47,7 +47,7 @@ function CommentList({ postId }) {
       },
     });
 
-  const comments = usePages(data);
+  const { pages } = usePages(data);
 
   if (isLoading) {
     return <Loader />;
@@ -63,12 +63,12 @@ function CommentList({ postId }) {
       scrollableTarget="commentList"
       style={{ overflow: "visible" }}
       loader={<Loader />}
-      dataLength={comments.length}
+      dataLength={pages.length}
       next={fetchNextPage}
       hasMore={hasNextPage}
     >
-      {comments.map((comment) => (
-        <CommentDetails postId={postId} data={comment} key={comment.id} />
+      {pages.map((page) => (
+        <CommentDetails postId={postId} data={page} key={page.id} />
       ))}
     </InfiniteScroll>
   );

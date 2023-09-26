@@ -50,7 +50,7 @@ function MessageList({ userId }) {
       },
     });
 
-  const messages = usePages(data);
+  const { pages } = usePages(data);
 
   if (isLoading) {
     return <Loader />;
@@ -67,20 +67,20 @@ function MessageList({ userId }) {
       style={{ overflow: "visible" }}
       loader={<Loader />}
       inverse={true}
-      dataLength={messages.length}
+      dataLength={pages.length}
       next={fetchNextPage}
       hasMore={hasNextPage}
     >
-      {messages.map((message) => (
+      {pages.map((page) => (
         <div
           className={`${
-            message.sender.id === user.uid
+            page.sender.id === user.uid
               ? "ml-auto mr-0 bg-yellow-400"
               : "ml-0 mr-auto bg-white"
           } max-w-3/5 rounded-lg p-3`}
-          key={message.id}
+          key={page.id}
         >
-          {message.content}
+          {page.content}
         </div>
       ))}
     </InfiniteScroll>

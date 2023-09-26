@@ -45,7 +45,7 @@ function ContactList() {
       },
     });
 
-  const contacts = usePages(data);
+  const { pages } = usePages(data);
 
   if (isLoading) {
     return <Loader />;
@@ -61,12 +61,12 @@ function ContactList() {
       scrollableTarget="contactList"
       style={{ overflow: "visible" }}
       loader={<Loader />}
-      dataLength={contacts.length}
+      dataLength={pages.length}
       next={fetchNextPage}
       hasMore={hasNextPage}
     >
-      {contacts.map((contact) => (
-        <ContactDetails data={contact} key={contact.id} />
+      {pages.map((page) => (
+        <ContactDetails data={page} key={page.id} />
       ))}
     </InfiniteScroll>
   );

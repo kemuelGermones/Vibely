@@ -50,7 +50,7 @@ function SearchList({ search }) {
       },
     });
 
-  const users = usePages(data);
+  const { pages } = usePages(data);
 
   if (isLoading) {
     return <Loader />;
@@ -66,12 +66,12 @@ function SearchList({ search }) {
       scrollableTarget="searchList"
       style={{ overflow: "visible" }}
       loader={<Loader />}
-      dataLength={users.length}
+      dataLength={pages.length}
       next={fetchNextPage}
       hasMore={hasNextPage}
     >
-      {users.map((user) => (
-        <SearchDetails data={user} key={user.id} />
+      {pages.map((page) => (
+        <SearchDetails data={page} key={page.id} />
       ))}
     </InfiniteScroll>
   );

@@ -60,7 +60,7 @@ function PostList({ userId }) {
       },
     });
 
-  const posts = usePages(data);
+  const { pages } = usePages(data);
 
   if (isLoading) {
     return <Loader />;
@@ -75,12 +75,12 @@ function PostList({ userId }) {
       className="flex flex-col gap-3"
       style={{ overflow: "visible" }}
       loader={<Loader />}
-      dataLength={posts.length}
+      dataLength={pages.length}
       next={fetchNextPage}
       hasMore={hasNextPage}
     >
-      {posts.map((post) => (
-        <PostDetails data={post} key={post.id} />
+      {pages.map((page) => (
+        <PostDetails data={page} key={page.id} />
       ))}
     </InfiniteScroll>
   );
