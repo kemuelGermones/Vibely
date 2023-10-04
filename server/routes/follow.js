@@ -4,7 +4,7 @@ const {
   validateFollowAvailability,
   validateFollowExistence,
 } = require("../middleware/validate");
-const { authenticate } = require("../middleware/auth");
+const { authenticateRoute } = require("../middleware/auth");
 const express = require("express");
 const wrapAsync = require("../utils/wrapAsync");
 
@@ -12,7 +12,7 @@ const router = express.Router({ mergeParams: true });
 
 router.post(
   "/",
-  authenticate,
+  authenticateRoute,
   validateUserExistence,
   validateFollowAvailability,
   wrapAsync(followUser)
@@ -20,7 +20,7 @@ router.post(
 
 router.delete(
   "/",
-  authenticate,
+  authenticateRoute,
   validateFollowExistence,
   wrapAsync(unfollowUser)
 );

@@ -1,63 +1,40 @@
-const BaseJoi = require("joi");
-const sanitizeHtml = require("sanitize-html");
-
-// Adds a escapeHTML method to Joi and checks if the
-// incoming data contains HTML elements
-const extension = (joi) => ({
-  type: "string",
-  base: joi.string(),
-  messages: {
-    "string.escapeHTML": "{{#label}} must not include HTML!",
-  },
-  rules: {
-    escapeHTML: {
-      validate(value, helpers) {
-        const clean = sanitizeHtml(value, {
-          allowedTags: [],
-          allowedAttributes: {},
-        });
-        if (clean !== value) {
-          return helpers.error("string.escapeHTML", { value });
-        }
-        return clean;
-      },
-    },
-  },
-});
-
-const Joi = BaseJoi.extend(extension);
+const escapeHTML = require("./utils/escapeHTML");
+const Joi = require("joi").extend(escapeHTML);
 
 module.exports.userSchema = Joi.object({
   firstname: Joi.string()
+    .label("Firstname")
     .min(2)
     .max(30)
     .regex(/^[a-z]+$/i)
     .escapeHTML()
     .required(),
   lastname: Joi.string()
+    .label("Lastname")
     .min(2)
     .max(30)
     .regex(/^[a-z]+$/i)
     .escapeHTML()
     .required(),
   username: Joi.string()
+    .label("Username")
     .min(2)
     .max(30)
     .regex(/^[a-z]+$/i)
     .escapeHTML()
     .required(),
-  email: Joi.string().email().escapeHTML().required(),
-  password: Joi.string().min(6).escapeHTML().required(),
+  email: Joi.string().label("Email").email().escapeHTML().required(),
+  password: Joi.string().label("Password").min(6).required(),
 });
 
 module.exports.postSchema = Joi.object({
-  caption: Joi.string().escapeHTML().required(),
+  caption: Joi.string().label("Caption").escapeHTML().required(),
 });
 
 module.exports.commentSchema = Joi.object({
-  description: Joi.string().escapeHTML().required(),
+  description: Joi.string().label("Description").escapeHTML().required(),
 });
 
 module.exports.messageSchema = Joi.object({
-  content: Joi.string().escapeHTML().required(),
+  content: Joi.string().label("Content").escapeHTML().required(),
 });

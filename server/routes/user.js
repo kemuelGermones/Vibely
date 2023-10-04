@@ -1,13 +1,20 @@
-const { getUser, getUsers } = require("../controllers/user");
+const { getUser, getContacts, getUsers } = require("../controllers/user");
 const { validateUserExistence } = require("../middleware/validate");
-const { authenticate } = require("../middleware/auth");
+const { authenticateRoute } = require("../middleware/auth");
 const express = require("express");
 const wrapAsync = require("../utils/wrapAsync");
 
 const router = express.Router();
 
-router.get("/", authenticate, wrapAsync(getUsers));
+router.get("/", authenticateRoute, wrapAsync(getUsers));
 
-router.get("/:userId", authenticate, validateUserExistence, wrapAsync(getUser));
+router.get("/contacts", authenticateRoute, wrapAsync(getContacts));
+
+router.get(
+  "/:userId",
+  authenticateRoute,
+  validateUserExistence,
+  wrapAsync(getUser)
+);
 
 module.exports = router;

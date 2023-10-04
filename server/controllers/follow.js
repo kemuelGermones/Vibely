@@ -9,7 +9,7 @@ module.exports.followUser = async (req, res, next) => {
   res.status(200).json({
     status: 200,
     items: null,
-    message: "successfully followed a user",
+    message: "Successfully followed a user",
   });
 };
 
@@ -22,6 +22,6 @@ module.exports.unfollowUser = async (req, res, next) => {
   res.status(200).json({
     status: 200,
     items: null,
-    message: "successfully unfollowed a user",
+    message: "Successfully unfollowed a user",
   });
 };

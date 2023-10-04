@@ -2,15 +2,16 @@ const { Sequelize } = require("sequelize");
 const { Comment, User, Avatar } = require("../models");
 
 module.exports.getComments = async (req, res, next) => {
+  const LIMIT = 10;
+  
   const { postId } = req.params;
   const { page } = req.query;
   const { uid } = req.user;
-  const limit = 10;
-  const offset = page ? Number(page) * limit : 0;
+  const offset = page ? Number(page) * LIMIT : 0;
 
   const comments = await Comment.findAll({
-    limit,
     offset,
+    limit: LIMIT,
     where: { postId },
     replacements: [uid],
     order: [["createdAt", "ASC"]],
@@ -51,7 +52,7 @@ module.exports.getComments = async (req, res, next) => {
   res.status(200).json({
     status: 200,
     items: comments,
-    message: "successfully fetched comments",
+    message: "Successfully fetched comments",
   });
 };
 
@@ -68,7 +69,7 @@ module.exports.createComment = async (req, res, next) => {
   res.status(200).json({
     status: 200,
     items: null,
-    message: "successfully created a comment",
+    message: "Successfully created a comment",
   });
 };
 
@@ -80,6 +81,6 @@ module.exports.deleteComment = async (req, res, next) => {
   res.status(200).json({
     status: 200,
     items: null,
-    message: "successfully deleted a comment",
+    message: "Successfully deleted a comment",
   });
 };

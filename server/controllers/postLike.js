@@ -9,7 +9,7 @@ module.exports.likePost = async (req, res, next) => {
   res.status(200).json({
     status: 200,
     items: null,
-    message: "successfully liked a post",
+    message: "Successfully liked a post",
   });
 };
 
@@ -22,6 +22,6 @@ module.exports.unlikePost = async (req, res, next) => {
   res.status(200).json({
     status: 200,
     items: null,
-    message: "successfully unliked a post",
+    message: "Successfully unliked a post",
   });
 };

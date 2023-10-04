@@ -1,6 +1,7 @@
 const DatauriParser = require("datauri/parser");
 const path = require("path");
 const cloudinary = require("../config/cloudinary");
+const AppError = require("../utils/AppError");
 
 const parser = new DatauriParser();
 
@@ -28,7 +29,7 @@ module.exports.uploadImagesToCloudinary = (req, res, next) => {
       }));
       next();
     })
-    .catch((error) => next(error));
+    .catch((error) => next(new AppError(error.http_code, error.message)));
 };
 
 module.exports.uploadAvatarToCloudinary = (req, res, next) => {
@@ -47,5 +48,5 @@ module.exports.uploadAvatarToCloudinary = (req, res, next) => {
       req.file = { url: avatar.url, filename: avatar.public_id };
       next();
     })
-    .catch((error) => next(error));
+    .catch((error) => next(new AppError(error.http_code, error.message)));
 };

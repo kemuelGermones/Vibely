@@ -4,7 +4,7 @@ const {
   validateCommentLikeAvailability,
   validateCommentLikeExistence,
 } = require("../middleware/validate");
-const { authenticate } = require("../middleware/auth");
+const { authenticateRoute } = require("../middleware/auth");
 const express = require("express");
 const wrapAsync = require("../utils/wrapAsync");
 
@@ -12,7 +12,7 @@ const router = express.Router({ mergeParams: true });
 
 router.post(
   "/",
-  authenticate,
+  authenticateRoute,
   validateCommentExistence,
   validateCommentLikeAvailability,
   wrapAsync(likeComment)
@@ -20,7 +20,7 @@ router.post(
 
 router.delete(
   "/",
-  authenticate,
+  authenticateRoute,
   validateCommentLikeExistence,
   wrapAsync(unlikeComment)
 );

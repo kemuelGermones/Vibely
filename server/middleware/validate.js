@@ -6,13 +6,16 @@ const {
   PostLike,
   CommentLike,
 } = require("../models");
-const {
-  postSchema,
-  commentSchema,
-  userSchema,
-  messageSchema,
-} = require("../schemas");
+const { postSchema, commentSchema, userSchema } = require("../schemas");
 const AppError = require("../utils/AppError");
+
+const OPTIONS = {
+  errors: {
+    wrap: {
+      label: "",
+    },
+  },
+};
 
 module.exports.validatePostExistence = (req, res, next) => {
   const { postId } = req.params;
@@ -20,7 +23,7 @@ module.exports.validatePostExistence = (req, res, next) => {
   Post.findOne({ where: { id: postId } })
     .then((post) => {
       if (!post) {
-        throw new AppError(400, "post doesn't exist");
+        throw new AppError(400, "Post doesn't exist");
       }
       next();
     })
@@ -28,7 +31,7 @@ module.exports.validatePostExistence = (req, res, next) => {
 };
 
 module.exports.validatePostCaption = (req, res, next) => {
-  const { error } = postSchema.validate(req.body);
+  const { error } = postSchema.validate(req.body, OPTIONS);
 
   if (error) {
     const message = error.details[0].message;
@@ -40,7 +43,7 @@ module.exports.validatePostCaption = (req, res, next) => {
 
 module.exports.validatePostImages = (req, res, next) => {
   if (req.files.length === 0) {
-    throw new AppError(400, '"images" is required');
+    throw new AppError(400, "Images is required");
   }
 
   next();
@@ -55,7 +58,7 @@ module.exports.validatePostOwner = (req, res, next) => {
       if (post.getDataValue("userId") !== uid) {
         throw new AppError(
           400,
-          "you are not allowed to update/delete this post"
+          "You are not allowed to update/delete this post"
         );
       }
       next();
@@ -70,7 +73,7 @@ module.exports.validatePostLikeAvailability = (req, res, next) => {
   PostLike.findOne({ where: { postId, userId: uid } })
     .then((like) => {
       if (like) {
-        throw new AppError(400, "you already liked this post");
+        throw new AppError(400, "You already liked this post");
       }
       next();
     })
@@ -84,7 +87,7 @@ module.exports.validatePostLikeExistence = (req, res, next) => {
   PostLike.findOne({ where: { postId, userId: uid } })
     .then((like) => {
       if (!like) {
-        throw new AppError(400, "post like doesn't exist");
+        throw new AppError(400, "Post like doesn't exist");
       }
       next();
     })
@@ -97,7 +100,7 @@ module.exports.validateCommentExistence = (req, res, next) => {
   Comment.findOne({ where: { postId, id: commentId } })
     .then((comment) => {
       if (!comment) {
-        throw new AppError(400, "comment doesn't exist");
+        throw new AppError(400, "Comment doesn't exist");
       }
       next();
     })
@@ -105,7 +108,7 @@ module.exports.validateCommentExistence = (req, res, next) => {
 };
 
 module.exports.validateCommentDescription = (req, res, next) => {
-  const { error } = commentSchema.validate(req.body);
+  const { error } = commentSchema.validate(req.body, OPTIONS);
 
   if (error) {
     const message = error.details[0].message;
@@ -122,7 +125,7 @@ module.exports.validateCommentOwner = (req, res, next) => {
   Comment.findOne({ where: { postId, id: commentId } })
     .then((comment) => {
       if (comment.getDataValue("userId") !== uid) {
-        throw new AppError(400, "you are not allowed to delete this comment");
+        throw new AppError(400, "You are not allowed to delete this comment");
       }
       next();
     })
@@ -136,7 +139,7 @@ module.exports.validateCommentLikeAvailability = (req, res, next) => {
   CommentLike.findOne({ where: { commentId, userId: uid } })
     .then((like) => {
       if (like) {
-        throw new AppError(400, "you already liked this comment");
+        throw new AppError(400, "You already liked this comment");
       }
       next();
     })
@@ -150,7 +153,7 @@ module.exports.validateCommentLikeExistence = (req, res, next) => {
   CommentLike.findOne({ where: { commentId, userId: uid } })
     .then((like) => {
       if (!like) {
-        throw new AppError(400, "comment like doesn't exist");
+        throw new AppError(400, "Comment like doesn't exist");
       }
       next();
     })
@@ -163,7 +166,7 @@ module.exports.validateUserExistence = (req, res, next) => {
   User.findOne({ where: { id: userId } })
     .then((user) => {
       if (!user) {
-        throw new AppError(400, "user doesn't exist");
+        throw new AppError(400, "User doesn't exist");
       }
       next();
     })
@@ -171,7 +174,7 @@ module.exports.validateUserExistence = (req, res, next) => {
 };
 
 module.exports.validateUserBody = (req, res, next) => {
-  const { error } = userSchema.validate(req.body);
+  const { error } = userSchema.validate(req.body, OPTIONS);
 
   if (error) {
     const message = error.details[0].message;
@@ -179,7 +182,7 @@ module.exports.validateUserBody = (req, res, next) => {
   }
 
   if (!req.file) {
-    throw new AppError(400, '"avatar" is required');
+    throw new AppError(400, "Avatar is required");
   }
 
   next();
@@ -193,7 +196,7 @@ module.exports.validateUsernameAvailability = (req, res, next) => {
   })
     .then((user) => {
       if (user) {
-        throw new AppError(400, '"username" has already been taken');
+        throw new AppError(400, "Username has already been taken");
       }
       next();
     })
@@ -208,7 +211,7 @@ module.exports.validateEmailAvailability = (req, res, next) => {
   })
     .then((user) => {
       if (user) {
-        throw new AppError(400, '"email" has already been taken');
+        throw new AppError(400, "Email has already been taken");
       }
       next();
     })
@@ -222,7 +225,7 @@ module.exports.validateFollowAvailability = (req, res, next) => {
   Follow.findOne({ where: { followerId: uid, followeeId: userId } })
     .then((follow) => {
       if (follow) {
-        throw new AppError(400, "you already followed this user");
+        throw new AppError(400, "You already followed this user");
       }
       next();
     })
@@ -236,20 +239,9 @@ module.exports.validateFollowExistence = (req, res, next) => {
   Follow.findOne({ where: { followerId: uid, followeeId: userId } })
     .then((follow) => {
       if (!follow) {
-        throw new AppError(400, "follow doesn't exist");
+        throw new AppError(400, "Follow doesn't exist");
       }
       next();
     })
     .catch((error) => next(error));
-};
-
-module.exports.validateMessageContent = (req, res, next) => {
-  const { error } = messageSchema.validate(req.body);
-
-  if (error) {
-    const message = error.details[0].message;
-    throw new AppError(400, message);
-  }
-
-  next();
 };

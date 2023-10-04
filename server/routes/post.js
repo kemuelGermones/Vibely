@@ -12,17 +12,17 @@ const {
 } = require("../middleware/validate");
 const { uploadImagesToCloudinary } = require("../middleware/cloudinary");
 const { parseCreatePostFormData } = require("../middleware/multer");
-const { authenticate } = require("../middleware/auth");
+const { authenticateRoute } = require("../middleware/auth");
 const express = require("express");
 const wrapAsync = require("../utils/wrapAsync");
 
 const router = express.Router();
 
-router.get("/", authenticate, wrapAsync(getPosts));
+router.get("/", authenticateRoute, wrapAsync(getPosts));
 
 router.post(
   "/",
-  authenticate,
+  authenticateRoute,
   parseCreatePostFormData,
   validatePostCaption,
   validatePostImages,
@@ -32,7 +32,7 @@ router.post(
 
 router.patch(
   "/:postId",
-  authenticate,
+  authenticateRoute,
   validatePostExistence,
   validatePostOwner,
   validatePostCaption,
@@ -41,7 +41,7 @@ router.patch(
 
 router.delete(
   "/:postId",
-  authenticate,
+  authenticateRoute,
   validatePostExistence,
   validatePostOwner,
   wrapAsync(deletePost)

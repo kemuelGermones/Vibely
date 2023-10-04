@@ -1,15 +1,13 @@
 const admin = require("../config/firebase");
 const AppError = require("../utils/AppError");
 
-module.exports.authenticate = (req, res, next) => {
+module.exports.authenticateRoute = (req, res, next) => {
+  const PATTERN = /^Bearer\s[^\s]/;
+  
   const bearerToken = req.headers.authorization;
 
-  if (!bearerToken) {
-    throw new AppError(400, "bearer token is required");
-  }
-
-  if (!/^Bearer\s[^\s]/.test(bearerToken)) {
-    throw new AppError(400, "invalid bearer token");
+  if (!PATTERN.test(bearerToken)) {
+    throw new AppError(400, "Invalid bearer token");
   }
 
   const token = bearerToken.split(" ")[1];
@@ -17,13 +15,26 @@ module.exports.authenticate = (req, res, next) => {
   admin
     .auth()
     .verifyIdToken(token)
-    .then((decodedToken) => {
-      req.user = decodedToken;
+    .then((user) => {
+      req.user = user;
       next();
     })
-    .catch((error) => {
-      const auth = error.code.split("/")[1];
-      const code = auth.replace(/-/g, " ");
-      next(new AppError(400, code));
-    });
+    .catch((error) => next(new AppError(400, error.message)));
+};
+
+module.exports.authenticateSocket = (socket, next) => {
+  const token = socket.handshake.auth.token;
+
+  if (!(typeof token === "string")) {
+    return next(new Error("Invalid token"));
+  }
+
+  admin
+    .auth()
+    .verifyIdToken(token)
+    .then((user) => {
+      socket.user = user;
+      next();
+    })
+    .catch((error) => next(error));
 };

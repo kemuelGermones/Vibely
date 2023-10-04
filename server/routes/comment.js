@@ -9,17 +9,17 @@ const {
   validateCommentDescription,
   validateCommentOwner,
 } = require("../middleware/validate");
-const { authenticate } = require("../middleware/auth");
+const { authenticateRoute } = require("../middleware/auth");
 const express = require("express");
 const wrapAsync = require("../utils/wrapAsync");
 
 const router = express.Router({ mergeParams: true });
 
-router.get("/", authenticate, validatePostExistence, wrapAsync(getComments));
+router.get("/", authenticateRoute, validatePostExistence, wrapAsync(getComments));
 
 router.post(
   "/",
-  authenticate,
+  authenticateRoute,
   validatePostExistence,
   validateCommentDescription,
   wrapAsync(createComment)
@@ -27,7 +27,7 @@ router.post(
 
 router.delete(
   "/:commentId",
-  authenticate,
+  authenticateRoute,
   validateCommentExistence,
   validateCommentOwner,
   wrapAsync(deleteComment)

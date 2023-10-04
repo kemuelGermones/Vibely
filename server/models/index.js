@@ -211,13 +211,13 @@ Message.belongsTo(User, {
 });
 
 User.hasMany(Message, {
-  foreignKey: { name: "recieverId", allowNull: false },
-  as: "recieved",
+  foreignKey: { name: "receiverId", allowNull: false },
+  as: "received",
   onDelete: "CASCADE",
 });
 Message.belongsTo(User, {
-  foreignKey: { name: "recieverId", allowNull: false },
-  as: "reciever",
+  foreignKey: { name: "receiverId", allowNull: false },
+  as: "receiver",
   onDelete: "CASCADE",
 });
 

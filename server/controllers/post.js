@@ -4,16 +4,17 @@ const cloudinary = require("../config/cloudinary");
 const sequelize = require("../config/sequelize");
 
 module.exports.getPosts = async (req, res) => {
+  const LIMIT = 10;
+
   const { page, search } = req.query;
   const { uid } = req.user;
-  const limit = 10;
-  const offset = page ? Number(page) * limit : 0;
+  const offset = page ? Number(page) * LIMIT : 0;
   const where = search ? { userId: search } : undefined;
 
   const posts = await Post.findAll({
-    limit,
     offset,
     where,
+    limit: LIMIT,
     replacements: [uid],
     order: [["createdAt", "DESC"]],
     include: [
@@ -64,7 +65,7 @@ module.exports.getPosts = async (req, res) => {
   res.status(200).json({
     status: 200,
     items: posts,
-    message: "successfully fetched posts",
+    message: "Successfully fetched posts",
   });
 };
 
@@ -84,7 +85,7 @@ module.exports.createPost = async (req, res) => {
   res.status(200).json({
     status: 200,
     items: null,
-    message: "successfully created a post",
+    message: "Successfully created a post",
   });
 };
 
@@ -96,7 +97,7 @@ module.exports.updatePost = async (req, res) => {
   res.status(200).json({
     status: 200,
     items: null,
-    message: "successfully updated a post",
+    message: "Successfully updated a post",
   });
 };
 
@@ -105,17 +106,18 @@ module.exports.deletePost = async (req, res) => {
 
   const images = await Image.findAll({ where: { postId } });
 
+  const destroyImagesCloudinary = images.map(async (image) => {
+    await cloudinary.uploader.destroy(image.getDataValue("filename"));
+  });
+
   await sequelize.transaction(async (t) => {
     await Post.destroy({ where: { id: postId }, transaction: t });
-    const destroyImagesCloudinary = images.map(async (image) => {
-      await cloudinary.uploader.destroy(image.getDataValue("filename"));
-    });
     await Promise.all(destroyImagesCloudinary);
   });
 
   res.status(200).json({
     status: 200,
     items: null,
-    message: "successfully deleted a post",
+    message: "Successfully deleted a post",
   });
 };
