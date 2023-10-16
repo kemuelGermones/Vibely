@@ -17,7 +17,15 @@ module.exports.uploadImagesToCloudinary = (req, res, next) => {
         resource_type: "image",
         folder: "Vibely",
         allowed_formats: "jpg, png, jpeg",
-        transformation: [{ width: 1280, height: 720, crop: "fill" }],
+        transformation: [
+          {
+            width: 614,
+            height: 345,
+            crop: "fill",
+            gravity: "auto",
+            quality: "100",
+          },
+        ],
       })
   );
 
@@ -43,6 +51,15 @@ module.exports.uploadAvatarToCloudinary = (req, res, next) => {
       resource_type: "image",
       folder: "Vibely",
       allowed_formats: "jpg, png, jpeg",
+      transformation: [
+        {
+          width: 40,
+          height: 40,
+          crop: "fill",
+          radius: "max",
+          quality: "100",
+        },
+      ],
     })
     .then((avatar) => {
       req.file = { url: avatar.url, filename: avatar.public_id };
