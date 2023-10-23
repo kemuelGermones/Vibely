@@ -11,7 +11,7 @@ module.exports.uploadImagesToCloudinary = (req, res, next) => {
       parser.format(path.extname(file.originalname), file.buffer).content
   );
 
-  const uploadImagesCloudinary = dataUris.map(
+  const upload = dataUris.map(
     async (image) =>
       await cloudinary.uploader.upload(image, {
         resource_type: "image",
@@ -29,7 +29,7 @@ module.exports.uploadImagesToCloudinary = (req, res, next) => {
       })
   );
 
-  Promise.all(uploadImagesCloudinary)
+  Promise.all(upload)
     .then((images) => {
       req.files = images.map((image) => ({
         url: image.url,
@@ -37,7 +37,11 @@ module.exports.uploadImagesToCloudinary = (req, res, next) => {
       }));
       next();
     })
-    .catch((error) => next(new AppError(error.http_code, error.message)));
+    .catch((error) => {
+      console.log("error");
+      const { http_code, message } = error;
+      next(new AppError(http_code, message));
+    });
 };
 
 module.exports.uploadAvatarToCloudinary = (req, res, next) => {
@@ -65,5 +69,8 @@ module.exports.uploadAvatarToCloudinary = (req, res, next) => {
       req.file = { url: avatar.url, filename: avatar.public_id };
       next();
     })
-    .catch((error) => next(new AppError(error.http_code, error.message)));
+    .catch((error) => {
+      const { http_code, message } = error;
+      next(new AppError(http_code, message));
+    });
 };

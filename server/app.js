@@ -65,8 +65,11 @@ app.all("*", (req, res, next) => {
 });
 
 app.use((err, req, res, next) => {
-  const { status = 500, message = "Something went wrong" } = err;
-  res.status(status).json({ status, items: null, message });
+  const {
+    status = 500,
+    message = "An error occured while trying your request",
+  } = err;
+  res.status(status).json({ status, message, items: null });
 });
 
 io.use(authenticateSocket);

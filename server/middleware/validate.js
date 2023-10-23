@@ -27,7 +27,9 @@ module.exports.validatePostExistence = (req, res, next) => {
       }
       next();
     })
-    .catch((error) => next(error));
+    .catch((error) => {
+      next(error);
+    });
 };
 
 module.exports.validatePostCaption = (req, res, next) => {
@@ -63,7 +65,9 @@ module.exports.validatePostOwner = (req, res, next) => {
       }
       next();
     })
-    .catch((error) => next(error));
+    .catch((error) => {
+      next(error);
+    });
 };
 
 module.exports.validatePostLikeAvailability = (req, res, next) => {
@@ -77,7 +81,9 @@ module.exports.validatePostLikeAvailability = (req, res, next) => {
       }
       next();
     })
-    .catch((error) => next(error));
+    .catch((error) => {
+      next(error);
+    });
 };
 
 module.exports.validatePostLikeExistence = (req, res, next) => {
@@ -91,7 +97,9 @@ module.exports.validatePostLikeExistence = (req, res, next) => {
       }
       next();
     })
-    .catch((error) => next(error));
+    .catch((error) => {
+      next(error);
+    });
 };
 
 module.exports.validateCommentExistence = (req, res, next) => {
@@ -104,7 +112,9 @@ module.exports.validateCommentExistence = (req, res, next) => {
       }
       next();
     })
-    .catch((error) => next(error));
+    .catch((error) => {
+      next(error);
+    });
 };
 
 module.exports.validateCommentDescription = (req, res, next) => {
@@ -129,7 +139,9 @@ module.exports.validateCommentOwner = (req, res, next) => {
       }
       next();
     })
-    .catch((error) => next(error));
+    .catch((error) => {
+      next(error);
+    });
 };
 
 module.exports.validateCommentLikeAvailability = (req, res, next) => {
@@ -143,7 +155,9 @@ module.exports.validateCommentLikeAvailability = (req, res, next) => {
       }
       next();
     })
-    .catch((error) => next(error));
+    .catch((error) => {
+      next(error);
+    });
 };
 
 module.exports.validateCommentLikeExistence = (req, res, next) => {
@@ -157,7 +171,9 @@ module.exports.validateCommentLikeExistence = (req, res, next) => {
       }
       next();
     })
-    .catch((error) => next(error));
+    .catch((error) => {
+      next(error);
+    });
 };
 
 module.exports.validateUserExistence = (req, res, next) => {
@@ -170,7 +186,9 @@ module.exports.validateUserExistence = (req, res, next) => {
       }
       next();
     })
-    .catch((error) => next(error));
+    .catch((error) => {
+      next(error);
+    });
 };
 
 module.exports.validateUserBody = (req, res, next) => {
@@ -200,7 +218,9 @@ module.exports.validateUsernameAvailability = (req, res, next) => {
       }
       next();
     })
-    .catch((error) => next(error));
+    .catch((error) => {
+      next(error);
+    });
 };
 
 module.exports.validateEmailAvailability = (req, res, next) => {
@@ -215,7 +235,9 @@ module.exports.validateEmailAvailability = (req, res, next) => {
       }
       next();
     })
-    .catch((error) => next(error));
+    .catch((error) => {
+      next(error);
+    });
 };
 
 module.exports.validateFollowAvailability = (req, res, next) => {
@@ -229,7 +251,9 @@ module.exports.validateFollowAvailability = (req, res, next) => {
       }
       next();
     })
-    .catch((error) => next(error));
+    .catch((error) => {
+      next(error);
+    });
 };
 
 module.exports.validateFollowExistence = (req, res, next) => {
@@ -243,5 +267,7 @@ module.exports.validateFollowExistence = (req, res, next) => {
       }
       next();
     })
-    .catch((error) => next(error));
+    .catch((error) => {
+      next(error);
+    });
 };

@@ -4,7 +4,7 @@ const { messageSchema } = require("./schemas");
 const connectSocket = (socket) => {
   socket.on("join_room", async (receiverId) => {
     try {
-      const senderId = socket.user.uid;
+      const { uid: senderId } = socket.user;
 
       const user = await User.findOne({ where: { id: receiverId } });
 
@@ -16,7 +16,7 @@ const connectSocket = (socket) => {
 
       socket.join(roomId);
     } catch (error) {
-      const message = error.message;
+      const { message } = message;
 
       socket.emit("event_error", message);
     }
@@ -24,7 +24,7 @@ const connectSocket = (socket) => {
 
   socket.on("leave_room", async (receiverId) => {
     try {
-      const senderId = socket.user.uid;
+      const { uid: senderId } = socket.user;
 
       const user = await User.findOne({ where: { id: receiverId } });
 
@@ -36,7 +36,7 @@ const connectSocket = (socket) => {
 
       socket.leave(roomId);
     } catch (error) {
-      const message = error.message;
+      const { message } = message;
 
       socket.emit("event_error", message);
     }
@@ -44,7 +44,7 @@ const connectSocket = (socket) => {
 
   socket.on("send_message", async (receiverId, data) => {
     try {
-      const senderId = socket.user.uid;
+      const { uid: senderId } = socket.user;
 
       const user = await User.findOne({ where: { id: receiverId } });
 
@@ -75,11 +75,11 @@ const connectSocket = (socket) => {
 
       socket.nsp.to(roomId).emit("receive_message", message);
     } catch (error) {
-      const message = error.message;
+      const { message } = message;
 
       socket.emit("event_error", message);
     }
   });
-}; 
+};
 
 module.exports = connectSocket;

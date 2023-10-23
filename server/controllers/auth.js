@@ -1,6 +1,6 @@
 const { User, Avatar } = require("../models");
 const sequelize = require("../config/sequelize");
-const admin = require("../config/firebase");
+const createUser = require("../utils/createUser");
 
 module.exports.signup = async (req, res) => {
   const { firstname, lastname, username, email, password } = req.body;
@@ -17,7 +17,7 @@ module.exports.signup = async (req, res) => {
       },
       { include: [Avatar], transaction: t }
     );
-    await admin.auth().createUser({
+    await createUser({
       email,
       password,
       displayName: username,

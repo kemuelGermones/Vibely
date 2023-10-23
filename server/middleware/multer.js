@@ -15,13 +15,14 @@ const fileFilter = (req, file, cb) => {
 
 module.exports.parseCreatePostFormData = (req, res, next) => {
   const LIMITS = { files: 5 };
-  
+
   const upload = multer({ storage, fileFilter, limits: LIMITS });
   const parse = upload.array("images");
 
   parse(req, res, (error) => {
     if (error) {
-      next(new AppError(400, error.message));
+      const { message } = error;
+      next(new AppError(400, message));
     } else {
       next();
     }
@@ -34,7 +35,8 @@ module.exports.parseSignupFormData = (req, res, next) => {
 
   parse(req, res, (error) => {
     if (error) {
-      next(new AppError(400, error.message));
+      const { message } = error;
+      next(new AppError(400, message));
     } else {
       next();
     }

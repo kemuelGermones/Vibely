@@ -1,7 +1,7 @@
 const { Sequelize } = require("sequelize");
 const { Post, Image, User, Avatar } = require("../models");
-const cloudinary = require("../config/cloudinary");
 const sequelize = require("../config/sequelize");
+const destroyImages = require("../utils/destroyImages");
 
 module.exports.getPosts = async (req, res) => {
   const LIMIT = 10;
@@ -106,13 +106,13 @@ module.exports.deletePost = async (req, res) => {
 
   const images = await Image.findAll({ where: { postId } });
 
-  const destroyImagesCloudinary = images.map(async (image) => {
-    await cloudinary.uploader.destroy(image.getDataValue("filename"));
+  const destroy = images.map(async (image) => {
+    await destroyImages(image.getDataValue("filename"));
   });
 
   await sequelize.transaction(async (t) => {
     await Post.destroy({ where: { id: postId }, transaction: t });
-    await Promise.all(destroyImagesCloudinary);
+    await Promise.all(destroy);
   });
 
   res.status(200).json({

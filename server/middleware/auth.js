@@ -3,7 +3,7 @@ const AppError = require("../utils/AppError");
 
 module.exports.authenticateRoute = (req, res, next) => {
   const PATTERN = /^Bearer\s[^\s]/;
-  
+
   const bearerToken = req.headers.authorization;
 
   if (!PATTERN.test(bearerToken)) {
@@ -19,7 +19,13 @@ module.exports.authenticateRoute = (req, res, next) => {
       req.user = user;
       next();
     })
-    .catch((error) => next(new AppError(400, error.message)));
+    .catch((error) => {
+      const { code } = error;
+      const info = code.split("/")[1];
+      const char = info.charAt(0).toUpperCase();
+      const message = char.concat(info.slice(1)).replace(/-/g, " ");
+      next(new AppError(400, message));
+    });
 };
 
 module.exports.authenticateSocket = (socket, next) => {
@@ -36,5 +42,11 @@ module.exports.authenticateSocket = (socket, next) => {
       socket.user = user;
       next();
     })
-    .catch((error) => next(error));
+    .catch((error) => {
+      const { code } = error;
+      const info = code.split("/")[1];
+      const char = info.charAt(0).toUpperCase();
+      const message = char.concat(info.slice(1)).replace(/-/g, " ");
+      next(new Error(message));
+    });
 };
