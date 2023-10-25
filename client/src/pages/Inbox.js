@@ -4,7 +4,7 @@ import useAuth from "../hooks/useAuth";
 import Navbar from "../components/ui/Navbar";
 import UserDetails from "../components/user/UserDetails";
 import AdvertisementDetails from "../components/misc/AdvertisementDetails";
-import InboxDetails from "../components/misc/InboxDetails";
+import InboxDetails from "../components/inbox/InboxDetails";
 import AboutDetails from "../components/misc/AboutDetails";
 import RegulationDetails from "../components/misc/RegulationDetails";
 

@@ -1,10 +1,10 @@
 import { BsTrash, BsHeart, BsHeartFill } from "react-icons/bs";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { toast } from "react-toastify";
 
 import { likeComment, unlikeComment } from "../../apis/commentLike";
 import { deleteComment } from "../../apis/comment";
 import useAuth from "../../hooks/useAuth";
-import handleError from "../../utils/handleError";
 import IconButton from "../ui/IconButton";
 
 function CommentDetailsIcons({ postId, data }) {
@@ -19,7 +19,7 @@ function CommentDetailsIcons({ postId, data }) {
         });
       },
       onError: (error) => {
-        handleError(error);
+        toast.error(error.message, { theme: "colored" });
       },
     });
 
@@ -31,7 +31,7 @@ function CommentDetailsIcons({ postId, data }) {
         });
       },
       onError: (error) => {
-        handleError(error);
+        toast.error(error.message, { theme: "colored" });
       },
     });
 
@@ -43,7 +43,7 @@ function CommentDetailsIcons({ postId, data }) {
         });
       },
       onError: (error) => {
-        handleError(error);
+        toast.error(error.message, { theme: "colored" });
       },
     });
 
@@ -60,7 +60,7 @@ function CommentDetailsIcons({ postId, data }) {
   };
 
   return (
-    <div className="flex items-center gap-3">
+    <div className="flex gap-3">
       {user.uid === data.user.id ? (
         <IconButton
           content="Delete"
@@ -71,7 +71,7 @@ function CommentDetailsIcons({ postId, data }) {
         </IconButton>
       ) : null}
       <IconButton
-        content={data.isLiked ? "Unlike" : "like"}
+        content={data.isLiked ? "Unlike" : "Like"}
         onClick={handleLikeOrUnlikeComment}
         disabled={isLoadingLikeComment || isLoadingUnlikeComment}
       >

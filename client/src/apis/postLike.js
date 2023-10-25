@@ -1,13 +1,14 @@
 import { getIdToken } from "firebase/auth";
-import axios from "axios";
 
-import { auth } from "../configs/firebase";
+import auth from "../configs/firebase";
+import server from "../configs/axios";
+import handleFirebaseAsync from "../utils/handleFirebaseAsync";
 
 export const likePost = async (postId) => {
   const user = auth.currentUser;
-  const token = await getIdToken(user);
+  const token = await handleFirebaseAsync(getIdToken.bind(null, user));
 
-  await axios.post(`http://localhost:5000/posts/${postId}/likes`, undefined, {
+  await server.post(`/posts/${postId}/likes`, undefined, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -16,9 +17,9 @@ export const likePost = async (postId) => {
 
 export const unlikePost = async (postId) => {
   const user = auth.currentUser;
-  const token = await getIdToken(user);
+  const token = await handleFirebaseAsync(getIdToken.bind(null, user));
 
-  await axios.delete(`http://localhost:5000/posts/${postId}/likes`, {
+  await server.delete(`/posts/${postId}/likes`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },

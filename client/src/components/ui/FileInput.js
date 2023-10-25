@@ -1,13 +1,13 @@
 function FileInput({
-  hasError,
-  title,
-  description,
   id,
   name,
+  title,
+  onBlur,
   multiple,
   onChange,
-  onBlur,
   children,
+  hasError,
+  description,
 }) {
   return (
     <label

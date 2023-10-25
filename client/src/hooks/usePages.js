@@ -1,16 +1,14 @@
-import { useState, useEffect } from "react";
+import { useMemo } from "react";
 
-function usePages(data) {
-  const [pages, setPages] = useState([]);
-
-  useEffect(() => {
-    if (data) {
-      const result = data.pages.reduce((prev, next) => [...prev, ...next]);
-      setPages(result);
+function usePages(value) {
+  const pages = useMemo(() => {
+    if (value) {
+      return value.pages.reduce((prev, next) => [...prev, ...next]);
     }
-  }, [data]);
+    return new Array();
+  }, [value]);
 
-  return { pages, setPages };
+  return pages;
 }
 
 export default usePages;

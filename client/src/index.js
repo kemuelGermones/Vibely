@@ -3,24 +3,38 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
 import "react-toastify/dist/ReactToastify.css";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import {
+  QueryClient,
+  QueryCache,
+  QueryClientProvider,
+} from "@tanstack/react-query";
 import { BrowserRouter } from "react-router-dom";
-import { ModalContextProvider } from "./stores/ModalContext";
+import { toast, ToastContainer } from "react-toastify";
 import { AuthContextProvider } from "./stores/AuthContext";
-import { ToastContainer } from "react-toastify";
+import { SocketContextProvider } from "./stores/SocketContext";
+import { ModalContextProvider } from "./stores/ModalContext";
 
-const queryClient = new QueryClient();
 const appRoot = ReactDOM.createRoot(document.getElementById("app-root"));
 
+const queryClient = new QueryClient({
+  queryCache: new QueryCache({
+    onError: (error) => {
+      toast.error(error.message, { theme: "colored" });
+    },
+  }),
+});
+
 appRoot.render(
-  <BrowserRouter>
-    <QueryClientProvider client={queryClient}>
+  <QueryClientProvider client={queryClient}>
+    <BrowserRouter>
       <AuthContextProvider>
-        <ModalContextProvider>
-          <ToastContainer />
-          <App />
-        </ModalContextProvider>
+        <SocketContextProvider>
+          <ModalContextProvider>
+            <ToastContainer />
+            <App />
+          </ModalContextProvider>
+        </SocketContextProvider>
       </AuthContextProvider>
-    </QueryClientProvider>
-  </BrowserRouter>
+    </BrowserRouter>
+  </QueryClientProvider>
 );

@@ -1,14 +1,14 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { BsHeart, BsHeartFill, BsChatSquare } from "react-icons/bs";
+import { toast } from "react-toastify";
 
 import { likePost, unlikePost } from "../../apis/postLike";
-import handleError from "../../utils/handleError";
 import useModal from "../../hooks/useModal";
 import CommentModal from "../comment/CommentModal";
 import IconButton from "../ui/IconButton";
 
 function PostDetailsIcons({ data }) {
-  const { openModal } = useModal();
+  const { showModal } = useModal();
   const queryClient = useQueryClient();
 
   const { mutate: mutateLikePost, isLoading: isLoadingLikePost } = useMutation(
@@ -18,7 +18,7 @@ function PostDetailsIcons({ data }) {
         queryClient.invalidateQueries({ queryKey: ["posts"] });
       },
       onError: (error) => {
-        handleError(error);
+        toast.error(error.message, { theme: "colored" });
       },
     }
   );
@@ -29,7 +29,7 @@ function PostDetailsIcons({ data }) {
         queryClient.invalidateQueries({ queryKey: ["posts"] });
       },
       onError: (error) => {
-        handleError(error);
+        toast.error(error.message, { theme: "colored" });
       },
     });
 
@@ -42,7 +42,7 @@ function PostDetailsIcons({ data }) {
   };
 
   const handleShowCommentModal = () => {
-    openModal(<CommentModal postId={data.id} />);
+    showModal(<CommentModal postId={data.id} />);
   };
 
   return (

@@ -1,12 +1,28 @@
+import { useEffect } from "react";
+
+import useSocket from "../../hooks/useSocket";
 import MessageList from "./MessageList";
 import CreateMessageForm from "./CreateMessageForm";
-import Avatar from "../ui/Avatar";
 
 function MessageModal({ data }) {
+  const socket = useSocket();
+
+  useEffect(() => {
+    socket.current.emit("join_room", data.id);
+
+    return () => {
+      socket.current.emit("leave_room", data.id);
+    };
+  }, []);
+
   return (
     <div className="card flex flex-col gap-3">
       <div className="flex items-center gap-3">
-        <Avatar src={data.avatar.url} alt={data.username} />
+        <img
+          className="h-10 w-10 rounded-full"
+          src={data.avatar.url}
+          alt={data.username}
+        />
         <div>
           <div className="font-semibold">{data.username}</div>
           <div className="text-sm text-gray-500">

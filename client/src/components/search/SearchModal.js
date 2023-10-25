@@ -4,12 +4,11 @@ import useDebounce from "../../hooks/useDebounce";
 import SearchList from "./SearchList";
 
 function SearchModal() {
-  const [search, setSearch] = useState("");
-  const debouncedSearch = useDebounce(search);
+  const [username, setUsername] = useState("");
+  const debouncedUsername = useDebounce(username);
 
-  const handleOnChangeSearchBar = (event) => {
-    const text = event.target.value;
-    setSearch(text.trim());
+  const handleOnChangeUsername = (event) => {
+    setUsername(event.target.value.trim());
   };
 
   return (
@@ -18,10 +17,10 @@ function SearchModal() {
         className="search_input-primary"
         type="text"
         placeholder="Enter username"
-        onChange={handleOnChangeSearchBar}
+        onChange={handleOnChangeUsername}
       />
       <div id="searchList" className="h-80 overflow-y-auto">
-        <SearchList search={debouncedSearch} />
+        <SearchList username={debouncedUsername} />
       </div>
     </div>
   );

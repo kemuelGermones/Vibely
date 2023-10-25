@@ -1,43 +1,42 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
 import InfiniteScroll from "react-infinite-scroll-component";
 
-import { getUsers } from "../../apis/user";
+import { getContacts } from "../../apis/user";
 import usePages from "../../hooks/usePages";
-import SearchDetailsSkeleton from "./SearchDetailsSkeleton";
-import SearchDetails from "./SearchDetails";
+import ContactDetails from "./ContactDetails";
+import ContactDetailsSkeleton from "./ContactDetailsSkeleton";
 
-function SearchList({ username }) {
+function ContactList() {
   const { fetchNextPage, hasNextPage, data, isLoading, isError } =
     useInfiniteQuery({
-      queryKey: ["users", { search: username }],
-      queryFn: ({ pageParam = 0 }) =>
-        getUsers({ page: pageParam, search: username }),
+      queryKey: ["contacts"],
+      queryFn: ({ pageParam = 0 }) => getContacts({ page: pageParam }),
       getNextPageParam: (lastPage, allPages) => {
         return lastPage.length ? allPages.length : undefined;
       },
     });
 
-  const users = usePages(data);
+  const contacts = usePages(data);
 
   if (isLoading || isError) {
-    return <SearchDetailsSkeleton />;
+    return <ContactDetailsSkeleton />;
   }
 
   return (
     <InfiniteScroll
       className="flex flex-col"
-      scrollableTarget="searchList"
+      scrollableTarget="contactList"
       style={{ overflow: "visible" }}
-      loader={<SearchDetailsSkeleton />}
-      dataLength={users.length}
+      loader={<ContactDetailsSkeleton />}
+      dataLength={contacts.length}
       next={fetchNextPage}
       hasMore={hasNextPage}
     >
-      {users.map((user) => (
-        <SearchDetails data={user} key={user.id} />
+      {contacts.map((contact) => (
+        <ContactDetails data={contact} key={contact.id} />
       ))}
     </InfiniteScroll>
   );
 }
 
-export default SearchList;
+export default ContactList;

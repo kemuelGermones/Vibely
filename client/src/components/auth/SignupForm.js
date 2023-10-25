@@ -1,17 +1,18 @@
 import { Link } from "react-router-dom";
 import { useFormik } from "formik";
 import { useMutation } from "@tanstack/react-query";
+import { toast } from "react-toastify";
 import * as yup from "yup";
 
 import { signup } from "../../apis/auth";
+import validateHtml from "../../utils/validateHtml";
 import validateAvatar from "../../utils/validateAvatar";
-import handleError from "../../utils/handleError";
 import FileInput from "../ui/FileInput";
 
 function SignupForm() {
   const { mutate, isLoading } = useMutation(signup, {
     onError: (error) => {
-      handleError(error);
+      toast.error(error.message, { theme: "colored" });
     },
   });
 
@@ -38,22 +39,32 @@ function SignupForm() {
         .min(2)
         .max(30)
         .matches(/^[a-z]+$/i)
+        .test("firstname", "Firstname is invalid", validateHtml)
         .required(),
       lastname: yup
         .string()
         .min(2)
         .max(30)
         .matches(/^[a-z]+$/i)
+        .test("lastname", "Lastname is invalid", validateHtml)
         .required(),
       username: yup
         .string()
         .min(2)
         .max(30)
         .matches(/^[a-z]+$/i)
+        .test("username", "Username is invalid", validateHtml)
         .required(),
-      email: yup.string().email().required(),
+      email: yup
+        .string()
+        .email()
+        .test("email", "Email is invalid", validateHtml)
+        .required(),
       password: yup.string().min(6).required(),
-      avatar: yup.mixed().test("avatar", "avatar is invalid", validateAvatar),
+      avatar: yup
+        .mixed()
+        .test("avatar", "Avatar is invalid", validateAvatar)
+        .required(),
     }),
     onSubmit: (values) => {
       mutate(values);
@@ -67,7 +78,7 @@ function SignupForm() {
   return (
     <form className="card flex flex-col gap-3" onSubmit={handleSubmit}>
       <div className="text-center font-shrikhand text-2xl">Vibely</div>
-      <div className="rounded-lg bg-yellow-200 p-3 text-gray-500">
+      <div className="rounded-lg bg-yellow-200 p-3 text-sm text-gray-500">
         Note: Firstname, lastname and username should only contain alphabets
         with a minimum of 2 characters and a maximum of 30 characters. Also,
         password must contain atleast 6 characters.

@@ -1,4 +1,4 @@
-import ContactList from "../contact/ContactList";
+import ContactList from "./ContactList";
 
 function InboxDetails() {
   return (

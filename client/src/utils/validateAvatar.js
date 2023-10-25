@@ -1,11 +1,7 @@
 function validateAvatar(avatar) {
-  if (!avatar) {
-    return false;
-  }
+  const PATTERN = /^image\/jpeg$|^image\/jpg$|^image\/png$/;
 
-  const pattern = /^image\/jpeg$|^image\/jpg$|^image\/png$/;
-
-  return pattern.test(avatar.type);
+  return PATTERN.test(avatar.type);
 }
 
 export default validateAvatar;

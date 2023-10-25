@@ -8,8 +8,8 @@ function Error() {
   };
 
   return (
-    <main className="flex h-screen flex-col items-center justify-center gap-3">
-      <div className="text-center font-shrikhand text-9xl text-gray-700">
+    <main className="flex h-screen flex-col items-center justify-center gap-3 p-3">
+      <div className="text-center font-shrikhand text-8xl text-gray-700">
         404
       </div>
       <div className="text-center text-xl text-gray-700">Page not found</div>

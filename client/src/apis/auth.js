@@ -1,7 +1,8 @@
 import { signInWithEmailAndPassword, signOut } from "firebase/auth";
-import axios from "axios";
 
-import { auth } from "../configs/firebase";
+import auth from "../configs/firebase";
+import server from "../configs/axios";
+import handleFirebaseAsync from "../utils/handleFirebaseAsync";
 
 export const signup = async (values) => {
   const formData = new FormData();
@@ -10,17 +11,21 @@ export const signup = async (values) => {
     formData.append(value, values[value]);
   });
 
-  await axios.post("http://localhost:5000/signup", formData, {
+  await server.post("/signup", formData, {
     headers: { "Content-Type": "multipart/form-data" },
   });
 
-  await signInWithEmailAndPassword(auth, values.email, values.password);
+  await handleFirebaseAsync(
+    signInWithEmailAndPassword.bind(null, auth, values.email, values.password)
+  );
 };
 
 export const signin = async ({ email, password }) => {
-  await signInWithEmailAndPassword(auth, email, password);
+  await handleFirebaseAsync(
+    signInWithEmailAndPassword.bind(null, auth, email, password)
+  );
 };
 
 export const signout = async () => {
-  await signOut(auth);
+  await handleFirebaseAsync(signOut.bind(null, auth));
 };

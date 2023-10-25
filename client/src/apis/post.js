@@ -1,7 +1,8 @@
 import { getIdToken } from "firebase/auth";
-import axios from "axios";
 
-import { auth } from "../configs/firebase";
+import auth from "../configs/firebase";
+import server from "../configs/axios";
+import handleFirebaseAsync from "../utils/handleFirebaseAsync";
 
 export const createPost = async (values) => {
   const formValues = new FormData();
@@ -18,9 +19,9 @@ export const createPost = async (values) => {
   }
 
   const user = auth.currentUser;
-  const token = await getIdToken(user);
+  const token = await handleFirebaseAsync(getIdToken.bind(null, user));
 
-  await axios.post("http://localhost:5000/posts", formValues, {
+  await server.post("/posts", formValues, {
     headers: {
       "Content-Type": "multipart/form-values",
       Authorization: `Bearer ${token}`,
@@ -30,9 +31,9 @@ export const createPost = async (values) => {
 
 export const getPosts = async ({ page, search }) => {
   const user = auth.currentUser;
-  const token = await getIdToken(user);
+  const token = await handleFirebaseAsync(getIdToken.bind(null, user));
 
-  const response = await axios("http://localhost:5000/posts", {
+  const response = await server.get("/posts", {
     params: { page, search },
     headers: { Authorization: `Bearer ${token}` },
   });
@@ -42,9 +43,9 @@ export const getPosts = async ({ page, search }) => {
 
 export const updatePost = async ({ postId, values }) => {
   const user = auth.currentUser;
-  const token = await getIdToken(user);
+  const token = await handleFirebaseAsync(getIdToken.bind(null, user));
 
-  await axios.patch(`http://localhost:5000/posts/${postId}`, values, {
+  await server.patch(`/posts/${postId}`, values, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -53,9 +54,9 @@ export const updatePost = async ({ postId, values }) => {
 
 export const deletePost = async (postId) => {
   const user = auth.currentUser;
-  const token = await getIdToken(user);
+  const token = await handleFirebaseAsync(getIdToken.bind(null, user));
 
-  await axios.delete(`http://localhost:5000/posts/${postId}`, {
+  await server.delete(`/posts/${postId}`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },

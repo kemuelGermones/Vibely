@@ -1,15 +1,16 @@
 import { useMutation } from "@tanstack/react-query";
 import { useFormik } from "formik";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 import * as yup from "yup";
 
 import { signin } from "../../apis/auth";
-import handleError from "../../utils/handleError";
+import validateHtml from "../../utils/validateHtml";
 
 function SigninForm() {
   const { mutate, isLoading } = useMutation(signin, {
     onError: (error) => {
-      handleError(error);
+      toast.error(error.message, { theme: "colored" });
     },
   });
 
@@ -20,7 +21,11 @@ function SigninForm() {
         password: "",
       },
       validationSchema: yup.object({
-        email: yup.string().email().required(),
+        email: yup
+          .string()
+          .email()
+          .test("email", "Email is invalid", validateHtml)
+          .required(),
         password: yup.string().required(),
       }),
       onSubmit: (values) => {

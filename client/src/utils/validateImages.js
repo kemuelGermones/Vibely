@@ -1,12 +1,8 @@
 function validateImages(images) {
-  if (!images.length || images.length > 5) {
-    return false;
-  }
-
-  const pattern = /^image\/jpeg$|^image\/jpg$|^image\/png$/;
+  const PATTERN = /^image\/jpeg$|^image\/jpg$|^image\/png$/;
 
   for (let image of images) {
-    if (!pattern.test(image.type)) {
+    if (!PATTERN.test(image.type)) {
       return false;
     }
   }

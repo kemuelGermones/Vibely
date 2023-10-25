@@ -1,21 +1,21 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { toast } from "react-toastify";
 import { BsTrash } from "react-icons/bs";
 
 import { deletePost } from "../../apis/post";
 import useModal from "../../hooks/useModal";
-import handleError from "../../utils/handleError";
 
 function DeletePostModal({ postId }) {
-  const { closeModal } = useModal();
+  const { hideModal } = useModal();
   const queryClient = useQueryClient();
 
   const { isLoading, mutate } = useMutation(deletePost, {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["posts"] });
-      closeModal();
+      hideModal();
     },
     onError: (error) => {
-      handleError(error);
+      toast.error(error.message, { theme: "colored" });
     },
   });
 
@@ -37,7 +37,7 @@ function DeletePostModal({ postId }) {
           className="btn-secondary"
           type="button"
           disabled={isLoading}
-          onClick={closeModal}
+          onClick={hideModal}
         >
           Cancel
         </button>

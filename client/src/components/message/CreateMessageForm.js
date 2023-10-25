@@ -1,24 +1,11 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useFormik } from "formik";
 import * as yup from "yup";
 
-import { createMessage } from "../../apis/message";
-import handleError from "../../utils/handleError";
+import useSocket from "../../hooks/useSocket";
+import validateHtml from "../../utils/validateHtml";
 
 function CreateMessageForm({ userId }) {
-  const queryClient = useQueryClient();
-
-  const { mutate, isLoading } = useMutation(createMessage, {
-    onSuccess: () => {
-      resetForm();
-      queryClient.invalidateQueries({
-        queryKey: ["users", userId, "messages"]
-      })
-    },
-    onError: (error) => {
-      handleError(error);
-    },
-  });
+  const socket = useSocket();
 
   const {
     touched,
@@ -33,10 +20,14 @@ function CreateMessageForm({ userId }) {
       content: "",
     },
     validationSchema: yup.object({
-      content: yup.string().required(),
+      content: yup
+        .string()
+        .test("content", "Content is invalid", validateHtml)
+        .required(),
     }),
     onSubmit: (values) => {
-      mutate({ userId, values });
+      socket.current.emit("send_message", userId, values);
+      resetForm();
     },
   });
 
@@ -56,8 +47,8 @@ function CreateMessageForm({ userId }) {
         onChange={handleChange}
         onBlur={handleBlur}
       />
-      <button className="btn-primary" type="submit" disabled={isLoading}>
-        {isLoading ? "Loading..." : "Send"}
+      <button className="btn-primary" type="submit">
+        Send
       </button>
     </form>
   );

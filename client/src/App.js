@@ -13,25 +13,25 @@ import Loading from "./pages/Loading";
 function App() {
   const { initialized } = useAuth();
 
-  if (initialized) {
-    return (
-      <Routes>
-        <Route index element={<Navigate to="/signin" />} />
-        <Route element={<Unprotected />}>
-          <Route path="/signin" element={<Signin />} />
-          <Route path="/signup" element={<Signup />} />
-        </Route>
-        <Route element={<Protected />}>
-          <Route path="/posts" element={<Posts />} />
-          <Route path="/inbox" element={<Inbox />} />
-          <Route path="/users/:userId" element={<Profile />} />
-        </Route>
-        <Route path="*" element={<Error />} />
-      </Routes>
-    );
+  if (!initialized) {
+    return <Loading />;
   }
 
-  return <Loading />;
+  return (
+    <Routes>
+      <Route index element={<Navigate to="/signin" replace />} />
+      <Route element={<Unprotected />}>
+        <Route path="/signin" element={<Signin />} />
+        <Route path="/signup" element={<Signup />} />
+      </Route>
+      <Route element={<Protected />}>
+        <Route path="/posts" element={<Posts />} />
+        <Route path="/inbox" element={<Inbox />} />
+        <Route path="/users/:userId" element={<Profile />} />
+      </Route>
+      <Route path="*" element={<Error />} />
+    </Routes>
+  );
 }
 
 export default App;

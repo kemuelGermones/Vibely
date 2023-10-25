@@ -1,14 +1,13 @@
 import { useNavigate } from "react-router-dom";
 
 import useModal from "../../hooks/useModal";
-import Avatar from "../ui/Avatar";
 
 function SearchDetails({ data }) {
-  const { closeModal } = useModal();
+  const { hideModal } = useModal();
   const navigate = useNavigate();
 
   const handleOnClickSearchDetails = () => {
-    closeModal();
+    hideModal();
     navigate(`/users/${data.id}`);
   };
 
@@ -17,7 +16,11 @@ function SearchDetails({ data }) {
       className="flex cursor-pointer items-center gap-3 rounded-lg p-3 hover:bg-yellow-400"
       onClick={handleOnClickSearchDetails}
     >
-      <Avatar src={data.avatar.url} alt={data.username} />
+      <img
+        className="h-10 w-10 rounded-full"
+        src={data.avatar.url}
+        alt={data.username}
+      />
       <div>
         <div className="font-semibold">{data.username}</div>
         <div className="text-sm text-gray-500">{`${data.firstname} ${data.lastname}`}</div>

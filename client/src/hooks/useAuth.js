@@ -3,8 +3,7 @@ import { useContext } from "react";
 import { AuthContext } from "../stores/AuthContext";
 
 function useAuth() {
-  const { user, initialized } = useContext(AuthContext);
-  return { user, initialized };
+  return useContext(AuthContext);
 }
 
 export default useAuth;

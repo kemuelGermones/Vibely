@@ -4,7 +4,7 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ["Poppins", "Roboto", "Arial"],
+        sans: ["Poppins", "Roboto", "Arial", "sans-serif"],
         shrikhand: ["Shrikhand"],
       },
     },

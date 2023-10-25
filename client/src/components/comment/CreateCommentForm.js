@@ -1,11 +1,11 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useFormik } from "formik";
+import { toast } from "react-toastify";
 import * as yup from "yup";
 
 import { createComment } from "../../apis/comment";
 import useAuth from "../../hooks/useAuth";
-import handleError from "../../utils/handleError";
-import Avatar from "../ui/Avatar";
+import validateHtml from "../../utils/validateHtml";
 
 function CreateCommentForm({ postId }) {
   const queryClient = useQueryClient();
@@ -19,7 +19,7 @@ function CreateCommentForm({ postId }) {
       });
     },
     onError: (error) => {
-      handleError(error);
+      toast.error(error.message, { theme: "colored" });
     },
   });
 
@@ -36,7 +36,10 @@ function CreateCommentForm({ postId }) {
       description: "",
     },
     validationSchema: yup.object({
-      description: yup.string().required(),
+      description: yup
+        .string()
+        .test("description", "Description is invalid", validateHtml)
+        .required(),
     }),
     onSubmit: (values) => {
       mutate({ postId, values });
@@ -44,8 +47,12 @@ function CreateCommentForm({ postId }) {
   });
 
   return (
-    <form className="flex gap-3" onSubmit={handleSubmit}>
-      <Avatar src={user.photoURL} alt={user.displayName} />
+    <form className="flex items-start gap-3" onSubmit={handleSubmit}>
+      <img
+        className="h-10 w-10 rounded-full"
+        src={user.photoURL}
+        alt={user.displayName}
+      />
       <div className="flex w-full flex-col gap-3">
         <textarea
           className={

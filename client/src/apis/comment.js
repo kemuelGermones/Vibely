@@ -1,13 +1,14 @@
 import { getIdToken } from "firebase/auth";
-import axios from "axios";
 
-import { auth } from "../configs/firebase";
+import auth from "../configs/firebase";
+import server from "../configs/axios";
+import handleFirebaseAsync from "../utils/handleFirebaseAsync";
 
 export const createComment = async ({ postId, values }) => {
   const user = auth.currentUser;
-  const token = await getIdToken(user);
+  const token = await handleFirebaseAsync(getIdToken.bind(null, user));
 
-  await axios.post(`http://localhost:5000/posts/${postId}/comments`, values, {
+  await server.post(`/posts/${postId}/comments`, values, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -16,29 +17,23 @@ export const createComment = async ({ postId, values }) => {
 
 export const getComments = async ({ postId, page }) => {
   const user = auth.currentUser;
-  const token = await getIdToken(user);
+  const token = await handleFirebaseAsync(getIdToken.bind(null, user));
 
-  const response = await axios(
-    `http://localhost:5000/posts/${postId}/comments`,
-    {
-      params: { page },
-      headers: { Authorization: `Bearer ${token}` },
-    }
-  );
+  const response = await server.get(`/posts/${postId}/comments`, {
+    params: { page },
+    headers: { Authorization: `Bearer ${token}` },
+  });
 
   return response.data.items;
 };
 
 export const deleteComment = async ({ postId, commentId }) => {
   const user = auth.currentUser;
-  const token = await getIdToken(user);
+  const token = await handleFirebaseAsync(getIdToken.bind(null, user));
 
-  await axios.delete(
-    `http://localhost:5000/posts/${postId}/comments/${commentId}`,
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    }
-  );
+  await server.delete(`/posts/${postId}/comments/${commentId}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
 };

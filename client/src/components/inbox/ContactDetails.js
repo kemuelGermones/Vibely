@@ -1,12 +1,11 @@
 import useModal from "../../hooks/useModal";
-import Avatar from "../ui/Avatar";
 import MessageModal from "../message/MessageModal";
 
 function ContactDetails({ data }) {
-  const { openModal } = useModal();
+  const { showModal } = useModal();
 
   const handleOnClickContactDetails = () => {
-    openModal(<MessageModal data={data} />);
+    showModal(<MessageModal data={data} />);
   };
 
   return (
@@ -14,7 +13,11 @@ function ContactDetails({ data }) {
       className="flex cursor-pointer items-center gap-3 rounded-lg p-3 hover:bg-yellow-400"
       onClick={handleOnClickContactDetails}
     >
-      <Avatar src={data.avatar.url} alt={data.username} />
+      <img
+        className="h-10 w-10 rounded-full"
+        src={data.avatar.url}
+        alt={data.username}
+      />
       <div>
         <div className="font-semibold">{data.username}</div>
         <div className="text-sm text-gray-500">{`${data.firstname} ${data.lastname}`}</div>

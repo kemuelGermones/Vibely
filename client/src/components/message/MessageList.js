@@ -1,46 +1,12 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
-import { BsExclamationTriangle } from "react-icons/bs";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import InfiniteScroll from "react-infinite-scroll-component";
 
 import { getMessages } from "../../apis/message";
-import useAuth from "../../hooks/useAuth";
-import usePages from "../../hooks/usePages";
-
-function Loader() {
-  return (
-    <div className="flex flex-col gap-3">
-      <div className="ml-0 mr-auto flex w-3/5 flex-col gap-1 rounded-lg bg-white p-3">
-        <div className="h-3.5 animate-pulse rounded-full bg-gray-300" />
-        <div className="h-3.5 w-2/6 animate-pulse rounded-full bg-gray-300" />
-      </div>
-      <div className="ml-auto mr-0 flex w-3/5 flex-col gap-1 rounded-lg bg-yellow-400 p-3">
-        <div className="h-3.5 animate-pulse rounded-full bg-gray-300" />
-        <div className="h-3.5 w-2/6 animate-pulse rounded-full bg-gray-300" />
-      </div>
-    </div>
-  );
-}
-
-function Error() {
-  return (
-    <div className="card flex items-center gap-3">
-      <BsExclamationTriangle
-        className="w-10 shrink-0 text-red-500"
-        size="1.5em"
-      />
-      <div className="flex flex-col">
-        <div className="font-semibold">Something went wrong</div>
-        <div className="text-sm text-gray-500">
-          An error occured while trying to fetch messages.
-        </div>
-      </div>
-    </div>
-  );
-}
+import useMessages from "../../hooks/useMessages";
+import MessageDetails from "./MessageDetails";
 
 function MessageList({ userId }) {
-  const { user } = useAuth();
-
   const { data, fetchNextPage, hasNextPage, isLoading, isError } =
     useInfiniteQuery({
       queryKey: ["users", userId, "messages"],
@@ -50,14 +16,17 @@ function MessageList({ userId }) {
       },
     });
 
-  const { pages } = usePages(data);
+  const messages = useMessages(data);
 
-  if (isLoading) {
-    return <Loader />;
-  }
-
-  if (isError) {
-    return <Error />;
+  if (isLoading || isError) {
+    return (
+      <div className="flex justify-center p-3">
+        <AiOutlineLoading3Quarters
+          className="animate-spin text-yellow-400"
+          size="1.5em"
+        />
+      </div>
+    );
   }
 
   return (
@@ -65,23 +34,21 @@ function MessageList({ userId }) {
       className="flex flex-col-reverse gap-3"
       scrollableTarget="messageList"
       style={{ overflow: "visible" }}
-      loader={<Loader />}
+      loader={
+        <div className="flex justify-center p-3">
+          <AiOutlineLoading3Quarters
+            className="animate-spin text-yellow-400"
+            size="1.5em"
+          />
+        </div>
+      }
       inverse={true}
-      dataLength={pages.length}
+      dataLength={messages.length}
       next={fetchNextPage}
       hasMore={hasNextPage}
     >
-      {pages.map((page) => (
-        <div
-          className={`${
-            page.sender.id === user.uid
-              ? "ml-auto mr-0 bg-yellow-400"
-              : "ml-0 mr-auto bg-white"
-          } max-w-3/5 rounded-lg p-3`}
-          key={page.id}
-        >
-          {page.content}
-        </div>
+      {messages.map((message) => (
+        <MessageDetails data={message} key={message.id} />
       ))}
     </InfiniteScroll>
   );

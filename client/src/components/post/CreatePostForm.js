@@ -1,25 +1,26 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useFormik } from "formik";
 import { BsCloudUpload } from "react-icons/bs";
+import { toast } from "react-toastify";
 import * as yup from "yup";
 
 import { createPost } from "../../apis/post";
-import validateImages from "../../utils/validateImages";
-import handleError from "../../utils/handleError";
 import useModal from "../../hooks/useModal";
+import validateHtml from "../../utils/validateHtml";
+import validateImages from "../../utils/validateImages";
 import FileInput from "../ui/FileInput";
 
 function CreatePostForm() {
-  const { closeModal } = useModal();
+  const { hideModal } = useModal();
   const queryClient = useQueryClient();
 
   const { mutate, isLoading } = useMutation(createPost, {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["posts"] });
-      closeModal();
+      hideModal();
     },
     onError: (error) => {
-      handleError(error);
+      toast.error(error.message, { theme: "colored" });
     },
   });
 
@@ -37,8 +38,16 @@ function CreatePostForm() {
       images: [],
     },
     validationSchema: yup.object({
-      caption: yup.string().required(),
-      images: yup.mixed().test("images", "images is invalid", validateImages),
+      caption: yup
+        .string()
+        .test("caption", "Caption is invalid", validateHtml)
+        .required(),
+      images: yup
+        .array()
+        .min(1)
+        .max(5)
+        .test("images", "Images is invalid", validateImages)
+        .required(),
     }),
     onSubmit: (values) => {
       mutate(values);
@@ -81,9 +90,23 @@ function CreatePostForm() {
       >
         <BsCloudUpload className="text-yellow-400" size="2.5em" />
       </FileInput>
-      <button className="btn-primary" type="submit" disabled={isLoading}>
-        {isLoading ? "Loading..." : "Submit"}
-      </button>
+      <div className="grid grid-cols-2 gap-3">
+        <button
+          className="btn-secondary"
+          type="button"
+          disabled={isLoading}
+          onClick={hideModal}
+        >
+          Cancel
+        </button>
+        <button
+          className="btn-primary bg-green-500"
+          type="submit"
+          disabled={isLoading}
+        >
+          {isLoading ? "Loading..." : "Submit"}
+        </button>
+      </div>
     </form>
   );
 }

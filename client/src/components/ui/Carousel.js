@@ -5,15 +5,11 @@ function Carousel({ images }) {
   const [currentSlide, setCurrentSlide] = useState(0);
 
   const handlePreviousSlide = () => {
-    setCurrentSlide((current) =>
-      current === 0 ? images.length - 1 : current - 1
-    );
+    setCurrentSlide((state) => (state === 0 ? images.length - 1 : state - 1));
   };
 
   const handleNextSlide = () => {
-    setCurrentSlide((current) =>
-      current === images.length - 1 ? 0 : current + 1
-    );
+    setCurrentSlide((state) => (state === images.length - 1 ? 0 : state + 1));
   };
 
   if (images.length > 1) {

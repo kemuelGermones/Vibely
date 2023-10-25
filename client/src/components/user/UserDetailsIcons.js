@@ -1,14 +1,14 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { BsPersonAdd, BsPersonCheck, BsEnvelopePlus } from "react-icons/bs";
+import { toast } from "react-toastify";
 
 import { followUser, unfollowUser } from "../../apis/follow";
 import useModal from "../../hooks/useModal";
 import MessageModal from "../message/MessageModal";
 import IconButton from "../ui/IconButton";
-import handleError from "../../utils/handleError";
 
 function UserDetailsIcons({ data }) {
-  const { openModal } = useModal();
+  const { showModal } = useModal();
   const queryClient = useQueryClient();
 
   const { mutate: mutateFollowUser, isLoading: isLoadingFollowUser } =
@@ -17,7 +17,7 @@ function UserDetailsIcons({ data }) {
         queryClient.invalidateQueries({ queryKey: ["users", data.id] });
       },
       onError: (error) => {
-        handleError(error);
+        toast.error(error.message, { theme: "colored" });
       },
     });
 
@@ -27,7 +27,7 @@ function UserDetailsIcons({ data }) {
         queryClient.invalidateQueries({ queryKey: ["users", data.id] });
       },
       onError: (error) => {
-        handleError(error);
+        toast.error(error.message, { theme: "colored" });
       },
     });
 
@@ -40,17 +40,11 @@ function UserDetailsIcons({ data }) {
   };
 
   const handleShowMessageModal = () => {
-    openModal(
+    const { id, firstname, lastname, username, email, avatar, createdAt } =
+      data;
+    showModal(
       <MessageModal
-        data={{
-          id: data.id,
-          firstname: data.firstname,
-          lastname: data.lastname,
-          username: data.username,
-          email: data.email,
-          createdAt: data.createdAt,
-          avatar: data.avatar,
-        }}
+        data={{ id, firstname, lastname, username, email, avatar, createdAt }}
       />
     );
   };
