@@ -1,5 +1,5 @@
 const AppError = require("./AppError");
-const cloudinary = require("../config/cloudinary");
+const cloudinary = require("../configs/cloudinary");
 
 const destroyImages = (filename) => {
   return new Promise((resolve, reject) => {

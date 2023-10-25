@@ -1,6 +1,6 @@
 const { Sequelize } = require("sequelize");
 const { Post, Image, User, Avatar } = require("../models");
-const sequelize = require("../config/sequelize");
+const sequelize = require("../configs/sequelize");
 const destroyImages = require("../utils/destroyImages");
 
 module.exports.getPosts = async (req, res) => {

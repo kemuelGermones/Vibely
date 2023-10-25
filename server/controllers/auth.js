@@ -1,5 +1,5 @@
 const { User, Avatar } = require("../models");
-const sequelize = require("../config/sequelize");
+const sequelize = require("../configs/sequelize");
 const createUser = require("../utils/createUser");
 
 module.exports.signup = async (req, res) => {

@@ -9,10 +9,10 @@ const {
   validatePostOwner,
   validatePostCaption,
   validatePostImages,
-} = require("../middleware/validate");
-const { uploadImagesToCloudinary } = require("../middleware/cloudinary");
-const { parseCreatePostFormData } = require("../middleware/multer");
-const { authenticateRoute } = require("../middleware/auth");
+} = require("../middlewares/validate");
+const { uploadImagesToCloudinary } = require("../middlewares/cloudinary");
+const { parseCreatePostFormData } = require("../middlewares/multer");
+const { authenticateRoute } = require("../middlewares/auth");
 const express = require("express");
 const wrapAsync = require("../utils/wrapAsync");
 

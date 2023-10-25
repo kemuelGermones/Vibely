@@ -3,8 +3,8 @@ const {
   validatePostExistence,
   validatePostLikeAvailability,
   validatePostLikeExistence,
-} = require("../middleware/validate");
-const { authenticateRoute } = require("../middleware/auth");
+} = require("../middlewares/validate");
+const { authenticateRoute } = require("../middlewares/auth");
 const express = require("express");
 const wrapAsync = require("../utils/wrapAsync");
 

@@ -1,6 +1,6 @@
 const { getUser, getContacts, getUsers } = require("../controllers/user");
-const { validateUserExistence } = require("../middleware/validate");
-const { authenticateRoute } = require("../middleware/auth");
+const { validateUserExistence } = require("../middlewares/validate");
+const { authenticateRoute } = require("../middlewares/auth");
 const express = require("express");
 const wrapAsync = require("../utils/wrapAsync");
 

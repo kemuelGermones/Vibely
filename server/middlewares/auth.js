@@ -1,4 +1,4 @@
-const admin = require("../config/firebase");
+const admin = require("../configs/firebase");
 const AppError = require("../utils/AppError");
 
 module.exports.authenticateRoute = (req, res, next) => {

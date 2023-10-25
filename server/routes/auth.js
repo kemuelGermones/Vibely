@@ -2,9 +2,9 @@ const {
   validateUserBody,
   validateUsernameAvailability,
   validateEmailAvailability,
-} = require("../middleware/validate");
-const { parseSignupFormData } = require("../middleware/multer");
-const { uploadAvatarToCloudinary } = require("../middleware/cloudinary");
+} = require("../middlewares/validate");
+const { parseSignupFormData } = require("../middlewares/multer");
+const { uploadAvatarToCloudinary } = require("../middlewares/cloudinary");
 const { signup } = require("../controllers/auth");
 const express = require("express");
 const wrapAsync = require("../utils/wrapAsync");

@@ -8,7 +8,7 @@ const { createServer } = require("http");
 const { Server } = require("socket.io");
 const cors = require("cors");
 const helmet = require("helmet");
-const sequelize = require("./config/sequelize");
+const sequelize = require("./configs/sequelize");
 const authRoute = require("./routes/auth");
 const userRoute = require("./routes/user");
 const followRoute = require("./routes/follow");
@@ -18,7 +18,7 @@ const postLikeRoute = require("./routes/postLike");
 const commentRoute = require("./routes/comment");
 const commentLikeRoute = require("./routes/commentLike");
 const AppError = require("./utils/AppError");
-const { authenticateSocket } = require("./middleware/auth");
+const { authenticateSocket } = require("./middlewares/auth");
 const connectSocket = require("./socket");
 
 const app = express();
