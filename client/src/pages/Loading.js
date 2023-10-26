@@ -1,9 +1,11 @@
 function Loading() {
   return (
-    <main className="flex h-screen items-center justify-center gap-3">
-      <div className="h-5 w-5 animate-[bounce_1s_infinite_-0.3s] rounded-full bg-yellow-400"></div>
-      <div className="h-5 w-5 animate-[bounce_1s_infinite_-0.1s] rounded-full bg-yellow-400"></div>
-      <div className="h-5 w-5 animate-[bounce_1s_infinite_0.1s] rounded-full bg-yellow-400"></div>
+    <main className="flex h-screen flex-col items-center justify-center gap-3 p-3">
+      <div className="font-shrikhand text-7xl text-gray-700">Vibely</div>
+      <div className="text-xl text-gray-700">Loading...</div>
+      <div className="text-center text-gray-500">
+        The page is currently in the process of loading.
+      </div>
     </main>
   );
 }

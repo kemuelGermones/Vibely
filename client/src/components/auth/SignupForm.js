@@ -67,7 +67,7 @@ function SignupForm() {
         .required(),
     }),
     onSubmit: (values) => {
-      // mutate(values);
+      mutate(values);
     },
   });
 
