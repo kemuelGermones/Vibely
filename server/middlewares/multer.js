@@ -14,7 +14,7 @@ const fileFilter = (req, file, cb) => {
 };
 
 module.exports.parseCreatePostFormData = (req, res, next) => {
-  const LIMITS = { files: 5 };
+  const LIMITS = { files: 5, fileSize: 4000000 };
 
   const upload = multer({ storage, fileFilter, limits: LIMITS });
   const parse = upload.array("images");
@@ -30,7 +30,9 @@ module.exports.parseCreatePostFormData = (req, res, next) => {
 };
 
 module.exports.parseSignupFormData = (req, res, next) => {
-  const upload = multer({ storage, fileFilter });
+  const LIMITS = { fileSize: 4000000 };
+
+  const upload = multer({ storage, fileFilter, limits: LIMITS });
   const parse = upload.single("avatar");
 
   parse(req, res, (error) => {
