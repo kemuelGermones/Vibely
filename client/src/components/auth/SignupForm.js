@@ -67,7 +67,7 @@ function SignupForm() {
         .required(),
     }),
     onSubmit: (values) => {
-      mutate(values);
+      // mutate(values);
     },
   });
 
@@ -156,7 +156,7 @@ function SignupForm() {
       <FileInput
         hasError={touched.avatar && errors.avatar}
         title="Choose profile picture"
-        description="Upload your avatar PNG, JPG or JPEG."
+        description="Accepted file formats: JPG, PNG, and JPEG, with a 4MB size limit."
         id="avatar"
         name="avatar"
         multiple={false}

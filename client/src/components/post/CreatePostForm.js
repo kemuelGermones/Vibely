@@ -81,7 +81,7 @@ function CreatePostForm() {
             ? `${values.images.length} images chosen`
             : "Choose images"
         }
-        description="Upload less than or equals to 5 images PNG, JPG or JPEG."
+        description="Accepted file formats: JPG, PNG, and JPEG, with a 4MB size limit and under 5 files."
         id="images"
         name="images"
         multiple={true}
