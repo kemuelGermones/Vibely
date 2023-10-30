@@ -1,5 +1,6 @@
-const { User, Avatar } = require("../models");
 const { Sequelize, Op } = require("sequelize");
+
+const { User, Avatar } = require("../models");
 const sequelize = require("../configs/sequelize");
 const createUser = require("../utils/createUser");
 

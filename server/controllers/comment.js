@@ -1,9 +1,10 @@
 const { Sequelize } = require("sequelize");
+
 const { Comment, User, Avatar } = require("../models");
 
 module.exports.getComments = async (req, res, next) => {
   const LIMIT = 10;
-  
+
   const { postId } = req.params;
   const { page } = req.query;
   const { uid } = req.user;

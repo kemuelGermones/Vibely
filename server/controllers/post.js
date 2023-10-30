@@ -1,4 +1,5 @@
 const { Sequelize } = require("sequelize");
+
 const { Post, Image, User, Avatar } = require("../models");
 const sequelize = require("../configs/sequelize");
 const destroyImages = require("../utils/destroyImages");

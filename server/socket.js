@@ -1,4 +1,4 @@
-const { User, Message } = require("./models/index");
+const { Message, User } = require("./models/index");
 const { messageSchema } = require("./schemas");
 
 const connectSocket = (io) => {

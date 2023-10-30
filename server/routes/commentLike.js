@@ -1,11 +1,12 @@
-const { likeComment, unlikeComment } = require("../controllers/commentLike");
+const express = require("express");
+
 const {
   validateCommentExistence,
   validateCommentLikeAvailability,
   validateCommentLikeExistence,
 } = require("../middlewares/validate");
 const { authenticateRoute } = require("../middlewares/auth");
-const express = require("express");
+const { likeComment, unlikeComment } = require("../controllers/commentLike");
 const wrapAsync = require("../utils/wrapAsync");
 
 const router = express.Router({ mergeParams: true });

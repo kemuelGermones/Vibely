@@ -3,11 +3,13 @@ require("dotenv").config();
 const CLIENT_URL = process.env.CLIENT_URL;
 const PORT = process.env.PORT;
 
-const express = require("express");
 const { createServer } = require("http");
 const { Server } = require("socket.io");
+const express = require("express");
 const cors = require("cors");
 const helmet = require("helmet");
+
+const { authenticateSocket } = require("./middlewares/auth");
 const sequelize = require("./configs/sequelize");
 const clientRoute = require("./routes/client");
 const userRoute = require("./routes/user");
@@ -17,9 +19,8 @@ const postRoute = require("./routes/post");
 const postLikeRoute = require("./routes/postLike");
 const commentRoute = require("./routes/comment");
 const commentLikeRoute = require("./routes/commentLike");
-const AppError = require("./utils/AppError");
-const { authenticateSocket } = require("./middlewares/auth");
 const connectSocket = require("./socket");
+const AppError = require("./utils/AppError");
 
 const app = express();
 const server = createServer(app);

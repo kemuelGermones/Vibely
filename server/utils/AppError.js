@@ -1,4 +1,4 @@
-// Extension of error class to have 
+// Extension of error class to have
 // HTTP status code
 class AppError extends Error {
   constructor(status, message) {

@@ -1,11 +1,12 @@
-const { followUser, unfollowUser } = require("../controllers/follow");
+const express = require("express");
+
 const {
   validateUserExistence,
   validateFollowAvailability,
   validateFollowExistence,
 } = require("../middlewares/validate");
 const { authenticateRoute } = require("../middlewares/auth");
-const express = require("express");
+const { followUser, unfollowUser } = require("../controllers/follow");
 const wrapAsync = require("../utils/wrapAsync");
 
 const router = express.Router({ mergeParams: true });

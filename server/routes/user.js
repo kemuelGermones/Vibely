@@ -1,7 +1,8 @@
-const { getUser, getUsers } = require("../controllers/user");
+const express = require("express");
+
 const { validateUserExistence } = require("../middlewares/validate");
 const { authenticateRoute } = require("../middlewares/auth");
-const express = require("express");
+const { getUser, getUsers } = require("../controllers/user");
 const wrapAsync = require("../utils/wrapAsync");
 
 const router = express.Router();

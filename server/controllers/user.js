@@ -1,5 +1,6 @@
-const { User, Avatar } = require("../models");
 const { Sequelize, Op } = require("sequelize");
+
+const { User, Avatar } = require("../models");
 
 module.exports.getUsers = async (req, res, next) => {
   const LIMIT = 10;

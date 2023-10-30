@@ -1,5 +1,6 @@
-const { Message } = require("../models/index");
 const { Op } = require("sequelize");
+
+const { Message } = require("../models/index");
 
 module.exports.getMessages = async (req, res, next) => {
   const LIMIT = 10;

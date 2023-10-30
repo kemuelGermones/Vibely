@@ -1,9 +1,5 @@
-const {
-  getPosts,
-  createPost,
-  updatePost,
-  deletePost,
-} = require("../controllers/post");
+const express = require("express");
+
 const {
   validatePostExistence,
   validatePostOwner,
@@ -13,7 +9,12 @@ const {
 const { uploadImagesToCloudinary } = require("../middlewares/cloudinary");
 const { parseCreatePostFormData } = require("../middlewares/multer");
 const { authenticateRoute } = require("../middlewares/auth");
-const express = require("express");
+const {
+  getPosts,
+  createPost,
+  updatePost,
+  deletePost,
+} = require("../controllers/post");
 const wrapAsync = require("../utils/wrapAsync");
 
 const router = express.Router();

@@ -1,4 +1,5 @@
 const escapeHTML = require("./utils/escapeHTML");
+
 const Joi = require("joi").extend(escapeHTML);
 
 module.exports.userSchema = Joi.object({

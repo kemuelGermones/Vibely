@@ -1,5 +1,5 @@
-const AppError = require("./AppError");
 const admin = require("../configs/firebase");
+const AppError = require("./AppError");
 
 const createUser = (user) => {
   return new Promise((resolve, reject) => {
