@@ -1,7 +1,7 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
 import InfiniteScroll from "react-infinite-scroll-component";
 
-import { getContacts } from "../../apis/user";
+import { getContacts } from "../../apis/client";
 import usePages from "../../hooks/usePages";
 import ContactDetails from "./ContactDetails";
 import ContactDetailsSkeleton from "./ContactDetailsSkeleton";

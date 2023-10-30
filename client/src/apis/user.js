@@ -20,18 +20,6 @@ export const getUsers = async ({ page, search }) => {
   return response.data.items;
 };
 
-export const getContacts = async ({ page }) => {
-  const user = auth.currentUser;
-  const token = await handleFirebaseAsync(getIdToken.bind(null, user));
-
-  const response = await server.get(`/users/contacts`, {
-    params: { page },
-    headers: { Authorization: `Bearer ${token}` },
-  });
-
-  return response.data.items;
-};
-
 export const getUser = async (userId) => {
   const user = auth.currentUser;
   const token = await handleFirebaseAsync(getIdToken.bind(null, user));

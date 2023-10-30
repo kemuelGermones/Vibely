@@ -4,7 +4,7 @@ import { useMutation } from "@tanstack/react-query";
 import { toast } from "react-toastify";
 import * as yup from "yup";
 
-import { signup } from "../../apis/auth";
+import { signup } from "../../apis/client";
 import validateHtml from "../../utils/validateHtml";
 import validateAvatar from "../../utils/validateAvatar";
 import FileInput from "../ui/FileInput";

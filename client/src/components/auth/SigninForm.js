@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import * as yup from "yup";
 
-import { signin } from "../../apis/auth";
+import { signin } from "../../apis/client";
 import validateHtml from "../../utils/validateHtml";
 
 function SigninForm() {

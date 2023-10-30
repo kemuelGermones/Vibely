@@ -1,4 +1,4 @@
-import { signInWithEmailAndPassword, signOut } from "firebase/auth";
+import { signInWithEmailAndPassword, signOut, getIdToken } from "firebase/auth";
 
 import auth from "../configs/firebase";
 import server from "../configs/axios";
@@ -28,4 +28,16 @@ export const signin = async ({ email, password }) => {
 
 export const signout = async () => {
   await handleFirebaseAsync(signOut.bind(null, auth));
+};
+
+export const getContacts = async ({ page }) => {
+  const user = auth.currentUser;
+  const token = await handleFirebaseAsync(getIdToken.bind(null, user));
+
+  const response = await server.get(`/contacts`, {
+    params: { page },
+    headers: { Authorization: `Bearer ${token}` },
+  });
+
+  return response.data.items;
 };

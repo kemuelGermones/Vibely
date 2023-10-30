@@ -12,7 +12,7 @@ import {
 } from "react-icons/bs";
 import "react-tooltip/dist/react-tooltip.css";
 
-import { signout } from "../../apis/auth";
+import { signout } from "../../apis/client";
 import useModal from "../../hooks/useModal";
 import useAuth from "../../hooks/useAuth";
 import SearchModal from "../search/SearchModal";
