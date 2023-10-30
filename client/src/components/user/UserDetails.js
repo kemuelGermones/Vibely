@@ -2,8 +2,8 @@ import { useQuery } from "@tanstack/react-query";
 
 import { getUser } from "../../apis/user";
 import useAuth from "../../hooks/useAuth";
-import UserDetailsSkeleton from "./UserDetailsSkeleton";
 import UserDetailsIcons from "./UserDetailsIcons";
+import UserDetailsSkeleton from "./UserDetailsSkeleton";
 
 function UserDetails({ userId }) {
   const { user } = useAuth();

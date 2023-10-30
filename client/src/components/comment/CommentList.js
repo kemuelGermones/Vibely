@@ -3,8 +3,8 @@ import InfiniteScroll from "react-infinite-scroll-component";
 
 import { getComments } from "../../apis/comment";
 import usePages from "../../hooks/usePages";
-import CommentDetailsSkeleton from "./CommentDetailsSkeleton";
 import CommentDetails from "./CommentDetails";
+import CommentDetailsSkeleton from "./CommentDetailsSkeleton";
 
 function CommentList({ postId }) {
   const { data, fetchNextPage, hasNextPage, isLoading, isError } =

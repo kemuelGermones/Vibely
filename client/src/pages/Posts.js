@@ -1,13 +1,13 @@
 import { Fragment } from "react";
 
-import useAuth from "../hooks/useAuth";
+import AboutDetails from "../components/misc/AboutDetails";
+import AdvertisementDetails from "../components/misc/AdvertisementDetails";
+import RegulationDetails from "../components/misc/RegulationDetails";
+import CreatePost from "../components/post/CreatePost";
+import PostList from "../components/post/PostList";
 import Navbar from "../components/ui/Navbar";
 import UserDetails from "../components/user/UserDetails";
-import PostList from "../components/post/PostList";
-import CreatePost from "../components/post/CreatePost";
-import AdvertisementDetails from "../components/misc/AdvertisementDetails";
-import AboutDetails from "../components/misc/AboutDetails";
-import RegulationDetails from "../components/misc/RegulationDetails";
+import useAuth from "../hooks/useAuth";
 
 function Posts() {
   const { user } = useAuth();

@@ -2,11 +2,11 @@ import { BsPencilSquare, BsTrash } from "react-icons/bs";
 
 import useAuth from "../../hooks/useAuth";
 import useModal from "../../hooks/useModal";
-import UpdatePostForm from "./UpdatePostForm";
+import Carousel from "../ui/Carousel";
+import Dropdown from "../ui/Dropdown";
 import DeletePostModal from "./DeletePostModal";
 import PostDetailsIcons from "./PostDetailsIcons";
-import Dropdown from "../ui/Dropdown";
-import Carousel from "../ui/Carousel";
+import UpdatePostForm from "./UpdatePostForm";
 
 function PostDetails({ data }) {
   const { user } = useAuth();

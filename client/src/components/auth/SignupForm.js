@@ -1,12 +1,12 @@
-import { Link } from "react-router-dom";
-import { useFormik } from "formik";
 import { useMutation } from "@tanstack/react-query";
+import { useFormik } from "formik";
+import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import * as yup from "yup";
 
 import { signup } from "../../apis/client";
-import validateHtml from "../../utils/validateHtml";
 import validateAvatar from "../../utils/validateAvatar";
+import validateHtml from "../../utils/validateHtml";
 import FileInput from "../ui/FileInput";
 
 function SignupForm() {

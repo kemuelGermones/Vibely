@@ -1,7 +1,7 @@
 import { getIdToken } from "firebase/auth";
 
-import auth from "../configs/firebase";
 import server from "../configs/axios";
+import auth from "../configs/firebase";
 import handleFirebaseAsync from "../utils/handleFirebaseAsync";
 
 export const followUser = async (userId) => {

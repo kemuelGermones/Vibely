@@ -1,12 +1,12 @@
 import { Fragment } from "react";
 
-import useAuth from "../hooks/useAuth";
-import Navbar from "../components/ui/Navbar";
-import UserDetails from "../components/user/UserDetails";
-import AdvertisementDetails from "../components/misc/AdvertisementDetails";
 import InboxDetails from "../components/inbox/InboxDetails";
 import AboutDetails from "../components/misc/AboutDetails";
+import AdvertisementDetails from "../components/misc/AdvertisementDetails";
 import RegulationDetails from "../components/misc/RegulationDetails";
+import Navbar from "../components/ui/Navbar";
+import UserDetails from "../components/user/UserDetails";
+import useAuth from "../hooks/useAuth";
 
 function Inbox() {
   const { user } = useAuth();

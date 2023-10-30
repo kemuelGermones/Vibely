@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { toast } from "react-toastify";
 import { BsTrash } from "react-icons/bs";
+import { toast } from "react-toastify";
 
 import { deletePost } from "../../apis/post";
 import useModal from "../../hooks/useModal";

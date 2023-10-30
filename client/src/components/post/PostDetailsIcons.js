@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { BsHeart, BsHeartFill, BsChatSquare } from "react-icons/bs";
+import { BsChatSquare, BsHeart, BsHeartFill } from "react-icons/bs";
 import { toast } from "react-toastify";
 
 import { likePost, unlikePost } from "../../apis/postLike";

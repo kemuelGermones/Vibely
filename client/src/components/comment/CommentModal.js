@@ -1,5 +1,5 @@
-import CreateCommentForm from "./CreateCommentForm";
 import CommentList from "./CommentList";
+import CreateCommentForm from "./CreateCommentForm";
 
 function CommentModal({ postId }) {
   return (

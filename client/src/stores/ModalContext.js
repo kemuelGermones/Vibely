@@ -1,4 +1,4 @@
-import { useState, createContext, Fragment } from "react";
+import { Fragment, createContext, useState } from "react";
 
 const INITIAL_STATE = {
   showModal: () => {},

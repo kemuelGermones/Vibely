@@ -1,18 +1,19 @@
-import React from "react";
-import ReactDOM from "react-dom/client";
-import "./index.css";
-import App from "./App";
-import "react-toastify/dist/ReactToastify.css";
 import {
-  QueryClient,
   QueryCache,
+  QueryClient,
   QueryClientProvider,
 } from "@tanstack/react-query";
+import React from "react";
+import ReactDOM from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
-import { toast, ToastContainer } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+import App from "./App";
+import "./index.css";
 import { AuthContextProvider } from "./stores/AuthContext";
-import { SocketContextProvider } from "./stores/SocketContext";
 import { ModalContextProvider } from "./stores/ModalContext";
+import { SocketContextProvider } from "./stores/SocketContext";
 
 const appRoot = ReactDOM.createRoot(document.getElementById("app-root"));
 

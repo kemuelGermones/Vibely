@@ -1,7 +1,7 @@
-import { signInWithEmailAndPassword, signOut, getIdToken } from "firebase/auth";
+import { getIdToken, signInWithEmailAndPassword, signOut } from "firebase/auth";
 
-import auth from "../configs/firebase";
 import server from "../configs/axios";
+import auth from "../configs/firebase";
 import handleFirebaseAsync from "../utils/handleFirebaseAsync";
 
 export const signup = async (values) => {

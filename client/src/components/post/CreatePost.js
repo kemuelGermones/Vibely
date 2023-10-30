@@ -1,5 +1,5 @@
-import useModal from "../../hooks/useModal";
 import useAuth from "../../hooks/useAuth";
+import useModal from "../../hooks/useModal";
 import CreatePostForm from "./CreatePostForm";
 
 function CreatePost() {

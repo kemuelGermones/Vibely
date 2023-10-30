@@ -1,12 +1,12 @@
 import { Fragment } from "react";
 import { useParams } from "react-router-dom";
 
+import AboutDetails from "../components/misc/AboutDetails";
+import AdvertisementDetails from "../components/misc/AdvertisementDetails";
+import RegulationDetails from "../components/misc/RegulationDetails";
+import PostList from "../components/post/PostList";
 import Navbar from "../components/ui/Navbar";
 import UserDetails from "../components/user/UserDetails";
-import PostList from "../components/post/PostList";
-import AdvertisementDetails from "../components/misc/AdvertisementDetails";
-import AboutDetails from "../components/misc/AboutDetails";
-import RegulationDetails from "../components/misc/RegulationDetails";
 
 function Profile() {
   const { userId } = useParams();

@@ -1,10 +1,11 @@
-import { lazy, Suspense } from "react";
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Suspense, lazy } from "react";
+import { Navigate, Route, Routes } from "react-router-dom";
+
 import useAuth from "./hooks/useAuth";
-import Unprotected from "./outlets/Unprotected";
 import Protected from "./outlets/Protected";
-import Loading from "./pages/Loading";
+import Unprotected from "./outlets/Unprotected";
 import Fallback from "./pages/Fallback";
+import Loading from "./pages/Loading";
 
 const Signin = lazy(() => import("./pages/Signin"));
 const Signup = lazy(() => import("./pages/Signup"));

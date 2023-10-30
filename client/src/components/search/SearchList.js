@@ -3,8 +3,8 @@ import InfiniteScroll from "react-infinite-scroll-component";
 
 import { getUsers } from "../../apis/user";
 import usePages from "../../hooks/usePages";
-import SearchDetailsSkeleton from "./SearchDetailsSkeleton";
 import SearchDetails from "./SearchDetails";
+import SearchDetailsSkeleton from "./SearchDetailsSkeleton";
 
 function SearchList({ username }) {
   const { fetchNextPage, hasNextPage, data, isLoading, isError } =

@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { BsPersonAdd, BsPersonCheck, BsEnvelopePlus } from "react-icons/bs";
+import { BsEnvelopePlus, BsPersonAdd, BsPersonCheck } from "react-icons/bs";
 import { toast } from "react-toastify";
 
 import { followUser, unfollowUser } from "../../apis/follow";

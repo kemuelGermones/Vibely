@@ -3,8 +3,8 @@ import InfiniteScroll from "react-infinite-scroll-component";
 
 import { getPosts } from "../../apis/post";
 import usePages from "../../hooks/usePages";
-import PostDetailsSkeleton from "./PostDetailsSkeleton";
 import PostDetails from "./PostDetails";
+import PostDetailsSkeleton from "./PostDetailsSkeleton";
 
 function PostList({ userId }) {
   const { data, fetchNextPage, hasNextPage, isLoading, isError } =

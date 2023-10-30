@@ -1,8 +1,8 @@
 import { useEffect } from "react";
 
 import useSocket from "../../hooks/useSocket";
-import MessageList from "./MessageList";
 import CreateMessageForm from "./CreateMessageForm";
+import MessageList from "./MessageList";
 
 function MessageModal({ data }) {
   const socket = useSocket();

@@ -1,5 +1,5 @@
-import { useEffect } from "react";
 import { useQueryClient } from "@tanstack/react-query";
+import { useEffect } from "react";
 
 import useSocket from "../../hooks/useSocket";
 import ContactList from "./ContactList";
