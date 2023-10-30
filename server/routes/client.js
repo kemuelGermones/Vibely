@@ -5,7 +5,8 @@ const {
 } = require("../middlewares/validate");
 const { parseSignupFormData } = require("../middlewares/multer");
 const { uploadAvatarToCloudinary } = require("../middlewares/cloudinary");
-const { signup } = require("../controllers/auth");
+const { authenticateRoute } = require("../middlewares/auth");
+const { signup, getContacts } = require("../controllers/client");
 const express = require("express");
 const wrapAsync = require("../utils/wrapAsync");
 
@@ -20,5 +21,7 @@ router.post(
   uploadAvatarToCloudinary,
   wrapAsync(signup)
 );
+
+router.get("/contacts", authenticateRoute, wrapAsync(getContacts));
 
 module.exports = router;

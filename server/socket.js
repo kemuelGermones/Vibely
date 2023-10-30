@@ -1,85 +1,99 @@
 const { User, Message } = require("./models/index");
 const { messageSchema } = require("./schemas");
 
-const connectSocket = (socket) => {
-  socket.on("join_room", async (receiverId) => {
-    try {
-      const { uid: senderId } = socket.user;
+const connectSocket = (io) => {
+  return (socket) => {
+    socket.on("join_room", async (receiverId) => {
+      try {
+        const { uid: senderId } = socket.user;
 
-      const user = await User.findOne({ where: { id: receiverId } });
+        const user = await User.findOne({ where: { id: receiverId } });
 
-      if (!user) {
-        throw new Error("User doesn't exist");
+        if (!user) {
+          throw new Error("User doesn't exist");
+        }
+
+        const roomId = new Array(senderId, receiverId).sort().join("__with__");
+
+        socket.join(roomId);
+      } catch (error) {
+        const { message } = message;
+
+        socket.emit("event_error", message);
       }
+    });
 
-      const roomId = new Array(senderId, receiverId).sort().join("__with__");
+    socket.on("leave_room", async (receiverId) => {
+      try {
+        const { uid: senderId } = socket.user;
 
-      socket.join(roomId);
-    } catch (error) {
-      const { message } = message;
+        const user = await User.findOne({ where: { id: receiverId } });
 
-      socket.emit("event_error", message);
-    }
-  });
+        if (!user) {
+          throw new Error("User doesn't exist");
+        }
 
-  socket.on("leave_room", async (receiverId) => {
-    try {
-      const { uid: senderId } = socket.user;
+        const roomId = new Array(senderId, receiverId).sort().join("__with__");
 
-      const user = await User.findOne({ where: { id: receiverId } });
+        socket.leave(roomId);
+      } catch (error) {
+        const { message } = message;
 
-      if (!user) {
-        throw new Error("User doesn't exist");
+        socket.emit("event_error", message);
       }
+    });
 
-      const roomId = new Array(senderId, receiverId).sort().join("__with__");
+    socket.on("send_message", async (receiverId, data) => {
+      try {
+        const { uid: senderId } = socket.user;
 
-      socket.leave(roomId);
-    } catch (error) {
-      const { message } = message;
+        const user = await User.findOne({ where: { id: receiverId } });
 
-      socket.emit("event_error", message);
-    }
-  });
+        if (!user) {
+          throw new Error("User doesn't exist");
+        }
 
-  socket.on("send_message", async (receiverId, data) => {
-    try {
-      const { uid: senderId } = socket.user;
-
-      const user = await User.findOne({ where: { id: receiverId } });
-
-      if (!user) {
-        throw new Error("User doesn't exist");
-      }
-
-      const { error } = messageSchema.validate(data, {
-        errors: {
-          wrap: {
-            label: "",
+        const { error } = messageSchema.validate(data, {
+          errors: {
+            wrap: {
+              label: "",
+            },
           },
-        },
-      });
+        });
 
-      if (error) {
-        const message = error.details[0].message;
-        throw new Error(message);
+        if (error) {
+          const message = error.details[0].message;
+          throw new Error(message);
+        }
+
+        const roomId = new Array(senderId, receiverId).sort().join("__with__");
+
+        const response = await Message.create({
+          ...data,
+          senderId,
+          receiverId,
+        });
+
+        const message = await Message.findOne({
+          where: { id: response.getDataValue("id") },
+        });
+
+        io.in(roomId).emit("receive_message", message);
+
+        const clients = await io.fetchSockets();
+
+        for (let client of clients) {
+          if (client.user.uid === senderId || client.user.uid === receiverId) {
+            io.to(client.id).emit("invalidate_contacts");
+          }
+        }
+      } catch (error) {
+        const { message } = message;
+
+        socket.emit("event_error", message);
       }
-
-      const roomId = new Array(senderId, receiverId).sort().join("__with__");
-
-      const response = await Message.create({ ...data, senderId, receiverId });
-
-      const message = await Message.findOne({
-        where: { id: response.getDataValue("id") },
-      });
-
-      socket.nsp.to(roomId).emit("receive_message", message);
-    } catch (error) {
-      const { message } = message;
-
-      socket.emit("event_error", message);
-    }
-  });
+    });
+  };
 };
 
 module.exports = connectSocket;

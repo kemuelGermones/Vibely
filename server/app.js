@@ -9,7 +9,7 @@ const { Server } = require("socket.io");
 const cors = require("cors");
 const helmet = require("helmet");
 const sequelize = require("./configs/sequelize");
-const authRoute = require("./routes/auth");
+const clientRoute = require("./routes/client");
 const userRoute = require("./routes/user");
 const followRoute = require("./routes/follow");
 const messageRoute = require("./routes/message");
@@ -50,7 +50,7 @@ app.use(cors());
 app.use(helmet());
 app.use(express.json());
 
-app.use("/", authRoute);
+app.use("/", clientRoute);
 app.use("/users", userRoute);
 app.use("/users/:userId/follows", followRoute);
 app.use("/users/:userId/messages", messageRoute);
@@ -73,7 +73,7 @@ app.use((err, req, res, next) => {
 });
 
 io.use(authenticateSocket);
-io.on("connection", connectSocket);
+io.on("connection", connectSocket(io));
 
 server.listen(PORT, () => {
   console.log(`Listening to port ${PORT}`);
