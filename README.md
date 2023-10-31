@@ -90,6 +90,4 @@ npm start
 ## Contact
 
 Email - [kemuelgermones@gmail.com](kemuelgermones@gmail.com)
-Project Link: [https://github.com/kemuelGermones/Vibely](https://github.com/kemuelGermones/Vibely)
-Web Application Link: [https://trackero-client.vercel.app/](https://trackero-client.vercel.app/)
 
