@@ -54,10 +54,11 @@ npm install
 PORT  = 5000
 CLIENT_URL  = http://localhost:3000
 
-DB_HOST  = **EXAMPLE: 127.0.0.1**
 DB_USER  = **EXAMPLE: root**
 DB_NAME  = **EXAMPLE: vibely**
 DB_PASSWORD  = **EXAMPLE: thisIsAPassword**
+DB_HOST  = **EXAMPLE: 127.0.0.1**
+DB_PORT = **EXAMPLE: 3306**
 
 CLOUDINARY_CLOUD_NAME  = **EXAMPLE: de9dtUdav**
 CLOUDINARY_KEY  = **EXAMPLE: 639786847010159**
