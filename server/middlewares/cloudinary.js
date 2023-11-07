@@ -39,7 +39,6 @@ module.exports.uploadImagesToCloudinary = (req, res, next) => {
       next();
     })
     .catch((error) => {
-      console.log("error");
       const { http_code, message } = error;
       next(new AppError(http_code, message));
     });
