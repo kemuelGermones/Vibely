@@ -6,11 +6,12 @@ A social media web application that is dedicated to fostering a community of lik
 
 ## About The Project
 
-![Vibely](https://res.cloudinary.com/de9dxfdav/image/upload/v1698739496/Project%20Promotion/Screenshot_from_2023-10-31_15-50-29_s0en0n.png)
+![Vibely](https://res.cloudinary.com/de9dxfdav/image/upload/v1699328991/Project%20Promotion/Screenshot_from_2023-11-07_11-39-09_1_agjf21.png)
 
-Vibely stands as a remarkable social media web application designed with a distinctive mission in mind. It serves as a digital haven for individuals seeking genuine connections with like-minded peers. Within its virtual realm, it's committed to fostering a thriving and close-knit community, where people of shared interests and passions can come together, connect, and collaborate. 
+Vibely stands as a remarkable social media web application designed with a distinctive mission in mind. It serves as a digital haven for individuals seeking genuine connections with like-minded peers. Within its virtual realm, it's committed to fostering a thriving and close-knit community, where people of shared interests and passions can come together, connect, and collaborate.
 
 **Key Features**
+
 - **User-Friendly Interface:** Our intuitive interface ensures that you can effortlessly navigate through the app.
 - **Connect with Friends:** Vibely allows you to follow others and make new connections easily.
 - **News Feed:** Stay informed about the latest posts.
@@ -34,22 +35,27 @@ To access the live demo, please proceed to the provided URL above. Alternatively
 
 ### Prerequisites
 
-In order to host the web application locally on your computer you must install MySQL and Node.js on your machine. Also, you must create a Firebase and Cloudinary account. 
+In order to host the web application locally on your computer you must install MySQL and Node.js on your machine. Also, you must create a Firebase and Cloudinary account.
 
 ### Installation
 
 Below are the instructions of how you can host the web application locally on your computer.
 
 1. Clone the project repository on your machine by running the command below on your terminal.
+
 ```
 git clone git@github.com:kemuelGermones/Vibely.git
 ```
+
 2.  Go into the client and server directory and run the command below on your terminal to install all dependencies.
+
 ```
 npm install
 ```
+
 3.  In the server directory create a `.env` file. The purpose of a `.env` (short for "environment") file is to store configuration variables and sensitive information.
 4.  Copy the code below and paste it on your server `.env` file. Also, you must provide MySQL and Cloudinary credentials.
+
 ```
 PORT  = 5000
 CLIENT_URL  = http://localhost:3000
@@ -64,10 +70,12 @@ CLOUDINARY_CLOUD_NAME  = **EXAMPLE: de9dtUdav**
 CLOUDINARY_KEY  = **EXAMPLE: 639786847010159**
 CLOUDINARY_SECRET  = **EXAMPLE: aju5yI6KbWvrKDpcyKxDrP7VN3g**
 ```
+
 5. On your Firebase account create a new project and inside your project create a new web app.
 6. On your Firebase project add authentication with email/password as sign-in provider.
 7. On your Firebase project go to service accounts inside settings and generate a new private key. It will automatically download a `.json` file rename it as `firebase.json` and move it to the server directory.
 8. Navigate to the client directory and create a `.env` file provided with your Firebase config located at your Firebase project settings.
+
 ```
 REACT_APP_SERVER_URL  = http://localhost:5000
 
@@ -78,17 +86,21 @@ REACT_APP_FIREBASE_STORAGE_BUCKET  = **EXAMPLE: vibely-6zz66.appspot.com**
 REACT_APP_FIREBASE_MESSAGING_SENDER_ID  = **EXAMPLE: 580991161234**
 REACT_APP_FIREBASE_APP_ID  = **EXAMPLE: 1:580991161234:web:69bfe6183d242f466faccd**
 ```
+
 9. Navigate back to the server directory and run the command below on your terminal.
+
 ```
 npm run dev
 ```
+
 10. Navigate to the client directory and run the command below on your terminal.
+
 ```
 npm start
-``` 
-11.  Open [http://localhost:3000](http://localhost:3000/) and enjoy!
+```
+
+11. Open [http://localhost:3000](http://localhost:3000/) and enjoy!
 
 ## Contact
 
 Email - [kemuelgermones@gmail.com](kemuelgermones@gmail.com)
-
