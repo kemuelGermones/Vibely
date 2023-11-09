@@ -31,7 +31,7 @@ Vibely stands as a remarkable social media web application designed with a disti
 
 ## Getting Started
 
-To access the live demo, please proceed to the provided URL above. Alternatively, if you prefer to host the web application locally on your computer, please follow the instructions outlined below.
+To view demo, please proceed to the provided URL above. Alternatively, if you prefer to host the web application locally on your computer, please follow the instructions outlined below.
 
 ### Prerequisites
 
