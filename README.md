@@ -2,7 +2,7 @@
 
 A social media web application that is dedicated to fostering a community of like-minded individuals who are passionate about creating and sharing positive, uplifting content.
 
-### [View Demo](https://trackero-client.vercel.app/)
+### [View Demo](https://youtu.be/GWgik937W4A)
 
 ## About The Project
 
