@@ -1,22 +1,22 @@
 const sanitizeHtml = require("sanitize-html");
 
-// Adds a escapeHTML method to Joi and checks if the
+// Adds a escapeHtml method to Joi and checks if the
 // incoming data contains HTML elements
-const escapeHTML = (joi) => ({
+const escapeHtml = (joi) => ({
   type: "string",
   base: joi.string(),
   messages: {
-    "string.escapeHTML": "{{#label}} must not include HTML",
+    "string.escapeHtml": "{{#label}} must not include HTML",
   },
   rules: {
-    escapeHTML: {
+    escapeHtml: {
       validate(value, helpers) {
         const clean = sanitizeHtml(value, {
           allowedTags: [],
           allowedAttributes: {},
         });
         if (clean !== value) {
-          return helpers.error("string.escapeHTML", { value });
+          return helpers.error("string.escapeHtml", { value });
         }
         return clean;
       },
@@ -24,4 +24,4 @@ const escapeHTML = (joi) => ({
   },
 });
 
-module.exports = escapeHTML;
+module.exports = escapeHtml;
