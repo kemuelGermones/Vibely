@@ -4,23 +4,15 @@ const PROJECTS = [
   {
     name: "Trackero",
     description:
-      "Is a project management tool that is intended to use as an internal tool within an organization that allows users to easily track, prioritize and resolve issues, bugs and tasks in a one central location.",
+      "A project management tool designed for internal use within a organization, enabling users to efficiently track, prioritize, and address issues, bugs, and tasks from a centralized platform.",
     image:
       "https://res.cloudinary.com/de9dxfdav/image/upload/c_fill,w_414,h_197,g_auto,q_100/v1677069643/Project%20Promotion/Screenshot_2023-02-22_203738_eyqjyh.jpg",
     link: "https://trackero-client.vercel.app/",
   },
   {
-    name: "PlayMath",
-    description:
-      "Is a web-based math game that allows users to tests their mathematical skills in addition, subtraction, multiplication and division.",
-    image:
-      "https://res.cloudinary.com/de9dxfdav/image/upload/c_fill,w_414,h_197,g_auto,q_100/v1667231699/Project%20Promotion/Screenshot_2022-10-31_235131_cy0nhw.jpg",
-    link: "https://play-math.vercel.app/",
-  },
-  {
     name: "Unexplained",
     description:
-      "Is an online forum web application that enables users to communicate with each other by posting messages and engaging in discussions on various topics like sightings of paranormal entities, UFOs, the possibility of extraterrestrial life and other strange events that cannot be explain.",
+      "A online forum web application that facilitates user communication through the posting and participation in discussions pertaining to a wide range of topics, such as sightings of paranormal entities, UFOs, the potential existence of extraterrestrial life, and other inexplicable phenomena.",
     image:
       "https://res.cloudinary.com/de9dxfdav/image/upload/c_fill,w_414,h_197,g_auto,q_100/v1666364496/Project%20Promotion/Screenshot_2022-10-21_224728_jwqjik.jpg",
     link: "https://unexplained.vercel.app/",
@@ -28,9 +20,9 @@ const PROJECTS = [
   {
     name: "Kemuel Germones",
     description:
-      "Is a personal website that provides information about myself and my individual work samples ",
+      "A personal website that serves as a platform to showcase my individual work samples and provide detailed information about myself.",
     image:
-      "https://res.cloudinary.com/de9dxfdav/image/upload/c_fill,w_414,h_197,g_auto,q_100/v1684574957/Project%20Promotion/Screenshot_from_2023-05-20_17-23-49_w8wrmg.png",
+      "https://res.cloudinary.com/de9dxfdav/image/upload/v1701330032/Project%20Promotion/Screenshot_from_2023-11-30_15-32-11_wjveol.png",
     link: "https://kemuel-germones.vercel.app/",
   },
 ];
