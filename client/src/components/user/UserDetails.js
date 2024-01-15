@@ -11,6 +11,7 @@ function UserDetails({ userId }) {
   const { isLoading, isError, data } = useQuery({
     queryKey: ["users", userId],
     queryFn: () => getUser(userId),
+    refetchInterval: 10000,
   });
 
   if (isLoading || isError) {

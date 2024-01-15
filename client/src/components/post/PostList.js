@@ -15,6 +15,7 @@ function PostList({ userId }) {
       getNextPageParam: (lastPage, allPages) => {
         return lastPage.length ? allPages.length : undefined;
       },
+      refetchInterval: 10000,
     });
 
   const posts = usePages(data);

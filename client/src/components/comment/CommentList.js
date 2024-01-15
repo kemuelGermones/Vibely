@@ -14,6 +14,7 @@ function CommentList({ postId }) {
       getNextPageParam: (lastPage, allPages) => {
         return lastPage.length ? allPages.length : undefined;
       },
+      refetchInterval: 10000,
     });
 
   const comments = usePages(data);
